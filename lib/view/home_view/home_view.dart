@@ -15,7 +15,7 @@ class HomeView extends StatelessWidget {
         children: [
           GlowContainer(
             color: AppColors.accentColor.withOpacity(0.35),
-            bottomPosition: screenHeight(context) * 0.6,
+            bottomPosition: screenHeight(context) * 0.4,
             rightPosition: screenWidth(context) * 0.1,
           ),
           Align(
@@ -27,7 +27,7 @@ class HomeView extends StatelessWidget {
                 screenWidth(context) * 0.05,
                 0,
               ),
-              child: HomeViewBody(),
+              child: const HomeViewBody(),
             ),
           )
         ],

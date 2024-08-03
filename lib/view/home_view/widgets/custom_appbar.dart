@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -34,10 +32,19 @@ class CustomAppbar extends StatelessWidget {
             ),
           ]),
         ),
-        IconButton(onPressed: (){
-           Get.toNamed(AppRouter.downloadViewPath);
-        }, icon: Icon(CupertinoIcons.cube_box,size: screenWidth(context)*0.1,color: AppColors.accentColor,),),
+        IconButton(
+          onPressed: () {
+            Get.toNamed(
+              AppRouter.downloadViewPath,
 
+            );
+          },
+          icon: Icon(
+            CupertinoIcons.cube_box,
+            size: screenWidth(context) * 0.1,
+            color: AppColors.accentColor,
+          ),
+        ),
       ],
     );
   }

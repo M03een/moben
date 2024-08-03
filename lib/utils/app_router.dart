@@ -1,5 +1,5 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
-import 'package:moben/view/download_view.dart';
+import 'package:moben/view/download_view/download_view.dart';
 import 'package:moben/view/home_view/home_view.dart';
 
 class AppRouter {
