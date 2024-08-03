@@ -2,7 +2,8 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_utils/get_utils.dart';
+import 'package:get/get.dart';
+import 'package:moben/utils/app_router.dart';
 import 'package:moben/utils/size_config.dart';
 
 import '../../../utils/colors.dart';
@@ -33,7 +34,9 @@ class CustomAppbar extends StatelessWidget {
             ),
           ]),
         ),
-        IconButton(onPressed: (){}, icon: Icon(CupertinoIcons.cube_box,size: screenWidth(context)*0.1,color: AppColors.accentColor,),),
+        IconButton(onPressed: (){
+           Get.toNamed(AppRouter.downloadViewPath);
+        }, icon: Icon(CupertinoIcons.cube_box,size: screenWidth(context)*0.1,color: AppColors.accentColor,),),
 
       ],
     );
