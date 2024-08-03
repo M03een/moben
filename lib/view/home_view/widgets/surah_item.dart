@@ -7,9 +7,10 @@ import '../../../utils/widgets/glass_container.dart';
 class SurahItem extends StatelessWidget {
   final String surahName;
   final bool isMakkia;
+  final Function() onTap;
 
   const SurahItem({
-    super.key, required this.surahName, required this.isMakkia,
+    super.key, required this.surahName, required this.isMakkia, required this.onTap,
   });
 
   @override
@@ -18,7 +19,7 @@ class SurahItem extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: InkWell(
         borderRadius: BorderRadius.circular(15),
-        onTap: () {},
+        onTap: onTap,
         child: GlassContainer(
           height: screenHeight(context) * 0.11,
           width: screenWidth(context) * 0.9,
