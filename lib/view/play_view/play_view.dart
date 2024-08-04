@@ -1,13 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:get/get.dart';
-import 'package:moben/utils/styles.dart';
-import 'package:moben/utils/widgets/glass_container.dart';
+import 'package:moben/utils/widgets/text_filling_loader.dart';
+import 'package:moben/view/play_view/widgets/audio_controller.dart';
 
 import '../../utils/colors.dart';
 import '../../utils/size_config.dart';
 import '../../utils/widgets/glow_container.dart';
+import 'widgets/play_view_appbar.dart';
+import 'widgets/reader_and_download_widget.dart';
+import 'widgets/surah_widget.dart';
 
 class PlayView extends StatelessWidget {
   const PlayView({super.key});
@@ -33,163 +33,28 @@ class PlayView extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'الفاتحة',
-                        style: AppStyles.quranTextStyle30,
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          Get.back();
-                        },
-                        icon: const Icon(
-                          CupertinoIcons.chevron_down,
-                          size: 30,
-                          color: AppColors.accentColor,
-                        ),
-                      ),
-                    ],
+                  const PlayViewAppbar(
+                    surahName: 'الفاتحة',
                   ),
                   (screenHeight(context) * 0.02).sh,
-                  Row(
-                    children: [
-                      GlassContainer(
-                        horMargin: 5,
-                        height: screenHeight(context) * 0.15,
-                        width: screenWidth(context) * 0.6,
-                        child: Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  const Icon(
-                                    CupertinoIcons.person_fill,
-                                    color: AppColors.accentColor,
-                                    size: 25,
-                                  ),
-                                  Text(
-                                    'القارئ',
-                                    style: AppStyles.textStyle19
-                                        .copyWith(color: AppColors.accentColor),
-                                  )
-                                ],
-                              ),
-                              const Spacer(),
-                              Row(
-                                children: [
-                                  Text(
-                                    'ابوبكر الشاطري',
-                                    style: AppStyles.textStyle15.copyWith(
-                                        color: AppColors.accentColor,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                  IconButton(
-                                    onPressed: () {},
-                                    icon: const Icon(
-                                      CupertinoIcons.chevron_compact_down,
-                                      color: AppColors.accentColor,
-                                      size: 25,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: GlassContainer(
-                          height: screenHeight(context) * 0.15,
-                          width: 200,
-                          child: Stack(
-                            children: [
-                              Align(
-                                alignment: Alignment.bottomCenter,
-                                child: Container(
-                                  width: double.infinity,
-                                  height: (screenHeight(context) * 0.1),
-                                  decoration: BoxDecoration(
-                                      color: AppColors.accentColor,
-                                      borderRadius: BorderRadius.circular(15)),
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        'جاري التحميل...${70}',
-                                        style: AppStyles.textStyle15.copyWith(
-                                            color: AppColors.primaryColor),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
+                  const ReaderAndDownloadWidget(
+                    readerName: 'ابوبكر الشاطري',
+                    isDownloaded: true,
+                    percentage: '',
                   ),
                   (screenHeight(context) * 0.01).sh,
-                  GlassContainer(
-                    horMargin: 5,
-                    height: screenHeight(context) * 0.15,
-                    width: double.infinity,
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              const Icon(
-                                CupertinoIcons.book_fill,
-                                color: AppColors.accentColor,
-                                size: 25,
-                              ),
-                              Text(
-                                'السورة',
-                                style: AppStyles.textStyle19
-                                    .copyWith(color: AppColors.accentColor),
-                              )
-                            ],
-                          ),
-                          const Spacer(),
-                          Row(
-                            children: [
-                              Text(
-                                'الفاتحة',
-                                style: AppStyles.textStyle15.copyWith(
-                                    color: AppColors.accentColor,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                              IconButton(
-                                onPressed: () {},
-                                icon: const Icon(
-                                  CupertinoIcons.chevron_compact_down,
-                                  color: AppColors.accentColor,
-                                  size: 25,
-                                ),
-                              ),
-                              const Spacer(),
-                              Text(
-                                'مكية',
-                                style: AppStyles.textStyle15.copyWith(
-                                    color: AppColors.accentColor,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
+                  const SurahWidget(
+                    surahName: 'الفاتحة',
+                    isMakkia: true,
                   ),
                   (screenHeight(context) * 0.01).sh,
-                  const Row(
-                    children: [
-
-                    ],
-                  )
+                  
+                  AudioController(
+                    next: () {},
+                    previous: () {},
+                    pause: () {},
+                  ),
+                  (screenHeight(context)*0.02).sh,
                 ],
               ),
             ),

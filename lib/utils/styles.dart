@@ -29,5 +29,11 @@ static const TextStyle textStyle30 = TextStyle(
     color: AppColors.whiteColor,
     fontFamily: 'Amiri'
   );
+  static const TextStyle quranTextStyle50 = TextStyle(
+    fontSize: 50.0,
+    fontWeight: FontWeight.normal,
+    color: AppColors.whiteColor,
+    fontFamily: 'Amiri'
+  );
 
 }
