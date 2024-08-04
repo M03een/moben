@@ -14,7 +14,7 @@ class SurahsApi {
         final Surah surah = Surah.fromJson(element);
         surahs.add(surah);
       }
-      return surahs[0];
+      return surahs;
     } else {
       return surahs;
     }

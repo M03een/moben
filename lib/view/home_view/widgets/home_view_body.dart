@@ -1,39 +1,55 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:moben/utils/app_router.dart';
-import 'package:moben/utils/size_config.dart';
-import 'package:moben/view/home_view/widgets/surah_item.dart';
+import '../../../controller/surah_controller.dart';
 import '../../../utils/widgets/custom_text_field.dart';
 import 'custom_appbar.dart';
+import 'surah_item.dart';
+import 'package:moben/utils/app_router.dart';
+import 'package:moben/utils/size_config.dart';
 
 class HomeViewBody extends StatelessWidget {
   const HomeViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final SurahController surahController = Get.put(SurahController());
+
     return SingleChildScrollView(
       child: Column(
-        mainAxisSize: MainAxisSize.min,
         children: [
           const CustomAppbar(),
           (screenHeight(context) * 0.02).sh,
-          const CustomTextField(),
-          (screenHeight(context) * 0.03).sh,
-          ListView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: 10,
-            itemBuilder: (context, index) {
-              return SurahItem(
-                surahName: 'الفاتحة',
-                isMakkia: true,
-                onTap: () {
-                  Get.toNamed(AppRouter.playViewPath);
-                },
-              );
+          CustomTextField(
+            hint: '2'.tr,
+            onChanged: (val) {
+              surahController.searchSurahs(val);
             },
-          )
+          ),
+          Obx(
+            () {
+              if (surahController.isLoading.value) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else {
+                return ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: surahController.filteredSurahs.length,
+                  itemBuilder: (context, index) {
+                    final surah = surahController.filteredSurahs[index];
+                    return SurahItem(
+                      surahName: surah.name ?? 'Unknown',
+                      isMakkia: surah.makkia == 1,
+                      onTap: () {
+                        Get.toNamed(AppRouter.playViewPath);
+                      },
+                    );
+                  },
+                );
+              }
+            },
+          ),
         ],
       ),
     );

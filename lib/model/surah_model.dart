@@ -25,12 +25,12 @@ class Surah {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['start_page'] = this.startPage;
-    data['end_page'] = this.endPage;
-    data['makkia'] = this.makkia;
-    data['type'] = this.type;
+    data['id'] = id;
+    data['name'] = name;
+    data['start_page'] = startPage;
+    data['end_page'] = endPage;
+    data['makkia'] = makkia;
+    data['type'] = type;
     return data;
   }
 }
