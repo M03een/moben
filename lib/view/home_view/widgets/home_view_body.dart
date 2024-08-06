@@ -28,9 +28,7 @@ class HomeViewBody extends StatelessWidget {
           Obx(
             () {
               if (surahController.isLoading.value) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
+                return const CircularProgressIndicator();
               } else {
                 return ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
