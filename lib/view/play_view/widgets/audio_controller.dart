@@ -4,13 +4,14 @@ import '../../../utils/colors.dart';
 import '../../../utils/size_config.dart';
 import '../../../utils/widgets/glass_circle.dart';
 
-class AudioController extends StatelessWidget {
-  const AudioController({
-    super.key, required this.pause, required this.next, required this.previous,
+class AudioControllerWidget extends StatelessWidget {
+  const AudioControllerWidget({
+    super.key, required this.playOrPause, required this.next, required this.previous, required this.isPaused,
   });
-  final Function() pause;
+  final Function() playOrPause;
   final Function() next;
   final Function() previous;
+  final bool isPaused;
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +31,9 @@ class AudioController extends StatelessWidget {
         GlassCircle(
           height: screenHeight(context) * 0.09,
           width: screenWidth(context) * 0.25,
-          onTap: pause,
-          child: const Icon(
-            CupertinoIcons.pause_solid,
+          onTap: playOrPause,
+          child:  Icon(
+            isPaused ? CupertinoIcons.pause_solid : CupertinoIcons.play_arrow_solid,
             color: AppColors.accentColor,
             size: 45,
           ),
