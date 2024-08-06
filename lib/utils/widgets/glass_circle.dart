@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:moben/utils/colors.dart';
 
 class GlassCircle extends StatelessWidget {
   const GlassCircle({
@@ -31,7 +32,7 @@ class GlassCircle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-
+      splashColor: AppColors.accentColor.withOpacity(0.2),
       onPressed: onTap,
       shape: const CircleBorder(),
       child: ClipOval(

@@ -42,7 +42,7 @@ class HomeViewBody extends StatelessWidget {
                       surahName: surah.name ?? 'Unknown',
                       isMakkia: surah.makkia == 1,
                       onTap: () {
-                        Get.toNamed(AppRouter.playViewPath);
+                        Get.toNamed(AppRouter.playViewPath,arguments: surah);
                       },
                     );
                   },

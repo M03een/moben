@@ -3,7 +3,7 @@ import 'package:moben/utils/colors.dart';
 
 class AppStyles {
   static const TextStyle textStyle15 = TextStyle(
-    fontSize: 17.0,
+    fontSize: 15.0,
     fontWeight: FontWeight.bold,
     color: AppColors.whiteColor
   );

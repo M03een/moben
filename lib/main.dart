@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:moben/service/surahs_api.dart';
 import 'package:moben/utils/app_router.dart';
 import 'package:moben/utils/colors.dart';
 import 'package:moben/utils/local.dart';
@@ -14,7 +13,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SurahsApi().fetchSurahs();
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Moben',

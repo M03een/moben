@@ -10,6 +10,9 @@ class AppRouter {
   static List<GetPage<dynamic>> routes = [
     GetPage(name: homeViewPath, page: () => const HomeView()),
     GetPage(name: downloadViewPath, page: () => const DownloadView()),
-    GetPage(name: playViewPath, page: () => const PlayView()),
+    GetPage(
+      name: playViewPath,
+      page: () => const PlayView(),
+    ),
   ];
 }
