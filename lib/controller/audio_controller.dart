@@ -9,12 +9,14 @@ class AudioController extends GetxController {
   var readerName = ''.obs;
   var duration = const Duration().obs;
   var position = const Duration().obs;
+  var loading = false.obs;
   AudioPlayer audioPlayer = AudioPlayer();
 
   @override
   void onInit() {
     audioPlayer.onDurationChanged.listen((Duration d) {
       duration.value = d;
+      loading.value = false;
     });
     audioPlayer.onPositionChanged.listen((Duration p) {
       position.value = p;
@@ -25,6 +27,7 @@ class AudioController extends GetxController {
   playOrPause({required int readerId, required int surahId}) async {
     isPlay.value = !isPlay.value;
     if (isPlay.value) {
+      loading.value = true;
       await audioPlayer.play(UrlSource(
           'https://server11.mp3quran.net/yasser/${HelperFunctions().converterId(surahId)}.mp3'));
     } else {
@@ -41,6 +44,7 @@ class AudioController extends GetxController {
     }
 
     await audioPlayer.stop();
+    loading.value = true;
     await audioPlayer.play(UrlSource(
         'https://server11.mp3quran.net/yasser/${HelperFunctions().converterId(surahId)}.mp3'));
   }
@@ -54,6 +58,7 @@ class AudioController extends GetxController {
     }
 
     await audioPlayer.stop();
+    loading.value = true;
     await audioPlayer.play(UrlSource(
         'https://server11.mp3quran.net/yasser/${HelperFunctions().converterId(surahId)}.mp3'));
   }

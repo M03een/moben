@@ -62,18 +62,24 @@ class PlayViewBody extends StatelessWidget {
                 1,
           ),
           const Spacer(),
-          AudioTimeLine(
-            onChanged: (value) {
-              audioController.audioPlayer
-                  .seek(Duration(seconds: value.toInt()));
-            },
-            max: audioController.duration.value.inSeconds.toDouble(),
-            value: audioController.position.value.inSeconds.toDouble(),
-            totalDuration: HelperFunctions()
-                .formatDuration(audioController.duration.value),
-            playedDuration: HelperFunctions()
-                .formatDuration(audioController.position.value),
-          ),
+          audioController.loading.value
+              ? const Center(
+                  child: Center(
+                     child: CircularProgressIndicator(),
+                  ),
+                )
+              : AudioTimeLine(
+                  onChanged: (value) {
+                    audioController.audioPlayer
+                        .seek(Duration(seconds: value.toInt()));
+                  },
+                  max: audioController.duration.value.inSeconds.toDouble(),
+                  value: audioController.position.value.inSeconds.toDouble(),
+                  totalDuration: HelperFunctions()
+                      .formatDuration(audioController.duration.value),
+                  playedDuration: HelperFunctions()
+                      .formatDuration(audioController.position.value),
+                ),
           (screenHeight(context) * 0.04).sh,
           AudioControllerWidget(
             isPaused: audioController.isPlay.value,
