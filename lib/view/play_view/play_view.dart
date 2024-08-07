@@ -17,7 +17,7 @@ class PlayView extends StatelessWidget {
       bottomPosition: screenHeight(context) * 0.6,
       rightPosition: screenWidth(context) * -0.5,
       tPadding: screenHeight(context) * 0.05,
-      child: const PlayViewBody(),
+      child:  PlayViewBody(),
     );
   }
 }
