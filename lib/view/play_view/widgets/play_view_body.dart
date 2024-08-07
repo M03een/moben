@@ -26,45 +26,43 @@ class PlayViewBody extends StatelessWidget {
     Surah surah = Get.arguments;
     audioController.surahIndex.value = surah.id! - 1;
 
-    return Column(
-      children: [
-        Obx(() {
-          return PlayViewAppbar(
+    return Obx(() {
+      return Column(
+        children: [
+          PlayViewAppbar(
             surahName:
                 '${surahController.surahs[audioController.surahIndex.value].name}',
-          );
-        }),
-        (screenHeight(context) * 0.02).sh,
-         ReaderAndDownloadWidget(
-          readerName: 'ابوبكر الشاطري',
-          isDownloaded: true,
-          percentage: '',
-          downloadOnTap: (){
-            Get.snackbar(
-              'هذه الخدمة غير متوفرة ',
-              "ستتوفر هذة الميزة في التحديث القادم للتطبيق",
-              colorText: Colors.white,
-              backgroundColor: AppColors.primaryColor,
-              icon: const Icon(Icons.upcoming,color: AppColors.accentColor,),
-              borderColor: AppColors.accentColor,
-              borderWidth: 2,
-
-            );
-          },
-        ),
-        (screenHeight(context) * 0.01).sh,
-        Obx(() {
-          return SurahWidget(
+          ),
+          (screenHeight(context) * 0.02).sh,
+          ReaderAndDownloadWidget(
+            readerName: 'ابوبكر الشاطري',
+            isDownloaded: true,
+            percentage: '',
+            downloadOnTap: () {
+              Get.snackbar(
+                'هذه الخدمة غير متوفرة ',
+                "ستتوفر هذة الميزة في التحديث القادم للتطبيق",
+                colorText: Colors.white,
+                backgroundColor: AppColors.primaryColor,
+                icon: const Icon(
+                  Icons.upcoming,
+                  color: AppColors.accentColor,
+                ),
+                borderColor: AppColors.accentColor,
+                borderWidth: 2,
+              );
+            },
+          ),
+          (screenHeight(context) * 0.01).sh,
+          SurahWidget(
             surahName:
                 '${surahController.surahs[audioController.surahIndex.value].name}',
             isMakkia: surahController
                     .surahs[audioController.surahIndex.value].makkia ==
                 1,
-          );
-        }),
-        const Spacer(),
-        Obx(() {
-          return AudioTimeLine(
+          ),
+          const Spacer(),
+          AudioTimeLine(
             onChanged: (value) {
               audioController.audioPlayer
                   .seek(Duration(seconds: value.toInt()));
@@ -75,11 +73,9 @@ class PlayViewBody extends StatelessWidget {
                 .formatDuration(audioController.duration.value),
             playedDuration: HelperFunctions()
                 .formatDuration(audioController.position.value),
-          );
-        }),
-        (screenHeight(context) * 0.04).sh,
-        Obx(() {
-          return AudioControllerWidget(
+          ),
+          (screenHeight(context) * 0.04).sh,
+          AudioControllerWidget(
             isPaused: audioController.isPlay.value,
             next: () {
               audioController.next(
@@ -99,10 +95,10 @@ class PlayViewBody extends StatelessWidget {
                       .surahs[audioController.surahIndex.value].id!,
                   readerId: 2);
             },
-          );
-        }),
-        (screenHeight(context) * 0.02).sh,
-      ],
-    );
+          ),
+          (screenHeight(context) * 0.02).sh,
+        ],
+      );
+    });
   }
 }
