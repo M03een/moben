@@ -39,8 +39,9 @@ class HomeViewBody extends StatelessWidget {
                     return SurahItem(
                       surahName: surah.name ?? 'Unknown',
                       isMakkia: surah.makkia == 1,
+                      surahId: surah.id ?? 404,
                       onTap: () {
-                        Get.toNamed(AppRouter.playViewPath,arguments: surah);
+                        Get.toNamed(AppRouter.playViewPath, arguments: surah);
                       },
                     );
                   },

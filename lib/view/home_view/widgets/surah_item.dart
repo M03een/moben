@@ -6,11 +6,12 @@ import '../../../utils/widgets/glass_container.dart';
 
 class SurahItem extends StatelessWidget {
   final String surahName;
+  final int surahId;
   final bool isMakkia;
   final Function() onTap;
 
   const SurahItem({
-    super.key, required this.surahName, required this.isMakkia, required this.onTap,
+    super.key, required this.surahName, required this.isMakkia, required this.onTap, required this.surahId,
   });
 
   @override
@@ -27,6 +28,7 @@ class SurahItem extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              Text('$surahId',style: AppStyles.textStyle24,),
               Text(surahName,style: AppStyles.quranTextStyle30,),
               Image.asset(
               isMakkia ?'assets/icons/makkia.png'
