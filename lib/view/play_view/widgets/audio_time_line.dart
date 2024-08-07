@@ -6,8 +6,14 @@ import '../../../utils/styles.dart';
 
 class AudioTimeLine extends StatelessWidget {
   const AudioTimeLine({
-    super.key,
+    super.key, required this.value, required this.max, required this.onChanged, required this.playedDuration, required this.totalDuration,
   });
+
+  final String playedDuration;
+  final String totalDuration;
+  final double value;
+  final double max;
+  final Function(double) onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -19,17 +25,17 @@ class AudioTimeLine extends StatelessWidget {
           inactiveColor: AppColors.whiteColor.withOpacity(0.2),
           thumbColor: AppColors.accentColor,
           min: 0.0,
-          max: 100.0,
-          value: 50,
-          onChanged: (value) {},
+          max: max,
+          value: value,
+          onChanged: onChanged,
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: screenWidth(context)*0.07),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('0:33',style: AppStyles.textStyle15.copyWith(color: AppColors.accentColor),),
-              const Text('1:15',style: AppStyles.textStyle15,),
+              Text(playedDuration,style: AppStyles.textStyle15,),
+              Text(totalDuration,style: AppStyles.textStyle15.copyWith(color: AppColors.accentColor)),
             ],
           ),
         ),

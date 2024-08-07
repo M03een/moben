@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moben/controller/audio_controller.dart';
+import 'package:moben/utils/colors.dart';
+import 'package:moben/utils/surah_audio_id_generation.dart';
 import 'package:moben/view/play_view/widgets/play_view_appbar.dart';
 import 'package:moben/view/play_view/widgets/reader_and_download_widget.dart';
 import 'package:moben/view/play_view/widgets/surah_widget.dart';
@@ -33,10 +35,22 @@ class PlayViewBody extends StatelessWidget {
           );
         }),
         (screenHeight(context) * 0.02).sh,
-        const ReaderAndDownloadWidget(
+         ReaderAndDownloadWidget(
           readerName: 'ابوبكر الشاطري',
           isDownloaded: true,
           percentage: '',
+          downloadOnTap: (){
+            Get.snackbar(
+              'هذه الخدمة غير متوفرة ',
+              "ستتوفر هذة الميزة في التحديث القادم للتطبيق",
+              colorText: Colors.white,
+              backgroundColor: AppColors.primaryColor,
+              icon: const Icon(Icons.upcoming,color: AppColors.accentColor,),
+              borderColor: AppColors.accentColor,
+              borderWidth: 2,
+
+            );
+          },
         ),
         (screenHeight(context) * 0.01).sh,
         Obx(() {
@@ -49,7 +63,20 @@ class PlayViewBody extends StatelessWidget {
           );
         }),
         const Spacer(),
-        const AudioTimeLine(),
+        Obx(() {
+          return AudioTimeLine(
+            onChanged: (value) {
+              audioController.audioPlayer
+                  .seek(Duration(seconds: value.toInt()));
+            },
+            max: audioController.duration.value.inSeconds.toDouble(),
+            value: audioController.position.value.inSeconds.toDouble(),
+            totalDuration: HelperFunctions()
+                .formatDuration(audioController.duration.value),
+            playedDuration: HelperFunctions()
+                .formatDuration(audioController.position.value),
+          );
+        }),
         (screenHeight(context) * 0.04).sh,
         Obx(() {
           return AudioControllerWidget(

@@ -25,7 +25,8 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
       setState(() {
         _duration = d;
       });
-    });
+    }
+    );
 
     audioPlayer.onPositionChanged.listen((Duration p) {
       setState(() {
@@ -123,7 +124,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
                 Text(_formatDuration(_duration)),
               ],
             ),
-            if (_localFilePath != null) Text('Saved at: $_localFilePath'),
+            Text('Saved at: $_localFilePath'),
           ],
         ),
       ),
