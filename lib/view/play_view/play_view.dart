@@ -6,17 +6,17 @@ import '../../utils/size_config.dart';
 import '../../utils/widgets/glow_background.dart';
 
 class PlayView extends StatelessWidget {
-   const PlayView({super.key});
+  const PlayView({super.key});
 
   @override
   Widget build(BuildContext context) {
-
     return GlowBackground(
       color: AppColors.accentColor.withOpacity(0.35),
       bottomPosition: screenHeight(context) * 0.6,
       rightPosition: screenWidth(context) * -0.5,
       tPadding: screenHeight(context) * 0.05,
-      child:  PlayViewBody(),
+      isAnimating: true,
+      child: PlayViewBody(),
     );
   }
 }

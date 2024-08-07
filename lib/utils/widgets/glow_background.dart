@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:moben/utils/size_config.dart';
-
 import '../../utils/widgets/glow_container.dart';
 
 class GlowBackground extends StatelessWidget {
-  const GlowBackground(
-      {super.key,
-      required this.child,
-      required this.color,
-      required this.bottomPosition,
-      required this.rightPosition,
-      this.lPadding,
-      this.tPadding,
-      this.rPadding,
-      this.bPadding});
+  const GlowBackground({
+    super.key,
+    required this.child,
+    required this.color,
+    required this.bottomPosition,
+    required this.rightPosition,
+    this.lPadding,
+    this.tPadding,
+    this.rPadding,
+    this.bPadding,
+    this.isAnimating = false,
+  });
 
   final Widget child;
   final Color color;
@@ -23,6 +24,7 @@ class GlowBackground extends StatelessWidget {
   final double? tPadding;
   final double? rPadding;
   final double? bPadding;
+  final bool isAnimating;
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +35,13 @@ class GlowBackground extends StatelessWidget {
             color: color,
             bottomPosition: bottomPosition,
             rightPosition: rightPosition,
+            isAnimating: isAnimating,
           ),
           Align(
             alignment: Alignment.topCenter,
             child: Padding(
               padding: EdgeInsets.fromLTRB(
-               lPadding ?? screenWidth(context) * 0.05,
+                lPadding ?? screenWidth(context) * 0.05,
                 tPadding ?? screenHeight(context) * 0.04,
                 rPadding ?? screenWidth(context) * 0.05,
                 bPadding ?? 0,
