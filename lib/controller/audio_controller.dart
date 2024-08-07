@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:moben/utils/surah_audio_id_generation.dart';
 
 class AudioController extends GetxController {
-  var isPause = false.obs;
+  var isPlay = false.obs;
   var isMakkia = false.obs;
   var surahName = ''.obs;
   var surahIndex = 0.obs;
@@ -17,10 +17,8 @@ class AudioController extends GetxController {
   }
 
   playOrPause({required int readerId, required int surahId}) async {
-    print('play');
-    print(SurahAudioIdGeneration().converterId(surahId));
-    isPause.value = !isPause.value;
-    if (isPause.value) {
+    isPlay.value = !isPlay.value;
+    if (isPlay.value) {
       await audioPlayer.play(UrlSource(
           'https://server11.mp3quran.net/yasser/${SurahAudioIdGeneration().converterId(surahId)}.mp3'));
     } else {
@@ -29,12 +27,12 @@ class AudioController extends GetxController {
   }
 
   next({required int surahId}) async {
-    print('next');
-    print(SurahAudioIdGeneration().converterId(surahId));
     if (surahIndex.value == 113) {
     } else {
       surahIndex++;
+      isPlay.value = true;
     }
+
 
     await audioPlayer.stop();
     await audioPlayer.play(UrlSource(
@@ -43,11 +41,10 @@ class AudioController extends GetxController {
   }
 
   previous({required int surahId}) async {
-    print('previuos');
-    print(SurahAudioIdGeneration().converterId(surahId));
     if (surahIndex.value == 0) {
     } else {
       surahIndex--;
+      isPlay.value = true;
     }
 
     await audioPlayer.stop();

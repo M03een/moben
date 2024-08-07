@@ -23,13 +23,13 @@ class PlayViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     Surah surah = Get.arguments;
     audioController.surahIndex.value = surah.id! - 1;
+
     return Column(
       children: [
         Obx(() {
           return PlayViewAppbar(
             surahName:
-                '${surahController.surahs[audioController.surahIndex.value].name}' ??
-                    'غير معلوم',
+                '${surahController.surahs[audioController.surahIndex.value].name}',
           );
         }),
         (screenHeight(context) * 0.02).sh,
@@ -39,28 +39,38 @@ class PlayViewBody extends StatelessWidget {
           percentage: '',
         ),
         (screenHeight(context) * 0.01).sh,
-        Obx(
-            (){
-              return SurahWidget(
-                surahName: '${surahController.surahs[audioController.surahIndex.value].name}' ?? 'غير معلوم',
-                isMakkia: surahController.surahs[audioController.surahIndex.value].makkia == 1,
-              );
-            }
-        ),
+        Obx(() {
+          return SurahWidget(
+            surahName:
+                '${surahController.surahs[audioController.surahIndex.value].name}',
+            isMakkia: surahController
+                    .surahs[audioController.surahIndex.value].makkia ==
+                1,
+          );
+        }),
         const Spacer(),
         const AudioTimeLine(),
         (screenHeight(context) * 0.04).sh,
         Obx(() {
           return AudioControllerWidget(
-            isPaused: audioController.isPause.value,
+            isPaused: audioController.isPlay.value,
             next: () {
-              audioController.next(surahId: surahController.surahs[audioController.surahIndex.value].id! +1);
+              audioController.next(
+                  surahId: surahController
+                          .surahs[audioController.surahIndex.value].id! +
+                      1);
             },
             previous: () {
-              audioController.previous(surahId:  surahController.surahs[audioController.surahIndex.value].id! -1 );
+              audioController.previous(
+                  surahId: surahController
+                          .surahs[audioController.surahIndex.value].id! -
+                      1);
             },
             playOrPause: () {
-              audioController.playOrPause(surahId: surahController.surahs[audioController.surahIndex.value].id!, readerId: 2);
+              audioController.playOrPause(
+                  surahId: surahController
+                      .surahs[audioController.surahIndex.value].id!,
+                  readerId: 2);
             },
           );
         }),
