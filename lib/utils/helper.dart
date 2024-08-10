@@ -24,4 +24,28 @@ class HelperFunctions {
       return "$twoDigitMinutes:$twoDigitSeconds";
     }
   }
+
+  String readerUrl({required int id}) {
+    switch (id) {
+      case 1:
+        {
+          return 'https://server11.mp3quran.net/yasser/';
+        }
+      case 2:
+        {
+          return 'https://server10.mp3quran.net/minsh/Almusshaf-Al-Mo-lim/';
+        }
+      case 3:
+        {
+          return 'https://server7.mp3quran.net/basit/';
+        }
+      case 4:
+        {
+          return 'https://server12.mp3quran.net/tblawi/';
+        }
+      default: {
+        return'https://server11.mp3quran.net/yasser/';
+      }
+    }
+  }
 }

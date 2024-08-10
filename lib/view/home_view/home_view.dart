@@ -11,7 +11,8 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GlowBackground(
-      color: AppColors.accentColor.withOpacity(0.35),
+      firstColor: AppColors.accentColor.withOpacity(0.35),
+      secColor: AppColors.secAccentColor.withOpacity(0.35),
       bottomPosition: screenHeight(context) * 0.4,
       rightPosition: screenWidth(context) * 0.1,
       child: const HomeViewBody(),

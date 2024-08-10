@@ -13,7 +13,7 @@ class DownloadView extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return GlowBackground(
-      color: AppColors.accentColor.withOpacity(0.35),
+      firstColor: AppColors.accentColor.withOpacity(0.35),
       bottomPosition: -screenHeight(context) * 0.4,
       rightPosition: -screenWidth(context) * 0.9,
       child: const DownloadViewBody(),

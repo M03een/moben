@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moben/utils/app_router.dart';
 import 'package:moben/utils/size_config.dart';
+import 'package:moben/utils/widgets/gradient_text.dart';
 
 import '../../../utils/colors.dart';
 import '../../../utils/styles.dart';
@@ -17,26 +18,26 @@ class CustomAppbar extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        RichText(
-          text: TextSpan(children: [
-            TextSpan(
-              text: "${'1'.tr}, ",
-              style: AppStyles.textStyle24.copyWith(
-                color: AppColors.accentColor,
-                fontFamily: 'Rubik',
-              ),
+        Row(
+          children: [
+            const GradientText(
+              text: 'السلام عليكم',
+              gradient: LinearGradient(
+                  colors: [AppColors.accentColor, AppColors.secAccentColor]),
+              style: AppStyles.textStyle24,
             ),
-            TextSpan(
-              text: 'عبدالله',
-              style: AppStyles.textStyle24.copyWith(fontFamily: 'Rubik'),
-            ),
-          ]),
+            (screenWidth(context) * 0.01).sw,
+            const Text(
+              ',عبدالله ',
+              style: AppStyles.textStyle24,
+            )
+          ],
         ),
+
         IconButton(
           onPressed: () {
             Get.toNamed(
               AppRouter.downloadViewPath,
-
             );
           },
           icon: Icon(

@@ -1,6 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:get/get.dart';
-import 'package:moben/utils/surah_audio_id_generation.dart';
+import 'package:moben/utils/helper.dart';
 
 class AudioController extends GetxController {
   var isPlay = false.obs;

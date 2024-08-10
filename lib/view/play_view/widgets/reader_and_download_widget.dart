@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:moben/controller/reader_controller.dart';
 
 import '../../../utils/colors.dart';
 import '../../../utils/size_config.dart';
@@ -7,7 +9,7 @@ import '../../../utils/styles.dart';
 import '../../../utils/widgets/glass_container.dart';
 
 class ReaderAndDownloadWidget extends StatelessWidget {
-  const ReaderAndDownloadWidget({
+  ReaderAndDownloadWidget({
     super.key,
     required this.readerName,
     required this.isDownloaded,
@@ -15,6 +17,7 @@ class ReaderAndDownloadWidget extends StatelessWidget {
     required this.downloadOnTap,
   });
 
+  final ReaderController readerController = Get.put(ReaderController());
   final String readerName;
   final bool isDownloaded;
   final String percentage;
@@ -47,24 +50,26 @@ class ReaderAndDownloadWidget extends StatelessWidget {
                   ],
                 ),
                 const Spacer(),
-                Row(
-                  children: [
-                    Text(
-                      readerName,
-                      style: AppStyles.textStyle15.copyWith(
-                          color: AppColors.accentColor,
-                          fontWeight: FontWeight.w600),
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        CupertinoIcons.chevron_compact_down,
-                        color: AppColors.accentColor,
-                        size: 25,
+                Obx(() {
+                  return Row(
+                    children: [
+                      Text(
+                        readerController.selectedReader.value,
+                        style: AppStyles.textStyle15.copyWith(
+                            color: AppColors.accentColor,
+                            fontWeight: FontWeight.w600),
                       ),
-                    )
-                  ],
-                ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          CupertinoIcons.chevron_compact_down,
+                          color: AppColors.accentColor,
+                          size: 25,
+                        ),
+                      )
+                    ],
+                  );
+                }),
               ],
             ),
           ),
@@ -84,6 +89,13 @@ class ReaderAndDownloadWidget extends StatelessWidget {
                       height: (screenHeight(context) * 0.1),
                       decoration: BoxDecoration(
                           color: AppColors.accentColor,
+                          gradient: const LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                            AppColors.accentColor,
+                            AppColors.secAccentColor
+                          ]),
                           borderRadius: BorderRadius.circular(15)),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -95,7 +107,10 @@ class ReaderAndDownloadWidget extends StatelessWidget {
                                 style: AppStyles.textStyle19
                                     .copyWith(color: AppColors.primaryColor),
                               ),
-                              const Icon(CupertinoIcons.down_arrow,color: AppColors.primaryColor,)
+                              const Icon(
+                                CupertinoIcons.down_arrow,
+                                color: AppColors.primaryColor,
+                              )
                             ],
                           )
                         ],

@@ -6,7 +6,7 @@ class GlowBackground extends StatelessWidget {
   const GlowBackground({
     super.key,
     required this.child,
-    required this.color,
+    required this.firstColor,
     required this.bottomPosition,
     required this.rightPosition,
     this.lPadding,
@@ -14,12 +14,18 @@ class GlowBackground extends StatelessWidget {
     this.rPadding,
     this.bPadding,
     this.isAnimating = false,
+    this.secColor,
+    this.secBottomPosition,
+    this.secRightPosition,
   });
 
   final Widget child;
-  final Color color;
+  final Color firstColor;
+  final Color? secColor;
   final double bottomPosition;
   final double rightPosition;
+  final double? secBottomPosition;
+  final double? secRightPosition;
   final double? lPadding;
   final double? tPadding;
   final double? rPadding;
@@ -32,9 +38,17 @@ class GlowBackground extends StatelessWidget {
       body: Stack(
         children: [
           GlowContainer(
-            color: color,
+            color: firstColor,
             bottomPosition: bottomPosition,
             rightPosition: rightPosition,
+            isAnimating: isAnimating,
+          ),
+          GlowContainer(
+            color: secColor ?? firstColor,
+            bottomPosition: secBottomPosition ??
+                bottomPosition + (-screenHeight(context) * 0.5),
+            rightPosition: secRightPosition ??
+                rightPosition + (-screenWidth(context) * 0.9),
             isAnimating: isAnimating,
           ),
           Align(

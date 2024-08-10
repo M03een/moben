@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moben/controller/audio_controller.dart';
 import 'package:moben/utils/colors.dart';
-import 'package:moben/utils/surah_audio_id_generation.dart';
+import 'package:moben/utils/helper.dart';
 import 'package:moben/view/play_view/widgets/play_view_appbar.dart';
 import 'package:moben/view/play_view/widgets/reader_and_download_widget.dart';
 import 'package:moben/view/play_view/widgets/surah_widget.dart';
