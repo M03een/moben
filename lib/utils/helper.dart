@@ -27,19 +27,19 @@ class HelperFunctions {
 
   String readerUrl({required int id}) {
     switch (id) {
-      case 1:
+      case 0:
         {
           return 'https://server11.mp3quran.net/yasser/';
         }
-      case 2:
+      case 1:
         {
-          return 'https://server10.mp3quran.net/minsh/Almusshaf-Al-Mo-lim/';
+          return 'https://server10.mp3quran.net/minsh/minh-old-with-echo/';
         }
-      case 3:
+      case 2:
         {
           return 'https://server7.mp3quran.net/basit/';
         }
-      case 4:
+      case 3:
         {
           return 'https://server12.mp3quran.net/tblawi/';
         }

@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moben/controller/audio_controller.dart';
 import 'package:moben/utils/colors.dart';
 import 'package:moben/utils/helper.dart';
+
 import 'package:moben/view/play_view/widgets/play_view_appbar.dart';
 import 'package:moben/view/play_view/widgets/reader_and_download_widget.dart';
 import 'package:moben/view/play_view/widgets/surah_widget.dart';
@@ -12,6 +14,7 @@ import '../../../model/surah_model.dart';
 import '../../../utils/size_config.dart';
 import 'audio_controller_widget.dart';
 import 'audio_time_line.dart';
+import 'auto_play.dart';
 
 class PlayViewBody extends StatelessWidget {
   PlayViewBody({
@@ -61,11 +64,12 @@ class PlayViewBody extends StatelessWidget {
                     .surahs[audioController.surahIndex.value].makkia ==
                 1,
           ),
+           AutoPlay(),
           const Spacer(),
           audioController.loading.value
               ? const Center(
                   child: Center(
-                     child: CircularProgressIndicator(),
+                    child: CircularProgressIndicator(),
                   ),
                 )
               : AudioTimeLine(
@@ -108,3 +112,5 @@ class PlayViewBody extends StatelessWidget {
     });
   }
 }
+
+

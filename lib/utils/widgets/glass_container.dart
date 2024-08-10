@@ -12,7 +12,7 @@ class GlassContainer extends StatelessWidget {
     this.verticalPadding,
     this.borderRadius,
     this.virMargin,
-    this.horMargin,
+    this.horMargin, this.onTap,
   });
 
   final double height;
@@ -21,6 +21,7 @@ class GlassContainer extends StatelessWidget {
   final double? horizontalPadding;
 
   final double? verticalPadding;
+  final Function()? onTap;
 
   final double? borderRadius;
 
@@ -46,7 +47,10 @@ class GlassContainer extends StatelessWidget {
               color: Colors.grey.withOpacity(0.2),
               borderRadius:
                   BorderRadius.all(Radius.circular(borderRadius ?? 15))),
-          child: child,
+          child: InkWell(
+              onTap: onTap,
+              child: child,
+          ),
         ),
       ),
     );

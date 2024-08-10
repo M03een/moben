@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moben/controller/reader_controller.dart';
+import 'package:moben/view/play_view/widgets/reader_bottom_sheet.dart';
 
 import '../../../utils/colors.dart';
 import '../../../utils/size_config.dart';
@@ -60,7 +61,9 @@ class ReaderAndDownloadWidget extends StatelessWidget {
                             fontWeight: FontWeight.w600),
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          showReaderBottomSheet(context);
+                        },
                         icon: const Icon(
                           CupertinoIcons.chevron_compact_down,
                           color: AppColors.accentColor,
@@ -93,9 +96,9 @@ class ReaderAndDownloadWidget extends StatelessWidget {
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
                               colors: [
-                            AppColors.accentColor,
-                            AppColors.secAccentColor
-                          ]),
+                                AppColors.accentColor,
+                                AppColors.secAccentColor
+                              ]),
                           borderRadius: BorderRadius.circular(15)),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -123,6 +126,19 @@ class ReaderAndDownloadWidget extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  void showReaderBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      backgroundColor: AppColors.primaryColor,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(40),
+        topRight: Radius.circular(40),
+      )),
+      context: context,
+      builder: (context) => ReaderBottomSheet(),
     );
   }
 }
