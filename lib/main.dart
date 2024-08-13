@@ -25,6 +25,13 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: AppColors.accentColor),
           useMaterial3: true,
           fontFamily: 'Rubik',
+          scrollbarTheme: const ScrollbarThemeData(
+            thumbColor: WidgetStatePropertyAll(AppColors.secAccentColor),
+            mainAxisMargin: 200,
+            minThumbLength: 70,
+            radius: Radius.circular(15),
+
+          )
 
         ),
         translations: AppStrings(),
