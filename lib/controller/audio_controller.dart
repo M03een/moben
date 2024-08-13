@@ -15,7 +15,7 @@ class AudioController extends GetxController {
   var loading = false.obs;
   var repeatSurah = false.obs;
   var shuffle = false.obs;
-  var repeatAll = false.obs;
+  var repeatAll = true.obs;
 
   AudioPlayer audioPlayer = AudioPlayer();
   final ReaderController readerController = Get.put(ReaderController());
@@ -40,30 +40,27 @@ class AudioController extends GetxController {
       position.value = p;
     });
 
-    // Listen for when the audio finishes playing
     audioPlayer.onPlayerComplete.listen((event) {
       if (repeatSurah.value) {
-        // Repeat the current Surah
-        playOrPause(readerId: readerController.readerIndex.value, surahId: surahIndex.value);
+        onlyPlay(surahId: surahIndex.value+1);
       } else if (shuffle.value) {
-        // Shuffle mode: Play a random Surah
         surahIndex.value = getRandomSurahIndex();
-        playOrPause(readerId: readerController.readerIndex.value, surahId: surahIndex.value);
-      } else if (repeatAll.value) {
-        // Repeat all: Move to the next Surah, or go back to the first one if at the end
         next(surahId: surahIndex.value);
+      } else if (repeatAll.value) {
+        next(surahId: surahIndex.value+2);
+
       }
     });
   }
 
   int getRandomSurahIndex() {
-    Random random = Random(); // Create a Random instance
-    return random.nextInt(114); // Generates a random integer between 0 (inclusive) and 114 (exclusive)
+    Random random = Random();
+    return random.nextInt(114);
   }
   playOrPause({required int readerId, required int surahId}) async {
     isPlay.value = !isPlay.value;
     if (isPlay.value) {
-      loading.value = true;
+     // loading.value = true;
       await audioPlayer.play(UrlSource(
           '${HelperFunctions().readerUrl(id: readerController.readerIndex.value)}${HelperFunctions().converterId(surahId)}.mp3'));
     } else {
@@ -71,10 +68,15 @@ class AudioController extends GetxController {
     }
   }
 
+  onlyPlay({required int surahId})async{
+    await audioPlayer.play(UrlSource(
+        '${HelperFunctions().readerUrl(id: readerController.readerIndex.value)}${HelperFunctions().converterId(surahId)}.mp3'));
+}
+
   next({required int surahId}) async {
     if (surahIndex.value == 113) {
       if (repeatAll.value) {
-        surahIndex.value = 0; // Go back to the first Surah
+        surahIndex.value = 0;
       } else {
         return;
       }

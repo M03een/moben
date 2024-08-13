@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:moben/utils/app_router.dart';
 import 'package:moben/utils/colors.dart';
@@ -13,19 +14,23 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Moben',
-      theme: ThemeData(
-        scaffoldBackgroundColor: AppColors.primaryColor,
-        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.accentColor),
-        useMaterial3: true,
-        fontFamily: 'Rubik',
+    return AnnotatedRegion(
+      value: const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+      ),      child: GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Moben',
+        theme: ThemeData(
+          scaffoldBackgroundColor: AppColors.primaryColor,
+          colorScheme: ColorScheme.fromSeed(seedColor: AppColors.accentColor),
+          useMaterial3: true,
+          fontFamily: 'Rubik',
 
+        ),
+        translations: AppStrings(),
+        locale: const Locale('ar'),
+        getPages: AppRouter.routes,
       ),
-      translations: AppStrings(),
-      locale: const Locale('ar'),
-      getPages: AppRouter.routes,
     );
   }
 }
