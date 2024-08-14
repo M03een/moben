@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:moben/view/play_view/widgets/surah_bottom_sheet_body.dart';
 
 import '../../../utils/colors.dart';
 import '../../../utils/size_config.dart';
 import '../../../utils/styles.dart';
+import '../../../utils/widgets/custom_bottom_sheet.dart';
 import '../../../utils/widgets/glass_container.dart';
 
 class SurahWidget extends StatelessWidget {
@@ -49,7 +51,9 @@ class SurahWidget extends StatelessWidget {
                       fontWeight: FontWeight.w600),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    showSurahBottomSheet(context);
+                  },
                   icon: const Icon(
                     CupertinoIcons.chevron_compact_down,
                     color: AppColors.accentColor,
@@ -67,6 +71,21 @@ class SurahWidget extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void showSurahBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      backgroundColor: AppColors.primaryColor,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(40),
+            topRight: Radius.circular(40),
+          )),
+      context: context,
+      builder: (context) => CustomBottomSheet(child: SurahBottomSheetBody(),
+
       ),
     );
   }

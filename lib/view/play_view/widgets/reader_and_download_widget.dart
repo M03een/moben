@@ -2,11 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moben/controller/reader_controller.dart';
-import 'package:moben/view/play_view/widgets/reader_bottom_sheet.dart';
+import 'package:moben/view/play_view/widgets/reader_bottom_sheet_body.dart';
 
 import '../../../utils/colors.dart';
 import '../../../utils/size_config.dart';
 import '../../../utils/styles.dart';
+import '../../../utils/widgets/custom_bottom_sheet.dart';
 import '../../../utils/widgets/glass_container.dart';
 
 class ReaderAndDownloadWidget extends StatelessWidget {
@@ -138,7 +139,9 @@ class ReaderAndDownloadWidget extends StatelessWidget {
         topRight: Radius.circular(40),
       )),
       context: context,
-      builder: (context) => ReaderBottomSheet(),
+      builder: (context) => CustomBottomSheet(child: ReaderBottomSheetBody(),
+
+      ),
     );
   }
 }

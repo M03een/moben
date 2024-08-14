@@ -30,7 +30,6 @@ class MyApp extends StatelessWidget {
             mainAxisMargin: 200,
             minThumbLength: 70,
             radius: Radius.circular(15),
-
           )
 
         ),

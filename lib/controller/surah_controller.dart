@@ -7,7 +7,6 @@
     var isLoading = true.obs;
     var filteredSurahs = <Surah>[].obs;
     var searchQuery = ''.obs;
-
     @override
     void onInit() {
       fetchSurahs();

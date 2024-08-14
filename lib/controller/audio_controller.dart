@@ -27,7 +27,7 @@ class AudioController extends GetxController {
     ever(readerController.readerIndex, (int newIndex) {
       readerName.value = HelperFunctions().readerUrl(id: newIndex);
       if (isPlay.value) {
-        playOrPause(readerId: newIndex, surahId: surahIndex.value);
+        onlyPlay(surahId: surahIndex.value + 1);
       }
     });
 
@@ -42,25 +42,34 @@ class AudioController extends GetxController {
 
     audioPlayer.onPlayerComplete.listen((event) {
       if (repeatSurah.value) {
-        onlyPlay(surahId: surahIndex.value+1);
+        onlyPlay(surahId: surahIndex.value + 1);
       } else if (shuffle.value) {
         surahIndex.value = getRandomSurahIndex();
         next(surahId: surahIndex.value);
       } else if (repeatAll.value) {
-        next(surahId: surahIndex.value+2);
-
+        next(surahId: surahIndex.value + 2);
       }
     });
+  }
+
+  changeSurahIndex({required int newIndex}) async {
+    print('===========$newIndex');
+    surahIndex = newIndex.obs;
+    isPlay.value = true;
+    await audioPlayer.stop();
+    loading.value = true;
+    await audioPlayer.play(UrlSource(
+        '${HelperFunctions().readerUrl(id: readerController.readerIndex.value)}${HelperFunctions().converterId(newIndex+1)}.mp3'));
   }
 
   int getRandomSurahIndex() {
     Random random = Random();
     return random.nextInt(114);
   }
+
   playOrPause({required int readerId, required int surahId}) async {
     isPlay.value = !isPlay.value;
     if (isPlay.value) {
-     // loading.value = true;
       await audioPlayer.play(UrlSource(
           '${HelperFunctions().readerUrl(id: readerController.readerIndex.value)}${HelperFunctions().converterId(surahId)}.mp3'));
     } else {
@@ -68,10 +77,10 @@ class AudioController extends GetxController {
     }
   }
 
-  onlyPlay({required int surahId})async{
+  onlyPlay({required int surahId}) async {
     await audioPlayer.play(UrlSource(
         '${HelperFunctions().readerUrl(id: readerController.readerIndex.value)}${HelperFunctions().converterId(surahId)}.mp3'));
-}
+  }
 
   next({required int surahId}) async {
     if (surahIndex.value == 113) {

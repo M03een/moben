@@ -1,0 +1,52 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:moben/controller/audio_controller.dart';
+import 'package:moben/controller/surah_controller.dart';
+import '../../../utils/colors.dart';
+import '../../../utils/styles.dart';
+
+class SurahBottomSheetBody extends StatelessWidget {
+  final SurahController surahController = Get.put(SurahController());
+  final AudioController audioController = Get.put(AudioController());
+
+  SurahBottomSheetBody({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: ListView.builder(
+        itemCount: surahController.surahs.length,
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onTap: () {
+              Get.back();
+            },
+            child: Obx(() {
+              return Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: TextButton(
+                      child: Text(
+                        surahController.surahs[index].name!,
+                        style: AppStyles.quranTextStyle30,
+                      ),
+                      onPressed: () {
+                        audioController.changeSurahIndex(newIndex: index);
+                        Get.back();
+                      },
+                    ),
+                  ),
+                  Divider(
+                    color: AppColors.whiteColor.withOpacity(0.3),
+                    thickness: 1,
+                  ),
+                ],
+              );
+            }),
+          );
+        },
+      ),
+    );
+  }
+}

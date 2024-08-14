@@ -64,6 +64,7 @@ class PlayViewBody extends StatelessWidget {
                     .surahs[audioController.surahIndex.value].makkia ==
                 1,
           ),
+          (screenHeight(context) * 0.01).sh,
            AutoPlay(),
           const Spacer(),
           audioController.loading.value

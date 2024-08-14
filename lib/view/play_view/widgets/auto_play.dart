@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../controller/audio_controller.dart';
@@ -15,8 +16,7 @@ class AutoPlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GlassContainer(
-      horMargin: 5,
-      virMargin: 10,
+
       height: screenHeight(context) * 0.15,
       width: double.infinity,
       child: Row(
