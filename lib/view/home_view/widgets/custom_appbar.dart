@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:moben/utils/app_router.dart';
 import 'package:moben/utils/size_config.dart';
 import 'package:moben/utils/widgets/gradient_text.dart';
+import 'package:moben/utils/widgets/snack_bars.dart';
 
 import '../../../utils/colors.dart';
 import '../../../utils/styles.dart';
@@ -36,9 +35,7 @@ class CustomAppbar extends StatelessWidget {
 
         IconButton(
           onPressed: () {
-            Get.toNamed(
-              AppRouter.downloadViewPath,
-            );
+           nextUpdateSnackBar();
           },
           icon: Icon(
             CupertinoIcons.cube_box,

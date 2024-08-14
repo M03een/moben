@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:moben/controller/audio_controller.dart';
 import 'package:moben/utils/colors.dart';
 import 'package:moben/utils/helper.dart';
+import 'package:moben/utils/widgets/snack_bars.dart';
 
 import 'package:moben/view/play_view/widgets/play_view_appbar.dart';
 import 'package:moben/view/play_view/widgets/reader_and_download_widget.dart';
@@ -42,18 +43,7 @@ class PlayViewBody extends StatelessWidget {
             isDownloaded: true,
             percentage: '',
             downloadOnTap: () {
-              Get.snackbar(
-                'هذه الخدمة غير متوفرة ',
-                "ستتوفر هذة الميزة في التحديث القادم للتطبيق",
-                colorText: Colors.white,
-                backgroundColor: AppColors.primaryColor,
-                icon: const Icon(
-                  Icons.upcoming,
-                  color: AppColors.accentColor,
-                ),
-                borderColor: AppColors.accentColor,
-                borderWidth: 2,
-              );
+              nextUpdateSnackBar();
             },
           ),
           (screenHeight(context) * 0.01).sh,
