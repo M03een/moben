@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../controller/audio_controller.dart';
 import '../../../controller/surah_controller.dart';
 import '../../../utils/widgets/custom_text_field.dart';
 import 'custom_appbar.dart';
@@ -13,6 +14,7 @@ class HomeViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final SurahController surahController = Get.put(SurahController());
+    final AudioController audioController = Get.put(AudioController());
 
     return Scrollbar(
       interactive: true,
@@ -46,6 +48,7 @@ class HomeViewBody extends StatelessWidget {
                           isMakkia: surah.makkia == 1,
                           surahId: surah.id ?? 404,
                           onTap: () {
+                            audioController.onlyPlay(surahId: surah.id!);
                             Get.toNamed(AppRouter.playViewPath, arguments: surah);
                           },
                         );

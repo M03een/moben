@@ -6,7 +6,7 @@ import 'package:moben/controller/reader_controller.dart';
 import 'package:moben/utils/helper.dart';
 
 class AudioController extends GetxController {
-  var isPlay = false.obs;
+  var isPlay = true.obs;
   var isMakkia = false.obs;
   var surahIndex = 0.obs;
   var readerName = ''.obs;
@@ -53,7 +53,6 @@ class AudioController extends GetxController {
   }
 
   changeSurahIndex({required int newIndex}) async {
-    print('===========$newIndex');
     surahIndex = newIndex.obs;
     isPlay.value = true;
     await audioPlayer.stop();
