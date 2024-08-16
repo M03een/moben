@@ -40,14 +40,14 @@ class HomeView extends StatelessWidget {
               height: 70,
               width: screenWidth(context) * 0.9,
               align: Alignment.center,
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    '${surahController.surahs[audioController.surahIndex.value].name}',
+                    'اسم السورة',
                     style: AppStyles.quranTextStyle30,
                   ),
-                  const Icon(
+                  Icon(
                     Icons.play_arrow,
                     color: AppColors.whiteColor,
                   )
