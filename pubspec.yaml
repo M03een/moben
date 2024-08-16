@@ -39,6 +39,7 @@ dependencies:
   dio: ^5.5.0+1
   just_audio: ^0.9.39
   just_audio_background: ^0.0.1-beta.13
+  internet_connection_checker_plus: ^2.5.1
   flutter_launcher_icons: ^0.13.1
 
 dev_dependencies:

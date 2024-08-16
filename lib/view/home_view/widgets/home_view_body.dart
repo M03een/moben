@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:moben/controller/network_controller.dart';
 import '../../../controller/audio_controller.dart';
 import '../../../controller/surah_controller.dart';
 import '../../../utils/widgets/custom_text_field.dart';
@@ -15,10 +16,9 @@ class HomeViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final SurahController surahController = Get.put(SurahController());
     final AudioController audioController = Get.put(AudioController());
-
+    final NetworkController networkController = Get.put(NetworkController());
     return SingleChildScrollView(
       child: Column(
-
         children: [
           const CustomAppbar(),
           (screenHeight(context) * 0.02).sh,
