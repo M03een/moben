@@ -15,7 +15,7 @@ class AppRouter {
     GetPage(name: downloadViewPath, page: () => const DownloadView()),
     GetPage(
       name: playViewPath,
-      page: () =>  const PlayView(),
+      page: () =>   PlayView(),
     ),
   ];
 }

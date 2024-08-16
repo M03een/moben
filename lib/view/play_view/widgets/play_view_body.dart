@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moben/controller/audio_controller.dart';
-import 'package:moben/utils/colors.dart';
 import 'package:moben/utils/helper.dart';
 import 'package:moben/utils/widgets/snack_bars.dart';
 
