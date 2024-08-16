@@ -66,6 +66,7 @@ class AudioController extends GetxController {
       id: '$surahIndex',
       album: readerController.readerNames[readerController.readerIndex.value],
       title: surahController.surahs[surahIndex].name!,
+      artUri: Uri.parse('https://img.freepik.com/premium-photo/islamic-background-with-empty-copy-space-good-special-event-like-ramadan-eid-al-fitr_800563-1650.jpg'),
 
     );
   }
@@ -99,7 +100,7 @@ class AudioController extends GetxController {
   onlyPlay({required int surahId}) async {
     await audioPlayer.setUrl(
       '${HelperFunctions().readerUrl(id: readerController.readerIndex.value)}${HelperFunctions().converterId(surahId)}.mp3',
-      tag: surahMediaItem(surahIndex: surahIndex.value)
+      tag: surahMediaItem(surahIndex: surahIndex.value),
     );
     await audioPlayer.play();
   }
