@@ -12,7 +12,10 @@ class GlassContainer extends StatelessWidget {
     this.verticalPadding,
     this.borderRadius,
     this.virMargin,
-    this.horMargin, this.onTap,
+    this.horMargin,
+    this.onTap,
+    this.align,
+    this.color, this.border,
   });
 
   final double height;
@@ -28,6 +31,9 @@ class GlassContainer extends StatelessWidget {
   final double? virMargin;
 
   final double? horMargin;
+  final AlignmentGeometry? align;
+  final Color? color;
+  final BoxBorder? border;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +42,7 @@ class GlassContainer extends StatelessWidget {
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
         child: Container(
+          alignment: align,
           margin: EdgeInsets.symmetric(
               vertical: virMargin ?? 0, horizontal: horMargin ?? 0),
           padding: EdgeInsets.symmetric(
@@ -44,12 +51,15 @@ class GlassContainer extends StatelessWidget {
           width: width,
           height: height,
           decoration: BoxDecoration(
-              color: Colors.grey.withOpacity(0.2),
-              borderRadius:
-                  BorderRadius.all(Radius.circular(borderRadius ?? 15))),
+            color: color ?? Colors.grey.withOpacity(0.2),
+            borderRadius: BorderRadius.all(
+              Radius.circular(borderRadius ?? 15),
+            ),
+            border: border,
+          ),
           child: InkWell(
-              onTap: onTap,
-              child: child,
+            onTap: onTap,
+            child: child,
           ),
         ),
       ),

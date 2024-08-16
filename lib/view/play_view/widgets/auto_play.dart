@@ -24,7 +24,7 @@ class AutoPlay extends StatelessWidget {
           Expanded(
             child: GlassContainer(
               onTap: () {
-                audioController.repeatSurah.toggle(); // Toggle repeatSurah
+                audioController.repeatSurah.toggle();
                 if (audioController.repeatSurah.value) {
                   audioController.shuffle.value = false;
                   audioController.repeatAll.value = false;

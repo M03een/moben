@@ -11,11 +11,11 @@ class AppRouter {
   static String playViewPath = '/play';
   static List<GetPage<dynamic>> routes = [
     GetPage(name: splashViewPath, page: () => const SplashView()),
-    GetPage(name: homeViewPath, page: () => const HomeView()),
+    GetPage(name: homeViewPath, page: () =>  HomeView()),
     GetPage(name: downloadViewPath, page: () => const DownloadView()),
     GetPage(
       name: playViewPath,
-      page: () =>   PlayView(),
+      page: () =>   const PlayView(),
     ),
   ];
 }
