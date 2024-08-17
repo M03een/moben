@@ -8,7 +8,7 @@ import 'package:moben/controller/surah_controller.dart';
 import 'package:moben/utils/helper.dart';
 
 class AudioController extends GetxController {
-  var isPlay = true.obs;
+  var isPlay = false.obs;
   var isMakkia = false.obs;
   var surahIndex = 0.obs;
   var readerName = ''.obs;
@@ -18,16 +18,18 @@ class AudioController extends GetxController {
   var repeatSurah = false.obs;
   var shuffle = false.obs;
   var repeatAll = true.obs;
+  var surahName = 'لايوحد سورة'.obs;
+
 
   AudioPlayer audioPlayer = AudioPlayer();
   final ReaderController readerController = Get.put(ReaderController());
   final SurahController surahController = Get.put(SurahController());
 
 
+
   @override
   void onInit() {
     super.onInit();
-
     ever(readerController.readerIndex, (int newIndex) {
       readerName.value = HelperFunctions().readerUrl(id: newIndex);
       if (isPlay.value) {
@@ -73,12 +75,12 @@ class AudioController extends GetxController {
 
   changeSurahIndex({required int newIndex}) async {
     surahIndex.value = newIndex;
+    surahName.value = surahController.surahs[newIndex].name ?? 'Unknown Surah';
     isPlay.value = true;
     loading.value = true;
     await audioPlayer.setUrl(
       '${HelperFunctions().readerUrl(id: readerController.readerIndex.value)}${HelperFunctions().converterId(newIndex + 1)}.mp3',
       tag: surahMediaItem(surahIndex: surahIndex.value),
-
     );
     await audioPlayer.play();
   }
@@ -91,6 +93,7 @@ class AudioController extends GetxController {
   playOrPause({required int readerId, required int surahId}) async {
     isPlay.value = !isPlay.value;
     if (isPlay.value) {
+      surahName.value = surahController.surahs[surahIndex.value].name ?? 'Unknown Surah';
       await audioPlayer.play();
     } else {
       await audioPlayer.pause();
@@ -98,9 +101,10 @@ class AudioController extends GetxController {
   }
 
   onlyPlay({required int surahId}) async {
+    surahName.value = surahController.surahs[surahId - 1].name ?? 'Unknown Surah';
     await audioPlayer.setUrl(
       '${HelperFunctions().readerUrl(id: readerController.readerIndex.value)}${HelperFunctions().converterId(surahId)}.mp3',
-      tag: surahMediaItem(surahIndex: surahIndex.value),
+      tag: surahMediaItem(surahIndex: surahId - 1),
     );
     await audioPlayer.play();
   }
@@ -115,12 +119,12 @@ class AudioController extends GetxController {
     } else {
       surahIndex++;
     }
-
+    surahName.value = surahController.surahs[surahIndex.value].name ?? 'Unknown Surah';
     isPlay.value = true;
     loading.value = true;
     await audioPlayer.setUrl(
       '${HelperFunctions().readerUrl(id: readerController.readerIndex.value)}${HelperFunctions().converterId(surahId)}.mp3',
-      tag: surahMediaItem(surahIndex: surahIndex.value)
+      tag: surahMediaItem(surahIndex: surahIndex.value),
     );
     await audioPlayer.play();
   }
@@ -131,12 +135,12 @@ class AudioController extends GetxController {
     } else {
       surahIndex--;
     }
-
+    surahName.value = surahController.surahs[surahIndex.value].name ?? 'Unknown Surah';
     isPlay.value = true;
     loading.value = true;
     await audioPlayer.setUrl(
       '${HelperFunctions().readerUrl(id: readerController.readerIndex.value)}${HelperFunctions().converterId(surahId)}.mp3',
-      tag: surahMediaItem(surahIndex: surahIndex.value)
+      tag: surahMediaItem(surahIndex: surahIndex.value),
     );
     await audioPlayer.play();
   }
