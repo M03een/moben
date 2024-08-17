@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:moben/controller/audio_controller.dart';
 import 'package:moben/controller/surah_controller.dart';
 import '../../../controller/audio_palylist_controller.dart';
 import '../../../utils/colors.dart';
@@ -8,7 +7,6 @@ import '../../../utils/styles.dart';
 
 class SurahBottomSheetBody extends StatelessWidget {
   final SurahController surahController = Get.put(SurahController());
-  //final AudioController audioController = Get.put(AudioController());
   final AudioPlaylistController audioPlaylistController = Get.put(AudioPlaylistController());
   SurahBottomSheetBody({super.key});
 
@@ -34,7 +32,6 @@ class SurahBottomSheetBody extends StatelessWidget {
                       ),
                       onPressed: () {
                         audioPlaylistController.changeSurahAndPlay(index);
-                        // audioController.changeSurahIndex(newIndex: index);
                         Get.back();
                       },
                     ),

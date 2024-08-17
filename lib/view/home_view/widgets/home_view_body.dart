@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../controller/audio_controller.dart';
 import '../../../controller/audio_palylist_controller.dart';
 import '../../../controller/surah_controller.dart';
 import '../../../utils/widgets/custom_text_field.dart';
@@ -48,7 +47,7 @@ class HomeViewBody extends StatelessWidget {
                         isMakkia: surah.makkia == 1,
                         surahId: surah.id ?? 404,
                         onTap: () {
-                          audioPlaylistController.changeSurahAndPlay(index);
+                          audioPlaylistController.playTrack(surah.id!-1);
                           Get.toNamed(AppRouter.playViewPath, arguments: surah);
                         },
                       );

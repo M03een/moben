@@ -21,18 +21,19 @@ class PlayViewBody extends StatelessWidget {
   });
 
   final SurahController surahController = Get.put(SurahController());
-  final AudioPlaylistController audioPlaylistController = Get.put(AudioPlaylistController());
+  final AudioPlaylistController audioPlaylistController =
+      Get.put(AudioPlaylistController());
+
   @override
   Widget build(BuildContext context) {
     Surah surah = Get.arguments;
     audioPlaylistController.surahIndex.value = surah.id! - 1;
-
     return Obx(() {
       return Column(
         children: [
           PlayViewAppbar(
             surahName:
-            '${surahController.surahs[audioPlaylistController.surahIndex.value].name}',
+                '${surahController.surahs[audioPlaylistController.surahIndex.value].name}',
           ),
           (screenHeight(context) * 0.02).sh,
           ReaderAndDownloadWidget(
@@ -46,21 +47,15 @@ class PlayViewBody extends StatelessWidget {
           (screenHeight(context) * 0.01).sh,
           SurahWidget(
             surahName:
-            '${surahController.surahs[audioPlaylistController.surahIndex.value].name}',
+                '${surahController.surahs[audioPlaylistController.surahIndex.value].name}',
             isMakkia: surahController
-                .surahs[audioPlaylistController.surahIndex.value].makkia ==
+                    .surahs[audioPlaylistController.surahIndex.value].makkia ==
                 1,
           ),
           (screenHeight(context) * 0.01).sh,
           AutoPlay(),
           const Spacer(),
-          audioPlaylistController.loading.value
-              ? const Center(
-            child: Center(
-              child: CircularProgressIndicator(),
-            ),
-          )
-              : AudioTimeLine(
+          AudioTimeLine(
             onChanged: (value) {
               audioPlaylistController.audioPlayer
                   .seek(Duration(seconds: value.toInt()));
@@ -77,17 +72,14 @@ class PlayViewBody extends StatelessWidget {
             isPaused: audioPlaylistController.isPlay.value,
             next: () {
               audioPlaylistController.next();
-
             },
             previous: () {
               audioPlaylistController.previous();
             },
             playOrPause: () {
-              audioPlaylistController.isPlay.value ?
-              audioPlaylistController.pause()
-              :audioPlaylistController.play()
-              ;
-
+              audioPlaylistController.isPlay.value
+                  ? audioPlaylistController.pause()
+                  : audioPlaylistController.play();
             },
           ),
           (screenHeight(context) * 0.02).sh,

@@ -27,7 +27,6 @@ class AudioPlaylistController extends GetxController {
   void onInit() {
     super.onInit();
 
-    ever(readerController.readerIndex, (_) => _updatePlaylist());
 
     audioPlayer.durationStream.listen((Duration? d) {
       if (d != null) {
@@ -43,6 +42,12 @@ class AudioPlaylistController extends GetxController {
     _setupListeners();
     audioPlayer.setShuffleModeEnabled(false);
     audioPlayer.setLoopMode(LoopMode.off);
+
+    ever(surahController.surahs, (_) {
+      if (surahController.surahs.isNotEmpty) {
+        _initializePlaylist();
+      }
+    });
   }
 
   Future<void> changeSurahAndPlay(int newIndex) async {
@@ -53,7 +58,7 @@ class AudioPlaylistController extends GetxController {
 
     try {
       await audioPlayer.stop();
-      surahIndex.value = newIndex;
+      surahIndex.value = newIndex-1;
       surahName.value =
           surahController.surahs[newIndex].name ?? 'Unknown Surah';
       await audioPlayer.seek(Duration.zero, index: newIndex);
@@ -65,33 +70,7 @@ class AudioPlaylistController extends GetxController {
     }
   }
 
-  Future<void> playSpecificSurah(int surahId) async {
-    if (surahId < 1 || surahId > 114) {
-      print("Invalid surah ID. Must be between 1 and 114.");
-      return;
-    }
 
-    try {
-      int surahIndex = surahId - 1;
-
-      await audioPlayer.stop();
-
-      this.surahIndex.value = surahIndex;
-      surahName.value =
-          surahController.surahs[surahIndex].name ?? 'Unknown Surah';
-
-      await audioPlayer.seek(Duration.zero, index: surahIndex);
-
-      await audioPlayer.play();
-
-      loading.value = true;
-
-      print("Now playing Surah ${surahId}: ${surahName.value}");
-    } catch (e) {
-      print("Error playing specific surah: $e");
-      loading.value = false;
-    }
-  }
 
   void toggleShuffle() {
     isShuffle.value = !isShuffle.value;
@@ -125,20 +104,24 @@ class AudioPlaylistController extends GetxController {
   }
 
   void _initializePlaylist() {
-    _playlist = ConcatenatingAudioSource(
-        useLazyPreparation: true,
-        shuffleOrder: DefaultShuffleOrder(),
-        children: _createAudioSources());
-    audioPlayer.setAudioSource(_playlist);
+    if (surahController.surahs.isNotEmpty) {
+      _playlist = ConcatenatingAudioSource(
+          useLazyPreparation: true,
+          shuffleOrder: DefaultShuffleOrder(),
+          children: _createAudioSources());
+      audioPlayer.setAudioSource(_playlist);
+    } else {
+      print("Surah list is empty. Cannot initialize playlist.");
+    }
   }
 
   List<AudioSource> _createAudioSources() {
     return List.generate(
-      114,
-      (index) {
+      surahController.surahs.length,  // Make sure to use the actual length
+          (index) {
         return AudioSource.uri(
           Uri.parse(
-              '${HelperFunctions().readerUrl(id: readerController.readerIndex.value)}${(surahIndex+1).toString().padLeft(3, '0')}.mp3'),
+              '${HelperFunctions().readerUrl(id: readerController.readerIndex.value)}${(index+1).toString().padLeft(3, '0')}.mp3'),
           tag: MediaItem(
             id: '${index + 1}',
             album: readerController.selectedReader.value,
@@ -174,7 +157,7 @@ class AudioPlaylistController extends GetxController {
       audioPlayer.play();
     }
 
-    loading.value = true;
+    loading.value = false;
   }
 
   void _setupListeners() {

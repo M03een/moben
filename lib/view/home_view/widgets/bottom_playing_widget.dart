@@ -26,7 +26,6 @@ class BottomPlayingWidget extends StatelessWidget {
             width: 2
           ),
           color: Colors.transparent,
-          virMargin: 10,
           horizontalPadding: 10,
           height: screenHeight(context)*0.07,
           width: screenWidth(context) * 0.9,

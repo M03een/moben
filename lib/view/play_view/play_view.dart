@@ -14,6 +14,7 @@ class PlayView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: GlowBackground(
         firstColor: AppColors.accentColor.withOpacity(0.35),
         secColor: AppColors.secAccentColor.withOpacity(0.35),
