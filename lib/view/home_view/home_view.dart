@@ -5,7 +5,6 @@ import 'package:moben/utils/size_config.dart';
 import 'package:moben/utils/styles.dart';
 import 'package:moben/utils/widgets/glow_background.dart';
 import 'package:moben/view/home_view/widgets/bottom_playing_widget.dart';
-import '../../controller/audio_controller.dart';
 import '../../controller/surah_controller.dart';
 import '../../controller/network_controller.dart'; // Import the NetworkController
 import '../../utils/colors.dart';
@@ -14,7 +13,6 @@ import 'widgets/home_view_body.dart';
 class HomeView extends StatelessWidget {
   HomeView({super.key});
 
-  final AudioController audioController = Get.put(AudioController());
   final SurahController surahController = Get.put(SurahController());
   final NetworkController networkController = Get.put(NetworkController());
   @override

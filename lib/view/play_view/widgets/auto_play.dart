@@ -11,7 +11,7 @@ import '../../../utils/widgets/glass_container.dart';
 class AutoPlay extends StatelessWidget {
   final AudioController audioController = Get.put(AudioController());
 
-   AutoPlay({super.key});
+  AutoPlay({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:moben/controller/audio_controller.dart';
+import 'package:moben/controller/audio_palylist_controller.dart';
 import 'package:moben/utils/colors.dart';
 
-import '../../../controller/audio_controller.dart';
-import '../../../controller/surah_controller.dart';
 import '../../../utils/size_config.dart';
 import '../../../utils/styles.dart';
 import '../../../utils/widgets/glass_container.dart';
@@ -13,8 +13,7 @@ class BottomPlayingWidget extends StatelessWidget {
     super.key,
   });
 
-  final AudioController audioController = Get.put(AudioController());
-  final SurahController surahController = Get.put(SurahController());
+  AudioController audioController = Get.put(AudioController());
 
   @override
   Widget build(BuildContext context) {
@@ -35,12 +34,25 @@ class BottomPlayingWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                audioController.surahName.value, // This will display the Surah name
+                audioController.surahName.value,
+                // This will display the Surah name
                 style: AppStyles.quranTextStyle30,
               ),
               audioController.isPlay.value
-                  ? IconButton(onPressed: () {}, icon: const Icon(Icons.pause,color: AppColors.whiteColor,))
-                  : IconButton(onPressed: () {}, icon: const Icon(Icons.play_arrow,color: AppColors.whiteColor)),
+                  ? IconButton(
+                      onPressed: () {
+                       // audioController.pause();
+                      },
+                      icon: const Icon(
+                        Icons.pause,
+                        color: AppColors.whiteColor,
+                      ))
+                  : IconButton(
+                      onPressed: () {
+                       // audioController.play();
+                      },
+                      icon: const Icon(Icons.play_arrow,
+                          color: AppColors.whiteColor)),
             ],
           ),
         ),

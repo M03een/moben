@@ -9,7 +9,6 @@ import 'package:moben/utils/helper.dart';
 
 class AudioController extends GetxController {
   var isPlay = false.obs;
-  var isMakkia = false.obs;
   var surahIndex = 0.obs;
   var readerName = ''.obs;
   var duration = const Duration().obs;
