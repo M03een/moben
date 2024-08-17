@@ -1,22 +1,38 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:just_audio/just_audio.dart';
 
-import '../../../controller/audio_controller.dart';
+import '../../../controller/audio_palylist_controller.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/size_config.dart';
 import '../../../utils/styles.dart';
 import '../../../utils/widgets/glass_container.dart';
 
 class AutoPlay extends StatelessWidget {
-  final AudioController audioController = Get.put(AudioController());
+  final AudioPlaylistController audioPlaylistController = Get.find<AudioPlaylistController>();
 
   AutoPlay({super.key});
 
   @override
   Widget build(BuildContext context) {
     return GlassContainer(
-
       height: screenHeight(context) * 0.15,
       width: double.infinity,
       child: Row(
@@ -24,11 +40,7 @@ class AutoPlay extends StatelessWidget {
           Expanded(
             child: GlassContainer(
               onTap: () {
-                audioController.repeatSurah.toggle();
-                if (audioController.repeatSurah.value) {
-                  audioController.shuffle.value = false;
-                  audioController.repeatAll.value = false;
-                }
+                audioPlaylistController.cycleRepeatMode();
               },
               height: screenHeight(context) * 0.15,
               width: 10,
@@ -38,20 +50,22 @@ class AutoPlay extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Obx(() => Icon(
-                    CupertinoIcons.repeat_1,
-                    color: audioController.repeatSurah.value
+                    audioPlaylistController.repeatMode.value == LoopMode.one
+                        ? CupertinoIcons.repeat_1
+                        : CupertinoIcons.repeat,
+                    color: audioPlaylistController.repeatMode.value != LoopMode.off
                         ? AppColors.accentColor
                         : AppColors.whiteColor,
                     size: 30,
                   )),
-                  Text(
-                    'تكرار السورة',
+                  Obx(() => Text(
+                    audioPlaylistController.repeatModeString,
                     style: AppStyles.textStyle19.copyWith(
-                      color: audioController.repeatSurah.value
+                      color: audioPlaylistController.repeatMode.value != LoopMode.off
                           ? AppColors.accentColor
                           : AppColors.whiteColor,
                     ),
-                  ),
+                  )),
                 ],
               ),
             ),
@@ -59,11 +73,7 @@ class AutoPlay extends StatelessWidget {
           Expanded(
             child: GlassContainer(
               onTap: () {
-                audioController.shuffle.toggle(); // Toggle shuffle
-                if (audioController.shuffle.value) {
-                  audioController.repeatSurah.value = false;
-                  audioController.repeatAll.value = false;
-                }
+                audioPlaylistController.toggleShuffle();
               },
               height: screenHeight(context) * 0.15,
               width: 10,
@@ -74,7 +84,7 @@ class AutoPlay extends StatelessWidget {
                 children: [
                   Obx(() => Icon(
                     CupertinoIcons.shuffle,
-                    color: audioController.shuffle.value
+                    color: audioPlaylistController.isShuffle.value
                         ? AppColors.accentColor
                         : AppColors.whiteColor,
                     size: 30,
@@ -82,42 +92,7 @@ class AutoPlay extends StatelessWidget {
                   Text(
                     'عشوائي',
                     style: AppStyles.textStyle19.copyWith(
-                      color: audioController.shuffle.value
-                          ? AppColors.accentColor
-                          : AppColors.whiteColor,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Expanded(
-            child: GlassContainer(
-              onTap: () {
-                audioController.repeatAll.toggle(); // Toggle repeatAll
-                if (audioController.repeatAll.value) {
-                  audioController.shuffle.value = false;
-                  audioController.repeatSurah.value = false;
-                }
-              },
-              height: screenHeight(context) * 0.15,
-              width: 10,
-              virMargin: 10,
-              horMargin: 10,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Obx(() => Icon(
-                    CupertinoIcons.repeat,
-                    color: audioController.repeatAll.value
-                        ? AppColors.accentColor
-                        : AppColors.whiteColor,
-                    size: 30,
-                  )),
-                  Text(
-                    'تكرار الكل',
-                    style: AppStyles.textStyle19.copyWith(
-                      color: audioController.repeatAll.value
+                      color: audioPlaylistController.isShuffle.value
                           ? AppColors.accentColor
                           : AppColors.whiteColor,
                     ),
@@ -131,3 +106,138 @@ class AutoPlay extends StatelessWidget {
     );
   }
 }
+
+// import 'package:flutter/cupertino.dart';
+// import 'package:flutter/material.dart';
+// import 'package:get/get.dart';
+//
+// import '../../../controller/audio_controller.dart';
+// import '../../../controller/audio_palylist_controller.dart';
+// import '../../../utils/colors.dart';
+// import '../../../utils/size_config.dart';
+// import '../../../utils/styles.dart';
+// import '../../../utils/widgets/glass_container.dart';
+//
+// class AutoPlay extends StatelessWidget {
+//   //final AudioController audioController = Get.put(AudioController());
+//     final AudioPlaylistController audioPlaylistController = Get.put(AudioPlaylistController());
+//   AutoPlay({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return GlassContainer(
+//
+//       height: screenHeight(context) * 0.15,
+//       width: double.infinity,
+//       child: Row(
+//         children: [
+//           Expanded(
+//             child: GlassContainer(
+//               onTap: () {
+//                 audioController.repeatSurah.toggle();
+//                 if (audioController.repeatSurah.value) {
+//                   audioController.shuffle.value = false;
+//                   audioController.repeatAll.value = false;
+//                 }
+//               },
+//               height: screenHeight(context) * 0.15,
+//               width: 10,
+//               virMargin: 10,
+//               horMargin: 10,
+//               child: Column(
+//                 mainAxisAlignment: MainAxisAlignment.center,
+//                 children: [
+//                   Obx(() => Icon(
+//                     CupertinoIcons.repeat_1,
+//                     color: audioController.repeatSurah.value
+//                         ? AppColors.accentColor
+//                         : AppColors.whiteColor,
+//                     size: 30,
+//                   )),
+//                   Text(
+//                     'تكرار السورة',
+//                     style: AppStyles.textStyle19.copyWith(
+//                       color: audioController.repeatSurah.value
+//                           ? AppColors.accentColor
+//                           : AppColors.whiteColor,
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ),
+//           Expanded(
+//             child: GlassContainer(
+//               onTap: () {
+//                 audioController.shuffle.toggle(); // Toggle shuffle
+//                 if (audioController.shuffle.value) {
+//                   audioController.repeatSurah.value = false;
+//                   audioController.repeatAll.value = false;
+//                 }
+//               },
+//               height: screenHeight(context) * 0.15,
+//               width: 10,
+//               virMargin: 10,
+//               horMargin: 10,
+//               child: Column(
+//                 mainAxisAlignment: MainAxisAlignment.center,
+//                 children: [
+//                   Obx(() => Icon(
+//                     CupertinoIcons.shuffle,
+//                     color: audioController.shuffle.value
+//                         ? AppColors.accentColor
+//                         : AppColors.whiteColor,
+//                     size: 30,
+//                   )),
+//                   Text(
+//                     'عشوائي',
+//                     style: AppStyles.textStyle19.copyWith(
+//                       color: audioController.shuffle.value
+//                           ? AppColors.accentColor
+//                           : AppColors.whiteColor,
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ),
+//           Expanded(
+//             child: GlassContainer(
+//               onTap: () {
+//                 audioController.repeatAll.toggle(); // Toggle repeatAll
+//                 if (audioController.repeatAll.value) {
+//                   audioController.shuffle.value = false;
+//                   audioController.repeatSurah.value = false;
+//                 }
+//               },
+//               height: screenHeight(context) * 0.15,
+//               width: 10,
+//               virMargin: 10,
+//               horMargin: 10,
+//               child: Column(
+//                 mainAxisAlignment: MainAxisAlignment.center,
+//                 children: [
+//                   Obx(() => Icon(
+//                     CupertinoIcons.repeat,
+//                     color: audioController.repeatAll.value
+//                         ? AppColors.accentColor
+//                         : AppColors.whiteColor,
+//                     size: 30,
+//                   )),
+//                   Text(
+//                     'تكرار الكل',
+//                     style: AppStyles.textStyle19.copyWith(
+//                       color: audioController.repeatAll.value
+//                           ? AppColors.accentColor
+//                           : AppColors.whiteColor,
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }

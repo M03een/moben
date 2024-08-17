@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:moben/controller/audio_controller.dart';
 import 'package:moben/utils/helper.dart';
 import 'package:moben/utils/widgets/snack_bars.dart';
 
@@ -8,6 +7,7 @@ import 'package:moben/view/play_view/widgets/play_view_appbar.dart';
 import 'package:moben/view/play_view/widgets/reader_and_download_widget.dart';
 import 'package:moben/view/play_view/widgets/surah_widget.dart';
 
+import '../../../controller/audio_palylist_controller.dart';
 import '../../../controller/surah_controller.dart';
 import '../../../model/surah_model.dart';
 import '../../../utils/size_config.dart';
@@ -20,20 +20,18 @@ class PlayViewBody extends StatelessWidget {
     super.key,
   });
 
-  final AudioController audioController = Get.put(AudioController());
   final SurahController surahController = Get.put(SurahController());
-
+  final AudioPlaylistController audioPlaylistController = Get.put(AudioPlaylistController());
   @override
   Widget build(BuildContext context) {
     Surah surah = Get.arguments;
-    audioController.surahIndex.value = surah.id! - 1;
-
+    audioPlaylistController.surahIndex.value = surah.id! - 1;
     return Obx(() {
       return Column(
         children: [
           PlayViewAppbar(
             surahName:
-            '${surahController.surahs[audioController.surahIndex.value].name}',
+            '${surahController.surahs[audioPlaylistController.surahIndex.value].name}',
           ),
           (screenHeight(context) * 0.02).sh,
           ReaderAndDownloadWidget(
@@ -47,15 +45,15 @@ class PlayViewBody extends StatelessWidget {
           (screenHeight(context) * 0.01).sh,
           SurahWidget(
             surahName:
-            '${surahController.surahs[audioController.surahIndex.value].name}',
+            '${surahController.surahs[audioPlaylistController.surahIndex.value].name}',
             isMakkia: surahController
-                .surahs[audioController.surahIndex.value].makkia ==
+                .surahs[audioPlaylistController.surahIndex.value].makkia ==
                 1,
           ),
           (screenHeight(context) * 0.01).sh,
           AutoPlay(),
           const Spacer(),
-          audioController.loading.value
+          audioPlaylistController.loading.value
               ? const Center(
             child: Center(
               child: CircularProgressIndicator(),
@@ -63,36 +61,32 @@ class PlayViewBody extends StatelessWidget {
           )
               : AudioTimeLine(
             onChanged: (value) {
-              audioController.audioPlayer
+              audioPlaylistController.audioPlayer
                   .seek(Duration(seconds: value.toInt()));
             },
-            max: audioController.duration.value.inSeconds.toDouble(),
-            value: audioController.position.value.inSeconds.toDouble(),
+            max: audioPlaylistController.duration.value.inSeconds.toDouble(),
+            value: audioPlaylistController.position.value.inSeconds.toDouble(),
             totalDuration: HelperFunctions()
-                .formatDuration(audioController.duration.value),
+                .formatDuration(audioPlaylistController.duration.value),
             playedDuration: HelperFunctions()
-                .formatDuration(audioController.position.value),
+                .formatDuration(audioPlaylistController.position.value),
           ),
           (screenHeight(context) * 0.04).sh,
           AudioControllerWidget(
-            isPaused: audioController.isPlay.value,
+            isPaused: audioPlaylistController.isPlay.value,
             next: () {
-              audioController.next(
-                  surahId: surahController
-                      .surahs[audioController.surahIndex.value].id! +
-                      1);
+              audioPlaylistController.next();
+
             },
             previous: () {
-              audioController.previous(
-                  surahId: surahController
-                      .surahs[audioController.surahIndex.value].id! -
-                      1);
+              audioPlaylistController.previous();
             },
             playOrPause: () {
-              audioController.playOrPause(
-                  surahId: surahController
-                      .surahs[audioController.surahIndex.value].id!,
-                  readerId: 2);
+              audioPlaylistController.isPlay.value ?
+              audioPlaylistController.pause()
+              :audioPlaylistController.play()
+              ;
+
             },
           ),
           (screenHeight(context) * 0.02).sh,

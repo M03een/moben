@@ -46,7 +46,7 @@ class HomeView extends StatelessWidget {
               }
             }),
           ),
-            BottomPlayingWidget(),
+            //BottomPlayingWidget(),
         ],
       ),
     );

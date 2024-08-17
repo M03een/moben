@@ -5,14 +5,17 @@ import 'package:moben/controller/reader_controller.dart';
 import 'package:moben/controller/surah_controller.dart';
 import 'package:moben/utils/helper.dart';
 
-
 class AudioPlaylistController extends GetxController {
   var isPlay = false.obs;
   var surahIndex = 0.obs;
   var surahName = 'لايوجد سورة'.obs;
+  var readerName = ''.obs;
+
   var duration = const Duration().obs;
   var position = const Duration().obs;
   var loading = false.obs;
+  var isShuffle = false.obs;
+  var repeatMode = LoopMode.off.obs;
 
   AudioPlayer audioPlayer = AudioPlayer();
   final ReaderController readerController = Get.put(ReaderController());
@@ -24,6 +27,7 @@ class AudioPlaylistController extends GetxController {
   void onInit() {
     super.onInit();
 
+    ever(readerController.readerIndex, (_) => _updatePlaylist());
 
     audioPlayer.durationStream.listen((Duration? d) {
       if (d != null) {
@@ -37,30 +41,140 @@ class AudioPlaylistController extends GetxController {
     });
     _initializePlaylist();
     _setupListeners();
+    audioPlayer.setShuffleModeEnabled(false);
+    audioPlayer.setLoopMode(LoopMode.off);
+  }
+
+  Future<void> changeSurahAndPlay(int newIndex) async {
+    if (newIndex < 0 || newIndex >= 114) {
+      print("Invalid surah index");
+      return;
+    }
+
+    try {
+      await audioPlayer.stop();
+      surahIndex.value = newIndex;
+      surahName.value =
+          surahController.surahs[newIndex].name ?? 'Unknown Surah';
+      await audioPlayer.seek(Duration.zero, index: newIndex);
+      await audioPlayer.play();
+      loading.value = true;
+    } catch (e) {
+      print("Error changing surah: $e");
+      loading.value = false;
+    }
+  }
+
+  Future<void> playSpecificSurah(int surahId) async {
+    if (surahId < 1 || surahId > 114) {
+      print("Invalid surah ID. Must be between 1 and 114.");
+      return;
+    }
+
+    try {
+      int surahIndex = surahId - 1;
+
+      await audioPlayer.stop();
+
+      this.surahIndex.value = surahIndex;
+      surahName.value =
+          surahController.surahs[surahIndex].name ?? 'Unknown Surah';
+
+      await audioPlayer.seek(Duration.zero, index: surahIndex);
+
+      await audioPlayer.play();
+
+      loading.value = true;
+
+      print("Now playing Surah ${surahId}: ${surahName.value}");
+    } catch (e) {
+      print("Error playing specific surah: $e");
+      loading.value = false;
+    }
+  }
+
+  void toggleShuffle() {
+    isShuffle.value = !isShuffle.value;
+    audioPlayer.setShuffleModeEnabled(isShuffle.value);
+  }
+
+  void cycleRepeatMode() {
+    switch (repeatMode.value) {
+      case LoopMode.off:
+        repeatMode.value = LoopMode.all;
+        break;
+      case LoopMode.all:
+        repeatMode.value = LoopMode.one;
+        break;
+      case LoopMode.one:
+        repeatMode.value = LoopMode.off;
+        break;
+    }
+    audioPlayer.setLoopMode(repeatMode.value);
+  }
+
+  String get repeatModeString {
+    switch (repeatMode.value) {
+      case LoopMode.off:
+        return 'Off';
+      case LoopMode.all:
+        return 'Repeat All';
+      case LoopMode.one:
+        return 'Repeat One';
+    }
   }
 
   void _initializePlaylist() {
     _playlist = ConcatenatingAudioSource(
+        useLazyPreparation: true,
+        shuffleOrder: DefaultShuffleOrder(),
+        children: _createAudioSources());
+    audioPlayer.setAudioSource(_playlist);
+  }
+
+  List<AudioSource> _createAudioSources() {
+    return List.generate(
+      114,
+      (index) {
+        return AudioSource.uri(
+          Uri.parse(
+              '${HelperFunctions().readerUrl(id: readerController.readerIndex.value)}${(index + 1).toString().padLeft(3, '0')}.mp3'),
+          tag: MediaItem(
+            id: '${index + 1}',
+            album: readerController.selectedReader.value,
+            title: surahController.surahs[index].name ?? 'Unknown Surah',
+            artUri: Uri.parse(
+              'https://img.freepik.com/premium-photo/islamic-background-with-empty-copy-space-good-special-event-like-ramadan-eid-al-fitr_800563-1650.jpg',
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _updatePlaylist() async {
+    int currentIndex = surahIndex.value;
+    bool wasPlaying = isPlay.value;
+
+    await audioPlayer.stop();
+
+    ConcatenatingAudioSource newPlaylist = ConcatenatingAudioSource(
       useLazyPreparation: true,
       shuffleOrder: DefaultShuffleOrder(),
-      children: List.generate(
-        114,
-            (index) {
-          return AudioSource.uri(
-            Uri.parse(
-                '${HelperFunctions().readerUrl(id: readerController.readerIndex.value)}${(index + 1).toString().padLeft(3, '0')}.mp3'),
-            tag: MediaItem(
-              id: '${index + 1}',
-              album: readerController.readerNames[readerController.readerIndex.value],
-              title: surahController.surahs[index].name ?? 'Unknown Surah',
-              artUri: Uri.parse(
-                  'https://img.freepik.com/premium-photo/islamic-background-with-empty-copy-space-good-special-event-like-ramadan-eid-al-fitr_800563-1650.jpg'),
-            ),
-          );
-        },
-      ),
+      children: _createAudioSources(),
     );
-    audioPlayer.setAudioSource(_playlist);
+
+    await audioPlayer.setAudioSource(newPlaylist,
+        initialIndex: currentIndex, initialPosition: Duration.zero);
+
+    surahName.value =
+        surahController.surahs[currentIndex].name ?? 'Unknown Surah';
+
+    if (wasPlaying) {
+      audioPlayer.play();
+    }
+
+    loading.value = true;
   }
 
   void _setupListeners() {

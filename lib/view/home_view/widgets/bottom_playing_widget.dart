@@ -13,7 +13,8 @@ class BottomPlayingWidget extends StatelessWidget {
     super.key,
   });
 
-  AudioController audioController = Get.put(AudioController());
+  //AudioController audioController = Get.put(AudioController());
+  AudioPlaylistController audioPlaylistController = Get.put(AudioPlaylistController());
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +35,11 @@ class BottomPlayingWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                audioController.surahName.value,
+                audioPlaylistController.surahName.value,
                 // This will display the Surah name
                 style: AppStyles.quranTextStyle30,
               ),
-              audioController.isPlay.value
+              audioPlaylistController.isPlay.value
                   ? IconButton(
                       onPressed: () {
                        // audioController.pause();
