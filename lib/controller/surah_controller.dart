@@ -4,8 +4,9 @@
 
   class SurahController extends GetxController {
     var surahs = <Surah>[].obs;
-    var isLoading = true.obs;
     var filteredSurahs = <Surah>[].obs;
+    var isLoading = true.obs;
+    var filteredSurahsLength = 114.obs;
     var searchQuery = ''.obs;
     @override
     void onInit() {
@@ -17,8 +18,9 @@
       try {
         isLoading(true);
         List<Surah> surahList = await SurahsApi().fetchSurahs();
-         surahs.value = surahList;
-         filteredSurahs.value = surahList;
+        surahs.addAll(surahList);
+        filteredSurahs.addAll(surahList);
+        filteredSurahsLength.value = filteredSurahs.length;
       } finally {
         isLoading(false);
       }
@@ -27,11 +29,12 @@
     void searchSurahs(String query) {
       searchQuery.value = query;
       if (query.isEmpty) {
-        filteredSurahs.value = surahs;
+        filteredSurahs.assignAll(surahs);
       } else {
-        filteredSurahs.value = surahs.where((surah) {
+        filteredSurahs.assignAll(surahs.where((surah) {
           return surah.name?.toLowerCase().contains(query.toLowerCase()) ?? false;
-        }).toList();
+        }).toList());
       }
+      filteredSurahsLength.value = filteredSurahs.length;
     }
   }

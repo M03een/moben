@@ -26,6 +26,7 @@ class PlayViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     Surah surah = Get.arguments;
     audioPlaylistController.surahIndex.value = surah.id! - 1;
+
     return Obx(() {
       return Column(
         children: [

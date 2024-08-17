@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           fontFamily: 'Rubik',
           scrollbarTheme: const ScrollbarThemeData(
-            thumbColor: WidgetStatePropertyAll(AppColors.secAccentColor),
+            thumbColor: WidgetStatePropertyAll(AppColors.accentColor),
             mainAxisMargin: 200,
             minThumbLength: 70,
             radius: Radius.circular(15),

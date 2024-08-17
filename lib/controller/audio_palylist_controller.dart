@@ -138,7 +138,7 @@ class AudioPlaylistController extends GetxController {
       (index) {
         return AudioSource.uri(
           Uri.parse(
-              '${HelperFunctions().readerUrl(id: readerController.readerIndex.value)}${(index + 1).toString().padLeft(3, '0')}.mp3'),
+              '${HelperFunctions().readerUrl(id: readerController.readerIndex.value)}${(surahIndex+1).toString().padLeft(3, '0')}.mp3'),
           tag: MediaItem(
             id: '${index + 1}',
             album: readerController.selectedReader.value,

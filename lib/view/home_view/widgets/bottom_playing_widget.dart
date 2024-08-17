@@ -13,7 +13,6 @@ class BottomPlayingWidget extends StatelessWidget {
     super.key,
   });
 
-  //AudioController audioController = Get.put(AudioController());
   AudioPlaylistController audioPlaylistController = Get.put(AudioPlaylistController());
 
   @override
@@ -24,11 +23,12 @@ class BottomPlayingWidget extends StatelessWidget {
         child: GlassContainer(
           border: Border.all(
             color: Colors.grey.withOpacity(0.2),
+            width: 2
           ),
           color: Colors.transparent,
           virMargin: 10,
           horizontalPadding: 10,
-          height: 70,
+          height: screenHeight(context)*0.07,
           width: screenWidth(context) * 0.9,
           align: Alignment.center,
           child: Row(
@@ -42,7 +42,7 @@ class BottomPlayingWidget extends StatelessWidget {
               audioPlaylistController.isPlay.value
                   ? IconButton(
                       onPressed: () {
-                       // audioController.pause();
+                        audioPlaylistController.pause();
                       },
                       icon: const Icon(
                         Icons.pause,
@@ -50,7 +50,7 @@ class BottomPlayingWidget extends StatelessWidget {
                       ))
                   : IconButton(
                       onPressed: () {
-                       // audioController.play();
+                        audioPlaylistController.play();
                       },
                       icon: const Icon(Icons.play_arrow,
                           color: AppColors.whiteColor)),

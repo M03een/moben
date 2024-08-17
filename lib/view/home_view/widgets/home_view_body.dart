@@ -15,44 +15,51 @@ class HomeViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final SurahController surahController = Get.put(SurahController());
-    //AudioController audioController = Get.put(AudioController());
-    //AudioPlaylistController audioPlaylistController = Get.put(AudioPlaylistController());
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          const CustomAppbar(),
-          (screenHeight(context) * 0.02).sh,
-          CustomTextField(
-            hint: '2'.tr,
-            onChanged: (val) {
-              surahController.searchSurahs(val);
-            },
-          ),
-          Obx(
-            () {
-              if (surahController.isLoading.value) {
-                return const CircularProgressIndicator();
-              } else {
-                return ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: surahController.filteredSurahs.length,
-                  itemBuilder: (context, index) {
-                    final surah = surahController.filteredSurahs[index];
-                    return SurahItem(
-                      surahName: surah.name ?? 'Unknown',
-                      isMakkia: surah.makkia == 1,
-                      surahId: surah.id ?? 404,
-                      onTap: () {
-                        Get.toNamed(AppRouter.playViewPath, arguments: surah);
-                      },
-                    );
-                  },
-                );
-              }
-            },
-          ),
-        ],
+    AudioPlaylistController audioPlaylistController = Get.put(AudioPlaylistController());
+    return Scrollbar(
+      interactive: true,
+      thumbVisibility: true,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            const CustomAppbar(),
+            (screenHeight(context) * 0.02).sh,
+            CustomTextField(
+              hint: '2'.tr,
+              onChanged: (val) {
+                surahController.searchSurahs(val);
+              },
+            ),
+            Obx(
+                  () {
+                if (surahController.isLoading.value) {
+                  return const CircularProgressIndicator();
+                } else if (surahController.filteredSurahs.isEmpty) {
+                  return const Center(child: Text('No surahs found'));
+                } else {
+                  return ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: surahController.filteredSurahs.length,
+                    itemBuilder: (context, index) {
+                      final surah = surahController.filteredSurahs[index];
+                      return SurahItem(
+                        surahName: surah.name ?? 'Unknown',
+                        isMakkia: surah.makkia == 1,
+                        surahId: surah.id ?? 404,
+                        onTap: () {
+                          audioPlaylistController.changeSurahAndPlay(index);
+                          Get.toNamed(AppRouter.playViewPath, arguments: surah);
+                        },
+                      );
+                    },
+                  );
+                }
+              },
+            ),
+            (screenHeight(context)*0.1).sh,
+          ],
+        ),
       ),
     );
   }
