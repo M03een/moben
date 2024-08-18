@@ -20,41 +20,46 @@ class BottomPlayingWidget extends StatelessWidget {
     return Obx(() {
       return Align(
         alignment: Alignment.bottomCenter,
-        child: GlassContainer(
-          border: Border.all(
-            color: Colors.grey.withOpacity(0.2),
-            width: 2
-          ),
-          color: Colors.transparent,
-          horizontalPadding: 10,
-          height: screenHeight(context)*0.07,
-          width: screenWidth(context) * 0.9,
-          align: Alignment.center,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                audioPlaylistController.surahName.value,
-                // This will display the Surah name
-                style: AppStyles.quranTextStyle30,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            GlassContainer(
+              border: Border.all(
+                color: Colors.grey.withOpacity(0.2),
+                width: 2
               ),
-              audioPlaylistController.isPlay.value
-                  ? IconButton(
-                      onPressed: () {
-                        audioPlaylistController.pause();
-                      },
-                      icon: const Icon(
-                        Icons.pause,
-                        color: AppColors.whiteColor,
-                      ))
-                  : IconButton(
-                      onPressed: () {
-                        audioPlaylistController.play();
-                      },
-                      icon: const Icon(Icons.play_arrow,
-                          color: AppColors.whiteColor)),
-            ],
-          ),
+              color: Colors.transparent,
+              horizontalPadding: 10,
+              height: screenHeight(context)*0.07,
+              width: screenWidth(context) * 0.9,
+              align: Alignment.center,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    audioPlaylistController.surahName.value,
+                    style: AppStyles.quranTextStyle30,
+                  ),
+                  audioPlaylistController.isPlay.value
+                      ? IconButton(
+                          onPressed: () {
+                            audioPlaylistController.pause();
+                          },
+                          icon: const Icon(
+                            Icons.pause,
+                            color: AppColors.whiteColor,
+                          ))
+                      : IconButton(
+                          onPressed: () {
+                            audioPlaylistController.play();
+                          },
+                          icon: const Icon(Icons.play_arrow,
+                              color: AppColors.whiteColor)),
+                ],
+              ),
+            ),
+            (screenHeight(context)*0.02).sh,
+          ],
         ),
       );
     });

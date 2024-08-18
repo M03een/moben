@@ -27,7 +27,6 @@ class AudioPlaylistController extends GetxController {
   void onInit() {
     super.onInit();
 
-
     audioPlayer.durationStream.listen((Duration? d) {
       if (d != null) {
         duration.value = d;
@@ -43,11 +42,24 @@ class AudioPlaylistController extends GetxController {
     audioPlayer.setShuffleModeEnabled(false);
     audioPlayer.setLoopMode(LoopMode.off);
 
+    ever(readerController.readerIndex, (_) => _handleReaderChange());
+
     ever(surahController.surahs, (_) {
       if (surahController.surahs.isNotEmpty) {
         _initializePlaylist();
       }
     });
+  }
+
+  void _handleReaderChange() async {
+    int currentSurahIndex = surahIndex.value;
+    await audioPlayer.stop();
+    _initializePlaylist();
+    surahIndex.value = currentSurahIndex;
+    surahName.value = surahController.surahs[currentSurahIndex].name ?? 'Unknown Surah';
+    await audioPlayer.seek(Duration.zero, index: currentSurahIndex);
+    await audioPlayer.play();
+    loading.value = true;
   }
 
   Future<void> changeSurahAndPlay(int newIndex) async {
@@ -58,7 +70,7 @@ class AudioPlaylistController extends GetxController {
 
     try {
       await audioPlayer.stop();
-      surahIndex.value = newIndex-1;
+      surahIndex.value = newIndex - 1;
       surahName.value =
           surahController.surahs[newIndex].name ?? 'Unknown Surah';
       await audioPlayer.seek(Duration.zero, index: newIndex);
@@ -69,8 +81,6 @@ class AudioPlaylistController extends GetxController {
       loading.value = false;
     }
   }
-
-
 
   void toggleShuffle() {
     isShuffle.value = !isShuffle.value;
@@ -95,11 +105,11 @@ class AudioPlaylistController extends GetxController {
   String get repeatModeString {
     switch (repeatMode.value) {
       case LoopMode.off:
-        return 'Off';
+        return 'التكرار مغلق';
       case LoopMode.all:
-        return 'Repeat All';
+        return 'تكرار الكل';
       case LoopMode.one:
-        return 'Repeat One';
+        return 'تكرار مرة واحدة';
     }
   }
 
@@ -117,7 +127,7 @@ class AudioPlaylistController extends GetxController {
 
   List<AudioSource> _createAudioSources() {
     return List.generate(
-      surahController.surahs.length,  // Make sure to use the actual length
+      surahController.surahs.length,
           (index) {
         return AudioSource.uri(
           Uri.parse(
@@ -135,30 +145,7 @@ class AudioPlaylistController extends GetxController {
     );
   }
 
-  void _updatePlaylist() async {
-    int currentIndex = surahIndex.value;
-    bool wasPlaying = isPlay.value;
 
-    await audioPlayer.stop();
-
-    ConcatenatingAudioSource newPlaylist = ConcatenatingAudioSource(
-      useLazyPreparation: true,
-      shuffleOrder: DefaultShuffleOrder(),
-      children: _createAudioSources(),
-    );
-
-    await audioPlayer.setAudioSource(newPlaylist,
-        initialIndex: currentIndex, initialPosition: Duration.zero);
-
-    surahName.value =
-        surahController.surahs[currentIndex].name ?? 'Unknown Surah';
-
-    if (wasPlaying) {
-      audioPlayer.play();
-    }
-
-    loading.value = false;
-  }
 
   void _setupListeners() {
     audioPlayer.playerStateStream.listen((playerState) {

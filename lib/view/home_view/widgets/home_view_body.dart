@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:moben/utils/styles.dart';
 import '../../../controller/audio_palylist_controller.dart';
 import '../../../controller/surah_controller.dart';
 import '../../../utils/widgets/custom_text_field.dart';
@@ -34,7 +35,7 @@ class HomeViewBody extends StatelessWidget {
                 if (surahController.isLoading.value) {
                   return const CircularProgressIndicator();
                 } else if (surahController.filteredSurahs.isEmpty) {
-                  return const Center(child: Text('No surahs found'));
+                  return const Center(child: Text('لا توجد سورة بهذا الأسم',style: AppStyles.textStyle30,));
                 } else {
                   return ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),

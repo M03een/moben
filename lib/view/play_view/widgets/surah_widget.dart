@@ -19,7 +19,6 @@ class SurahWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GlassContainer(
-      horMargin: 5,
       height: screenHeight(context) * 0.15,
       width: double.infinity,
       child: Padding(
