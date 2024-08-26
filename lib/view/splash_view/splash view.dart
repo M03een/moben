@@ -24,7 +24,7 @@ class _SplashViewState extends State<SplashView> {
       });
     });
 
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 2), () {
       Get.toNamed(AppRouter.bottomViewPath);
     });
   }

@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:moben/utils/styles.dart';
 import '../../../controller/audio_palylist_controller.dart';
 import '../../../controller/surah_controller.dart';
+import '../../../model/surah_model.dart';
+import '../../../service/surahs_api.dart';
 import '../../../utils/widgets/custom_text_field.dart';
 import 'custom_appbar.dart';
 import 'surah_item.dart';
@@ -16,6 +18,7 @@ class QuranAudioViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final SurahController surahController = Get.put(SurahController());
     AudioPlaylistController audioPlaylistController = Get.put(AudioPlaylistController());
+
     return Scrollbar(
       interactive: true,
       thumbVisibility: true,
@@ -30,25 +33,33 @@ class QuranAudioViewBody extends StatelessWidget {
                 surahController.searchSurahs(val);
               },
             ),
-            Obx(
-                  () {
-                if (surahController.isLoading.value) {
+            FutureBuilder<List<Surah>>(
+              future: SurahsApi().fetchSurahs(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator();
-                } else if (surahController.filteredSurahs.isEmpty) {
-                  return const Center(child: Text('لا توجد سورة بهذا الأسم',style: AppStyles.textStyle30,));
+                } else if (snapshot.hasError) {
+                  return const Center(
+                    child: Text('Error fetching Surahs', style: AppStyles.textStyle30),
+                  );
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return const Center(
+                    child: Text('لا توجد سورة بهذا الأسم', style: AppStyles.textStyle30),
+                  );
                 } else {
+                  final surahs = snapshot.data!;
                   return ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: 114,
+                    itemCount: surahs.length,
                     itemBuilder: (context, index) {
-                      final surah = surahController.filteredSurahs[index];
+                      final surah = surahs[index];
                       return SurahItem(
                         surahName: surah.name ?? 'Unknown',
                         isMakkia: surah.makkia == 1,
                         surahId: surah.id ?? 404,
                         onTap: () {
-                          audioPlaylistController.playTrack(surah.id!-1);
+                          audioPlaylistController.playTrack(surah.id! - 1);
                           Get.toNamed(AppRouter.playViewPath, arguments: surah);
                         },
                       );
@@ -57,7 +68,7 @@ class QuranAudioViewBody extends StatelessWidget {
                 }
               },
             ),
-            (screenHeight(context)*0.1).sh,
+            (screenHeight(context) * 0.1).sh,
           ],
         ),
       ),

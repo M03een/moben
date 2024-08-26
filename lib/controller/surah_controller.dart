@@ -17,9 +17,9 @@ class SurahController extends GetxController {
   void fetchSurahs() async {
     try {
       isLoading(true);
-      List<Surah> surahList = await SurahsApi().fetchSurahs();
-      surahs.addAll(surahList);
-      filteredSurahs.addAll(surahList);
+      List<Surah>? surahList = await SurahsApi().fetchSurahs();
+      surahs.addAll(surahList as Iterable<Surah>);
+      filteredSurahs.addAll(surahList as Iterable<Surah>);
     } catch (error) {
       print("Error fetching surahs: $error");
     } finally {

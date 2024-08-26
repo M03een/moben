@@ -6,7 +6,7 @@ class SurahsApi {
   final dio = Dio();
   List<Surah> surahs = [];
 
-  Future<dynamic> fetchSurahs() async {
+  Future<List<Surah>>? fetchSurahs() async {
     final response =
         await dio.get('https://mp3quran.net/api/v3/suwar?language=ar');
     if (response.statusCode == 200) {
