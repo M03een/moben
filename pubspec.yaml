@@ -41,6 +41,7 @@ dependencies:
   just_audio_background: ^0.0.1-beta.13
   internet_connection_checker_plus: ^2.5.1
   flutter_launcher_icons: ^0.13.1
+  flutter_svg: ^2.0.10+1
 
 dev_dependencies:
   flutter_test:
@@ -69,6 +70,7 @@ flutter:
     - assets/icons/
     - assets/images/
     - assets/images/readers/
+    - assets/icons/svg_icons/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

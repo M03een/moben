@@ -9,8 +9,8 @@ import 'surah_item.dart';
 import 'package:moben/utils/app_router.dart';
 import 'package:moben/utils/size_config.dart';
 
-class HomeViewBody extends StatelessWidget {
-  const HomeViewBody({super.key});
+class QuranAudioViewBody extends StatelessWidget {
+  const QuranAudioViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class HomeViewBody extends StatelessWidget {
                   return ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: surahController.filteredSurahs.length,
+                    itemCount: 114,
                     itemBuilder: (context, index) {
                       final surah = surahController.filteredSurahs[index];
                       return SurahItem(
