@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:moben/utils/colors.dart';
 import 'package:moben/view/counter_view/counter_view.dart';
 import 'package:moben/view/home_view/quran_audio_view.dart';
+import 'package:moben/view/qiblah_view/qiblah_view.dart';
 
 import '../../../controller/bottom_nav_controller.dart';
 
@@ -14,12 +15,8 @@ class BottomNavBar extends StatelessWidget {
 
   final List<Widget> pages = [
     QuranAudioView(),
-    CounterView(),
-    const Center(
-        child: Text(
-      "Home 3",
-      style: TextStyle(color: Colors.red, fontSize: 50),
-    )),
+    const CounterView(),
+    const QiblahView(),
     const Center(
         child: Text(
       "Home 4",
@@ -40,11 +37,22 @@ class BottomNavBar extends StatelessWidget {
           showUnselectedLabels: false,
           type: BottomNavigationBarType.fixed,
           items: [
-            bottomNavigationBarItem(icon: 'waveform.svg', label: 'audio',color: ColorFilter.mode(inActiveIconColor, BlendMode.srcIn)),
-            bottomNavigationBarItem(icon: 'bell-concierge.svg', label: 'audio',color: ColorFilter.mode(inActiveIconColor, BlendMode.srcIn)),
-            bottomNavigationBarItem(icon: 'praying-hands.svg', label: 'audio',color: ColorFilter.mode(inActiveIconColor, BlendMode.srcIn)),
-            bottomNavigationBarItem(icon: 'layers.svg', label: 'audio',color: ColorFilter.mode(inActiveIconColor, BlendMode.srcIn)),
-
+            bottomNavigationBarItem(
+                icon: 'waveform.svg',
+                label: 'audio',
+                color: ColorFilter.mode(inActiveIconColor, BlendMode.srcIn)),
+            bottomNavigationBarItem(
+                icon: 'bell-concierge.svg',
+                label: 'audio',
+                color: ColorFilter.mode(inActiveIconColor, BlendMode.srcIn)),
+            bottomNavigationBarItem(
+                icon: 'navigation.svg',
+                label: 'audio',
+                color: ColorFilter.mode(inActiveIconColor, BlendMode.srcIn)),
+            bottomNavigationBarItem(
+                icon: 'layers.svg',
+                label: 'audio',
+                color: ColorFilter.mode(inActiveIconColor, BlendMode.srcIn)),
           ],
         );
       }),
@@ -52,16 +60,18 @@ class BottomNavBar extends StatelessWidget {
   }
 
   BottomNavigationBarItem bottomNavigationBarItem(
-      {required String icon, required String label ,required ColorFilter color}) {
+      {required String icon,
+      required String label,
+      required ColorFilter color}) {
     return BottomNavigationBarItem(
       icon: SvgPicture.asset(
         'assets/icons/svg_icons/$icon',
         colorFilter: color,
       ),
-
       activeIcon: SvgPicture.asset(
         'assets/icons/svg_icons/$icon',
-        colorFilter: const ColorFilter.mode(AppColors.secAccentColor, BlendMode.srcIn),
+        colorFilter:
+            const ColorFilter.mode(AppColors.secAccentColor, BlendMode.srcIn),
       ),
       label: label,
     );
