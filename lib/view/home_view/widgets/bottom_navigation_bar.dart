@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:moben/utils/colors.dart';
+import 'package:moben/view/counter_view/counter_view.dart';
 import 'package:moben/view/home_view/quran_audio_view.dart';
 
 import '../../../controller/bottom_nav_controller.dart';
@@ -13,11 +14,7 @@ class BottomNavBar extends StatelessWidget {
 
   final List<Widget> pages = [
     QuranAudioView(),
-    const Center(
-        child: Text(
-      "Home 2",
-      style: TextStyle(color: Colors.red, fontSize: 50),
-    )),
+    CounterView(),
     const Center(
         child: Text(
       "Home 3",
