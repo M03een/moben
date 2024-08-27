@@ -4,7 +4,6 @@ import 'package:moben/utils/colors.dart';
 import 'package:moben/utils/widgets/custom_icon.dart';
 import '../../../controller/bottom_nav_controller.dart';
 import '../../../utils/size_config.dart';
-import '../../../utils/widgets/glass_container.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
   const CustomBottomNavBar({super.key});
@@ -12,16 +11,24 @@ class CustomBottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final BottomNavController controller = Get.put(BottomNavController());
-
-    return GlassContainer(
-      color: AppColors.primaryColor,
-      horizontalPadding: screenWidth(context) * 0.05,
+    return Container(
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: AppColors.primaryColor,
+        borderRadius: BorderRadius.circular(25),
+        boxShadow:  [
+          BoxShadow(
+            color: AppColors.secAccentColor.withOpacity(0.2),
+            blurRadius: 15,
+            spreadRadius: 10,
+            offset: const Offset(0, -5)
+          )
+        ]
+      ),
+      padding: EdgeInsets.symmetric(horizontal:  screenWidth(context) * 0.05),
       height: screenHeight(context) * 0.06,
       width: screenWidth(context) * 0.5,
-      align: Alignment.center,
-      borderRadius: 25,
-      border: Border.all(
-          color: AppColors.whiteColor.withOpacity(0.2), width: 0.5),
+      margin: EdgeInsets.only(bottom: screenHeight(context)*0.03) ,
       child: Obx(
             () => Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -57,7 +64,7 @@ class CustomBottomNavBar extends StatelessWidget {
                   : AppColors.whiteColor.withOpacity(0.2),
             ),
             CustomIcon(
-              icon: 'layers.svg',
+              icon: 'person-praying.svg',
               onTap: () {
                 controller.updateCurrentIndex(3);
               },

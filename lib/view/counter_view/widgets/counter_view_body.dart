@@ -22,9 +22,23 @@ class CounterViewBody extends StatelessWidget {
           alignment: Alignment.topCenter,
           child: Padding(
             padding: EdgeInsets.only(top: screenHeight(context) * 0.1),
-            child: const Text(
-              'المسبحة',
-              style: AppStyles.quranTextStyle50,
+            child: Column(
+              children: [
+                Text(
+                  'المسبحة',
+                  style: AppStyles.quranTextStyle50.copyWith(color: AppColors.primaryColor),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.info,color: AppColors.primaryColor,),
+                    Text(
+                      'إضغط مطولا للإعادة',
+                      style: AppStyles.textStyle19.copyWith(color: AppColors.primaryColor,fontWeight: FontWeight.w700),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ),
@@ -45,7 +59,7 @@ class CounterViewBody extends StatelessWidget {
                     style: const TextStyle(
                         fontSize: 300,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.whiteColor),
+                        color: AppColors.primaryColor),
                   ),
                 );
               },

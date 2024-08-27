@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mesh/mesh.dart';
+import 'package:moben/utils/colors.dart';
 
 final meshRect = OMeshRect(
   width: 3,
   height: 4,
   colorSpace: OMeshColorSpace.xyY,
-  fallbackColor: const Color(0xff0e0e0e),
-  backgroundColor: const Color(0xff0e0e0e),
+  fallbackColor: AppColors.secAccentColor,
+  backgroundColor: AppColors.accentColor,
   vertices: [
     (-0.12, -0.21).v.bezier(east: (-0.05, -0.04).v, south: (-0.21, -0.03).v, ),    (0.38, -0.25).v.bezier(east: (0.76, -0.23).v, west: (0.18, -0.27).v, ),    (0.99, -0.34).v.bezier(west: (0.93, -0.24).v, ),  // Row 1
     (-0.12, 0.55).v,    (0.48, 0.48).v.bezier(east: (0.99, 0.5).v, ),    (1.05, 0.28).v,  // Row 2
