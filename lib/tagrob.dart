@@ -1,89 +1,112 @@
-//============== play list audio service =====================
+/*
 
-import 'package:just_audio/just_audio.dart';
-import 'package:just_audio_background/just_audio_background.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:moben/utils/colors.dart';
+import 'package:moben/utils/styles.dart';
+import 'package:moben/utils/widgets/custom_icon.dart';
 
-class AudioService {
-  final AudioPlayer _player = AudioPlayer();
+import '../../../controller/audio_palylist_controller.dart';
+import '../../../utils/size_config.dart';
+import '../../../utils/widgets/glass_container.dart';
 
-  // Generate a playlist with tracks from 1 to 114
-  final ConcatenatingAudioSource _playlist = ConcatenatingAudioSource(
-    useLazyPreparation: true,
-    shuffleOrder: DefaultShuffleOrder(),
-    children: List.generate(
-      114,
-          (index) {
-        print(index);
-        return AudioSource.uri(
+class CustomBottomNavBar extends StatelessWidget {
+    CustomBottomNavBar({
+    super.key,
+  });
 
-          Uri.parse('https://server6.mp3quran.net/akdr/${(index + 1).toString().padLeft(3, '0')}.mp3'),
-          tag: MediaItem(
-            // Specify a unique ID for each media item:
-            id: '1',
-            // Metadata to display in the notification:
-            album: "Album name",
-            title: "Song name",
-            artUri: Uri.parse('https://example.com/albumart.jpg'),
-          ),
-        );
-      },
-    ),
-  );
+  AudioPlaylistController audioPlaylistController = Get.put(AudioPlaylistController());
 
-  AudioService() {
-    // Set the playlist as the audio source for the player
-    _player.setAudioSource(_playlist);
-  }
 
-  // Method to play the audio
-  Future<void> play() async {
-    try {
-      if (_player.playing) {
-        _player.play();
-      } else {
-        // Start playing from the beginning of the playlist
-        await _player.play();
-      }
-    } catch (e) {
-      // Handle error
-      print("Error playing audio: $e");
-    }
-  }
+  @override
+  Widget build(BuildContext context) {
+    return Obx((){
 
-  // Method to play a specific track from the playlist
-  Future<void> playTrack(int index) async {
-    try {
-      // Set the current index and play
-      await _player.seek(Duration.zero, index: index);
-      _player.play();
-    } catch (e) {
-      // Handle error
-      print("Error playing specific track: $e");
-    }
-  }
+      return Align(
+        alignment: Alignment.bottomCenter,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            GlassContainer(
+              color: AppColors.primaryColor,
+              horizontalPadding: screenWidth(context)*0.02,
+              verticalPadding: 0,
+              height: screenHeight(context) * 0.12,
+              width: screenWidth(context) * 0.48,
+              align: Alignment.center,
+              borderRadius: 25,
+              border: Border.all(color: AppColors.whiteColor.withOpacity(0.2),width: 0.5),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        audioPlaylistController.surahName.value,
+                        style: AppStyles.quranTextStyle30,
+                      ),
+                      audioPlaylistController.isPlay.value
+                          ? IconButton(
+                          onPressed: () {
+                            audioPlaylistController.pause();
+                          },
+                          icon: const Icon(
+                            Icons.pause,
+                            color: AppColors.whiteColor,
+                          ))
+                          : IconButton(
+                          onPressed: () {
+                            audioPlaylistController.play();
+                          },
+                          icon: const Icon(Icons.play_arrow,
+                              color: AppColors.whiteColor)),
+                    ],
+                  ),
+                  (screenHeight(context)*0.005).sh,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CustomIcon(
+                        icon: 'waveform.svg',
+                        onTap: () {},
+                        isSelected: true,
+                        color: AppColors.secAccentColor,
+                      ),CustomIcon(
+                        icon: 'bell-concierge.svg',
+                        onTap: () {},
+                        color: AppColors.secAccentColor,
+                        isSelected: false,
 
-  // Method to pause audio
-  void pause() {
-    _player.pause();
-  }
+                      ),CustomIcon(
+                        icon: 'navigation.svg',
+                        onTap: () {},
+                        color: AppColors.secAccentColor,
+                        isSelected: false,
+                      ),CustomIcon(
+                        icon: 'layers.svg',
+                        onTap: () {},
+                        color: AppColors.secAccentColor,
+                        isSelected: false,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
 
-  // Method to stop audio
-  void stop() {
-    _player.stop();
-  }
-
-  // Method to skip to the next track
-  void next() {
-    _player.seekToNext();
-  }
-
-  // Method to skip to the previous track
-  void previous() {
-    _player.seekToPrevious();
-  }
-
-  // Dispose the player when it's no longer needed
-  void dispose() {
-    _player.dispose();
+    });
   }
 }
+
+
+/*
+
+
+
+ */
+
+
+ */

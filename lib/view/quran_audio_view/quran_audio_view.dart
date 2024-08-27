@@ -4,8 +4,7 @@ import 'package:get/get.dart';
 import 'package:moben/utils/size_config.dart';
 import 'package:moben/utils/styles.dart';
 import 'package:moben/utils/widgets/glow_background.dart';
-import 'package:moben/view/home_view/widgets/bottom_navigation_bar.dart';
-import 'package:moben/view/home_view/widgets/bottom_playing_widget.dart';
+import 'package:moben/view/quran_audio_view/widgets/custom_bottom_nav_bar.dart';
 import '../../controller/surah_controller.dart';
 import '../../controller/network_controller.dart'; // Import the NetworkController
 import '../../utils/colors.dart';
@@ -50,7 +49,6 @@ class QuranAudioView extends StatelessWidget {
               },
             ),
           ),
-          BottomPlayingWidget()
         ],
       ),
     );
