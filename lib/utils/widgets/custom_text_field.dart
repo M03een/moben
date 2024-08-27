@@ -7,10 +7,15 @@ import 'glass_container.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
-    super.key, required this.onChanged, required this.hint,
+    super.key, required this.onChanged, required this.hint, this.icon, this.textInputType, this.color,
   });
   final Function(String) onChanged;
   final String hint;
+  final IconData? icon;
+  final TextInputType? textInputType;
+  final Color? color;
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -21,20 +26,23 @@ class CustomTextField extends StatelessWidget {
       verticalPadding: 10,
       horizontalPadding: 10,
       child: TextField(
+        keyboardType: textInputType ?? TextInputType.none,
         onChanged: onChanged,
-        style: const TextStyle(color: AppColors.accentColor),
+        style:  TextStyle(color:color ??  AppColors.accentColor),
         decoration: InputDecoration(
             prefixIcon: Icon(
-              CupertinoIcons.search,
-              color: AppColors.accentColor.withOpacity(0.6),
+              icon ?? CupertinoIcons.search,
+              color: color?.withOpacity(0.6) ?? AppColors.accentColor.withOpacity(0.6),
             ),
             hintText: hint,
             hintStyle: TextStyle(
-              color: AppColors.accentColor.withOpacity(0.6),
+              color:color?.withOpacity(0.6) ??  AppColors.accentColor.withOpacity(0.6),
               fontSize: 20,
             ),
             focusedBorder: InputBorder.none,
-            enabledBorder: InputBorder.none),
+            enabledBorder: InputBorder.none,
+
+        ),
       ),
     );
   }

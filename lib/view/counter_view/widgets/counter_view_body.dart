@@ -33,7 +33,7 @@ class CounterViewBody extends StatelessWidget {
                   children: [
                     const Icon(Icons.info,color: AppColors.primaryColor,),
                     Text(
-                      'إضغط مطولا للإعادة',
+                      'إضغط مطولا للإعادة ',
                       style: AppStyles.textStyle19.copyWith(color: AppColors.primaryColor,fontWeight: FontWeight.w700),
                     ),
                   ],
@@ -56,8 +56,8 @@ class CounterViewBody extends StatelessWidget {
                   },
                   child: Text(
                     '${value.counter}',
-                    style: const TextStyle(
-                        fontSize: 300,
+                    style:  TextStyle(
+                        fontSize: value.counter > 99 ? 250 : 300,
                         fontWeight: FontWeight.bold,
                         color: AppColors.primaryColor),
                   ),

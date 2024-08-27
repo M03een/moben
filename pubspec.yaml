@@ -44,7 +44,6 @@ dependencies:
   flutter_svg: ^2.0.10+1
   mesh: ^0.4.1
   figma_squircle: ^0.5.3
-  slider_button: ^2.1.0
 
 dev_dependencies:
   flutter_test:

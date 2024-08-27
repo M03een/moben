@@ -6,6 +6,6 @@ class PrayView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const PrayViewBody();
+    return  PrayViewBody();
   }
 }
