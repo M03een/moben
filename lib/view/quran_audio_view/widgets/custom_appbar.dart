@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:moben/utils/size_config.dart';
+import 'package:moben/utils/widgets/custom_icon.dart';
 import 'package:moben/utils/widgets/gradient_text.dart';
 import 'package:moben/utils/widgets/snack_bars.dart';
 
@@ -15,32 +16,46 @@ class CustomAppbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Row(
-          children: [
-            const GradientText(
-              text: 'السلام عليكم',
-              gradient: LinearGradient(
-                  colors: [AppColors.accentColor, AppColors.secAccentColor]),
-              style: AppStyles.textStyle24,
-            ),
-            (screenWidth(context) * 0.01).sw,
-            const Text(
-              ',عبدالله ',
-              style: AppStyles.textStyle24,
-            )
-          ],
+        Image.asset(
+          'assets/images/logo.png',
+          width: screenWidth(context) * 0.25,
+          height: screenHeight(context) * 0.07,
         ),
-
-        IconButton(
-          onPressed: () {
-           nextUpdateSnackBar();
-          },
-          icon: Icon(
-            CupertinoIcons.cube_box,
-            size: screenWidth(context) * 0.1,
-            color: AppColors.accentColor,
+        const Spacer(),
+        Container(
+          width: screenWidth(context) * 0.13,
+          height: screenHeight(context) * 0.06,
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color:  AppColors.whiteColor.withOpacity(0.2),
+            borderRadius: BorderRadius.circular(15)
+          ),
+          child: SvgIconButton(
+            onTap: () {
+              nextUpdateSnackBar();
+            },
+            width:  screenWidth(context)*0.1,
+            height: screenHeight(context)*0.04,
+            icon: 'user.svg',
+            color: AppColors.secAccentColor,
+          ),
+        ),
+        (screenWidth(context)*0.03).sw,
+        Container(
+          width: screenWidth(context) * 0.13,
+          height: screenHeight(context) * 0.06,
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color:  AppColors.whiteColor.withOpacity(0.2),
+            borderRadius: BorderRadius.circular(15)
+          ),
+          child: SvgIconButton(
+            onTap: () {},
+            width:  screenWidth(context)*0.1,
+            height: screenHeight(context)*0.04,
+            icon: 'apps.svg',
+            color: AppColors.secAccentColor,
           ),
         ),
       ],
