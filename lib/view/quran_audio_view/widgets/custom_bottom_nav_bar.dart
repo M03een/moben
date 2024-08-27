@@ -32,7 +32,9 @@ class CustomBottomNavBar extends StatelessWidget {
                 controller.updateCurrentIndex(0);
               },
               isSelected: controller.currentSelectedIndex.value == 0,
-              color: AppColors.secAccentColor,
+              color: controller.currentSelectedIndex.value == 0
+                  ? AppColors.secAccentColor
+                  : AppColors.whiteColor.withOpacity(0.2),
             ),
             CustomIcon(
               icon: 'bell-concierge.svg',
@@ -40,7 +42,9 @@ class CustomBottomNavBar extends StatelessWidget {
                 controller.updateCurrentIndex(1);
               },
               isSelected: controller.currentSelectedIndex.value == 1,
-              color: AppColors.secAccentColor,
+              color: controller.currentSelectedIndex.value == 1
+                  ? AppColors.secAccentColor
+                  : AppColors.whiteColor.withOpacity(0.2),
             ),
             CustomIcon(
               icon: 'navigation.svg',
@@ -48,7 +52,9 @@ class CustomBottomNavBar extends StatelessWidget {
                 controller.updateCurrentIndex(2);
               },
               isSelected: controller.currentSelectedIndex.value == 2,
-              color: AppColors.secAccentColor,
+              color: controller.currentSelectedIndex.value == 2
+                  ? AppColors.secAccentColor
+                  : AppColors.whiteColor.withOpacity(0.2),
             ),
             CustomIcon(
               icon: 'layers.svg',
@@ -56,7 +62,9 @@ class CustomBottomNavBar extends StatelessWidget {
                 controller.updateCurrentIndex(3);
               },
               isSelected: controller.currentSelectedIndex.value == 3,
-              color: AppColors.secAccentColor,
+              color: controller.currentSelectedIndex.value == 3
+                  ? AppColors.secAccentColor
+                  : AppColors.whiteColor.withOpacity(0.2),
             ),
           ],
         ),

@@ -28,23 +28,17 @@ class BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-      body: Obx((){
-
-        return  Stack(
+      body: Obx(() {
+        return Stack(
           children: [
             pages[controller.currentSelectedIndex.value],
-
             const Align(
-                alignment: Alignment.bottomCenter,
-                child: CustomBottomNavBar(),
+              alignment: Alignment.bottomCenter,
+              child: CustomBottomNavBar(),
             ),
           ],
         );
-
       }),
-
     );
   }
 }
-
