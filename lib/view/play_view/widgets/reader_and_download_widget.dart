@@ -13,16 +13,12 @@ import '../../../utils/widgets/glass_container.dart';
 class ReaderAndDownloadWidget extends StatelessWidget {
   ReaderAndDownloadWidget({
     super.key,
-    required this.readerName,
-    required this.isDownloaded,
-    required this.percentage,
+
     required this.downloadOnTap,
   });
 
   final ReaderController readerController = Get.put(ReaderController());
-  final String readerName;
-  final bool isDownloaded;
-  final String percentage;
+
   final Function() downloadOnTap;
 
   @override

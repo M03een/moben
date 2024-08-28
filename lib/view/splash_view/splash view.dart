@@ -38,8 +38,8 @@ class _SplashViewState extends State<SplashView> {
           duration: const Duration(seconds: 2),
           child: Image.asset(
             'assets/images/logo.png',
-            width: screenWidth(context) * 0.3,
-            height: screenHeight(context) * 0.4,
+            width: screenWidth(context) * 0.2,
+            height: screenHeight(context) * 0.34,
           ),
         ),
       ),

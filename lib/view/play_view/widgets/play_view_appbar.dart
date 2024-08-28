@@ -22,7 +22,9 @@ class PlayViewAppbar extends StatelessWidget {
         ),
         IconButton(
           onPressed: () {
-            Get.back();
+            Get.back(
+
+            );
           },
           icon: const Icon(
             CupertinoIcons.chevron_down,

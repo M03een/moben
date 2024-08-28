@@ -20,7 +20,7 @@ class NewPray extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: screenHeight(context) * 0.42,
+      height: screenHeight(context) * 0.43,
       width: screenWidth(context) * 0.9,
       padding: const EdgeInsets.all(10),
       decoration: ShapeDecoration(

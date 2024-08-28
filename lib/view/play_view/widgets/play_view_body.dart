@@ -37,9 +37,7 @@ class PlayViewBody extends StatelessWidget {
           ),
           (screenHeight(context) * 0.02).sh,
           ReaderAndDownloadWidget(
-            readerName: 'ابوبكر الشاطري',
-            isDownloaded: true,
-            percentage: '',
+
             downloadOnTap: () {
               nextUpdateSnackBar();
             },

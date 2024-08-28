@@ -27,7 +27,7 @@ class BottomNavBar extends StatelessWidget {
         return Stack(
           children: [
             pages[controller.currentSelectedIndex.value],
-            const Align(
+            Align(
               alignment: Alignment.bottomCenter,
               child: CustomBottomNavBar(),
             ),
