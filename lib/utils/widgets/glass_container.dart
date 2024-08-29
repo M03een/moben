@@ -58,6 +58,7 @@ class GlassContainer extends StatelessWidget {
             border: border,
           ),
           child: InkWell(
+            borderRadius: BorderRadius.all(Radius.circular(borderRadius ?? 15)),
             onTap: onTap,
             child: child,
           ),

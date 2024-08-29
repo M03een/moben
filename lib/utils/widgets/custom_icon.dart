@@ -24,10 +24,9 @@ class SvgIconButton extends StatelessWidget {
   const SvgIconButton({
     super.key,
     required this.onTap,
-    required this.width,
-    required this.height,
+
     required this.icon,
-    required this.color,
+    required this.color, this.width, this.height,
   });
 
   final Function() onTap;

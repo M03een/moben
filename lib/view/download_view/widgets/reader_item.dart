@@ -59,7 +59,7 @@ class ReaderItem extends StatelessWidget {
                     ),
                     TextSpan(
                       text: " $downloaded",
-                      style: AppStyles.textStyle30,
+                      style: AppStyles.textStyle35,
                     ),
                   ]),
                 ),

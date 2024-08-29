@@ -25,10 +25,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    SystemChrome.setEnabledSystemUIMode(
-        SystemUiMode.manual,
-        overlays: [SystemUiOverlay.top]
-    );
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
     _mobenPermissionHandler.checkLocationPermission();
     return AnnotatedRegion(
       value: const SystemUiOverlayStyle(

@@ -40,11 +40,11 @@ class QuranAudioViewBody extends StatelessWidget {
                   return const CircularProgressIndicator();
                 } else if (snapshot.hasError) {
                   return const Center(
-                    child: Text('Error fetching Surahs', style: AppStyles.textStyle30),
+                    child: Text('Error fetching Surahs', style: AppStyles.textStyle35),
                   );
                 } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                   return const Center(
-                    child: Text('لا توجد سورة بهذا الأسم', style: AppStyles.textStyle30),
+                    child: Text('لا توجد سورة بهذا الأسم', style: AppStyles.textStyle35),
                   );
                 } else {
                   final surahs = snapshot.data!;
