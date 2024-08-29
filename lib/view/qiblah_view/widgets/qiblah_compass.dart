@@ -3,9 +3,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_qiblah/flutter_qiblah.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:moben/utils/colors.dart';
+import 'package:moben/utils/styles.dart';
 
 class QiblahCompass extends StatefulWidget {
-    QiblahCompass({super.key});
+    const QiblahCompass({super.key});
 
   @override
   State<QiblahCompass> createState() => _QiblahCompassState();
@@ -41,8 +43,8 @@ class _QiblahCompassState extends State<QiblahCompass> with SingleTickerProvider
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Container(
             alignment: Alignment.center,
-            child: const CircularProgressIndicator(
-              color: Color(0xff87854f),
+            child:  const CircularProgressIndicator(
+              color: AppColors.accentColor,
             ),
           );
         }
@@ -73,8 +75,15 @@ class _QiblahCompassState extends State<QiblahCompass> with SingleTickerProvider
             ),
           );
         } else {
-          return const Center(
-            child: Text('Unable to get Qiblah direction'),
+          return   Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('تأكد من تشغيل ال Location',style: AppStyles.textStyle24.copyWith(color: AppColors.accentColor),),
+                Text('تأكد من السماح بأذونات الموقع من الإعدادات',style: AppStyles.textStyle24.copyWith(color: AppColors.accentColor),),
+                Text('و لو ايفون مش ذنبي',style: AppStyles.textStyle24.copyWith(color: AppColors.accentColor),),
+              ],
+            ),
           );
         }
       },
