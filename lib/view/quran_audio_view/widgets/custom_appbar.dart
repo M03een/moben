@@ -2,11 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:moben/utils/size_config.dart';
 import 'package:moben/utils/widgets/custom_icon.dart';
-import 'package:moben/utils/widgets/gradient_text.dart';
 import 'package:moben/utils/widgets/snack_bars.dart';
 
 import '../../../utils/colors.dart';
-import '../../../utils/styles.dart';
 
 class CustomAppbar extends StatelessWidget {
   const CustomAppbar({
@@ -20,7 +18,7 @@ class CustomAppbar extends StatelessWidget {
         Image.asset(
           'assets/images/logo.png',
           width: screenWidth(context) * 0.25,
-          height: screenHeight(context) * 0.07,
+          height: screenHeight(context) * 0.06,
         ),
         const Spacer(),
         Container(

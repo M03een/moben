@@ -2,22 +2,25 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_qiblah/flutter_qiblah.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:moben/utils/colors.dart';
 import 'package:moben/utils/styles.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class QiblahCompass extends StatefulWidget {
-    const QiblahCompass({super.key});
+  const QiblahCompass({super.key});
 
   @override
   State<QiblahCompass> createState() => _QiblahCompassState();
 }
 
-class _QiblahCompassState extends State<QiblahCompass> with SingleTickerProviderStateMixin {
-
+class _QiblahCompassState extends State<QiblahCompass>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _animation;
   double _begin = 0.0;
+
+  final Stream<QiblahDirection> flutterQiblah = FlutterQiblah.qiblahStream;
 
   @override
   void initState() {
@@ -25,15 +28,16 @@ class _QiblahCompassState extends State<QiblahCompass> with SingleTickerProvider
     _animationController =
         AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
     _animation = Tween(begin: 0.0, end: 0.0).animate(_animationController);
+
   }
+
+
 
   @override
   void dispose() {
     _animationController.dispose();
     super.dispose();
   }
-
-  final Stream<QiblahDirection> flutterQiblah =FlutterQiblah.qiblahStream;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +47,7 @@ class _QiblahCompassState extends State<QiblahCompass> with SingleTickerProvider
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Container(
             alignment: Alignment.center,
-            child:  const CircularProgressIndicator(
+            child: const CircularProgressIndicator(
               color: AppColors.accentColor,
             ),
           );
@@ -75,13 +79,16 @@ class _QiblahCompassState extends State<QiblahCompass> with SingleTickerProvider
             ),
           );
         } else {
-          return   Center(
+          return Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('تأكد من تشغيل ال Location',style: AppStyles.textStyle24.copyWith(color: AppColors.accentColor),),
-                Text('تأكد من السماح بأذونات الموقع من الإعدادات',style: AppStyles.textStyle24.copyWith(color: AppColors.accentColor),),
-                Text('و لو ايفون مش ذنبي',style: AppStyles.textStyle24.copyWith(color: AppColors.accentColor),),
+                Text('تأكد من تشغيل ال Location',
+                    style: AppStyles.textStyle24.copyWith(color: AppColors.accentColor)),
+                Text('تأكد من السماح بأذونات الموقع من الإعدادات',
+                    style: AppStyles.textStyle24.copyWith(color: AppColors.accentColor)),
+                Text('و لو ايفون مش ذنبي',
+                    style: AppStyles.textStyle24.copyWith(color: AppColors.accentColor)),
               ],
             ),
           );

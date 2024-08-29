@@ -26,7 +26,20 @@ class QuranAudioView extends StatelessWidget {
             secColor: AppColors.secAccentColor.withOpacity(0.35),
             bottomPosition: screenHeight(context) * 0.4,
             rightPosition: screenWidth(context) * 0.1,
-            child: Obx(
+            child: const QuranAudioViewBody(),
+
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+/*
+
+
+   child: Obx(
               () {
                 if (networkController.isInternetConnected.value) {
                   return const QuranAudioViewBody();
@@ -48,9 +61,6 @@ class QuranAudioView extends StatelessWidget {
                 }
               },
             ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+
+
+ */

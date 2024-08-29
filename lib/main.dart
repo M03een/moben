@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_qiblah/flutter_qiblah.dart';
 import 'package:get/get.dart';
 import 'package:just_audio_background/just_audio_background.dart';
+import 'package:moben/service/permission_handler.dart';
 import 'package:moben/utils/app_router.dart';
 import 'package:moben/utils/colors.dart';
 import 'package:moben/utils/local.dart';
@@ -19,6 +20,7 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
     MyApp({super.key});
   final deviceSupport = FlutterQiblah.androidDeviceSensorSupport();
+    final MobenPermissionHandler _mobenPermissionHandler = MobenPermissionHandler();
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,7 @@ class MyApp extends StatelessWidget {
         SystemUiMode.manual,
         overlays: [SystemUiOverlay.top]
     );
+    _mobenPermissionHandler.checkLocationPermission();
     return AnnotatedRegion(
       value: const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
