@@ -79,6 +79,7 @@ class NewPray extends StatelessWidget {
                     height: screenHeight(context) * 0.05,
                     child: CustomTextField(
                       onChanged: (val) {},
+                      obscureText: true,
                       hint: 'مثال: صلاة الظهر',
                       color: AppColors.secAccentColor,
                       textInputType: TextInputType.number,

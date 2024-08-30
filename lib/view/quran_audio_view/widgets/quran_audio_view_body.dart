@@ -29,6 +29,7 @@ class QuranAudioViewBody extends StatelessWidget {
             (screenHeight(context) * 0.02).sh,
             CustomTextField(
               hint: '2'.tr,
+              obscureText: true,
               onChanged: (val) {
                 surahController.searchSurahs(val);
               },

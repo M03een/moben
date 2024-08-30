@@ -18,7 +18,7 @@ class AppRouter {
   static String zekrViewPath = '/zekr';
   static List<GetPage<dynamic>> routes = [
     GetPage(name: loginViewPath, page: () =>  const LoginView()),
-    GetPage(name: registerViewPath, page: () =>  const RegisterView()),
+    GetPage(name: registerViewPath, page: () =>   RegisterView()),
     GetPage(name: bottomNavigationPath, page: () =>  BottomNavBar()),
     GetPage(name: downloadViewPath, page: () => const DownloadView()),
     GetPage(name: playViewPath, page: () =>   const PlayView()),

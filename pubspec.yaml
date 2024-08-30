@@ -45,6 +45,8 @@ dependencies:
   mesh: ^0.4.1
   smooth_corner: ^1.1.0
   flutter_qiblah: ^2.2.1
+  supabase_flutter: ^2.6.0
+  flutter_dotenv: ^5.1.0
   permission_handler: ^11.3.1
   hugeicons: ^0.0.7
 
@@ -78,6 +80,7 @@ flutter:
     - assets/icons/svg_icons/
     - assets/images/azkar_avatars/
     - assets/json/azkar/azkar.json
+    - assets/.env
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
