@@ -9,11 +9,13 @@ import '../../../utils/size_config.dart';
 class ZekrContainer extends StatelessWidget {
   const ZekrContainer({
     super.key,
-    required this.child, required this.onTap,
+    required this.child, required this.onTap, required this.totalCount, required this.finishedCount,
   });
 
   final Widget child;
   final Function() onTap;
+  final String totalCount;
+  final int finishedCount;
 
   @override
   Widget build(BuildContext context) {
@@ -39,13 +41,14 @@ class ZekrContainer extends StatelessWidget {
           SmoothBorderRadius(cornerRadius: 25, cornerSmoothing: 0.6),
         ),
         child: Column(
+
           children: [
             child,
-            Spacer(),
+            const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text('3/2',style: AppStyles.textStyle24.copyWith(color: AppColors.primaryColor),),
+                Text('$totalCount/$finishedCount',style: AppStyles.textStyle24.copyWith(color: AppColors.primaryColor),),
               ],
             )
           ],

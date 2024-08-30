@@ -4,11 +4,15 @@ import 'package:moben/utils/colors.dart';
 import 'package:moben/utils/size_config.dart';
 import 'package:moben/utils/styles.dart';
 import 'package:moben/utils/widgets/custom_icon.dart';
-
+import '../../../controller/azkar_controller.dart';
+import '../../../model/azkar_category.dart';
+import '../../../utils/app_router.dart';
 import 'azkar_item.dart';
 
 class AzkarViewBody extends StatelessWidget {
-  const AzkarViewBody({super.key});
+  AzkarViewBody({super.key});
+
+  final AzkarController controller = Get.put(AzkarController());
 
   @override
   Widget build(BuildContext context) {
@@ -37,11 +41,30 @@ class AzkarViewBody extends StatelessWidget {
             ),
             (screenHeight(context) * 0.02).sh,
             Expanded(
-              child: ListView.builder(
-                itemBuilder: (context, index) {
-                  return const AzkarrItem();
-                },
-              ),
+              child: Obx(() {
+                if (controller.isLoading.value) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (controller.azkarCategories.isEmpty) {
+                  return const Center(child: Text('لا تتوفر بيانات'));
+                } else {
+                  return ListView.builder(
+                    itemCount: controller.azkarCategories.length,
+                    itemBuilder: (context, index) {
+                      String category =
+                          controller.azkarCategories.keys.toList()[index];
+                      AzkarCategory? azkarCategory =
+                          controller.azkarCategories[category];
+                      String imageUrl = azkarCategory?.imageUrl ??
+                          'assets/images/default_azkar.png';
+                      return AzkarrItem(
+                        zekrCategory: category,
+                        imageUrl: imageUrl,
+
+                      );
+                    },
+                  );
+                }
+              }),
             ),
           ],
         ),
@@ -49,4 +72,3 @@ class AzkarViewBody extends StatelessWidget {
     );
   }
 }
-
