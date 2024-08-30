@@ -6,6 +6,7 @@ import 'package:moben/utils/colors.dart';
 import 'package:moben/utils/size_config.dart';
 import 'package:moben/utils/styles.dart';
 import 'package:moben/utils/widgets/custom_text_field.dart';
+import 'package:moben/utils/widgets/snack_bars.dart';
 
 import '../../../controller/user_auth_controller.dart';
 import '../../../utils/app_router.dart';
@@ -144,7 +145,9 @@ class LoginViewBody extends StatelessWidget {
                 children: [
                   GradientButton(
                     width: screenWidth(context) * 0.15,
-                    onTap: () {},
+                    onTap: () {
+                      MobenSnackBars().nextUpdateSnackBar();
+                    },
                     child: const HugeIcon(
                       icon: HugeIcons.strokeRoundedNewTwitter,
                       color: AppColors.primaryColor,
@@ -153,7 +156,9 @@ class LoginViewBody extends StatelessWidget {
                   ),
                   GradientButton(
                     width: screenWidth(context) * 0.15,
-                    onTap: () {},
+                    onTap: () {
+                      MobenSnackBars().nextUpdateSnackBar();
+                    },
                     child: const HugeIcon(
                       icon: HugeIcons.strokeRoundedGoogle,
                       color: AppColors.primaryColor,

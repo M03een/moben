@@ -10,6 +10,7 @@ import '../../../utils/size_config.dart';
 import '../../../utils/styles.dart';
 import '../../../utils/widgets/custom_text_field.dart';
 import '../../../utils/widgets/gradient_button.dart';
+import '../../../utils/widgets/snack_bars.dart';
 
 class RegisterViewBody extends StatelessWidget {
   const RegisterViewBody({super.key});
@@ -65,7 +66,7 @@ class RegisterViewBody extends StatelessWidget {
                 obscureText: false,
                 hint: 'الاسم',
                 color: AppColors.whiteColor,
-                icon: CupertinoIcons.at,
+                icon: CupertinoIcons.person_alt_circle_fill,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'الرجاء إدخال اسمك';
@@ -156,7 +157,10 @@ class RegisterViewBody extends StatelessWidget {
                 children: [
                   GradientButton(
                     width: screenWidth(context) * 0.15,
-                    onTap: () {},
+                    onTap: () {
+                      MobenSnackBars().nextUpdateSnackBar();
+
+                    },
                     child: const HugeIcon(
                       icon: HugeIcons.strokeRoundedNewTwitter,
                       color: AppColors.primaryColor,
@@ -165,7 +169,10 @@ class RegisterViewBody extends StatelessWidget {
                   ),
                   GradientButton(
                     width: screenWidth(context) * 0.15,
-                    onTap: () {},
+                    onTap: () {
+                      MobenSnackBars().nextUpdateSnackBar();
+
+                    },
                     child: const HugeIcon(
                       icon: HugeIcons.strokeRoundedGoogle,
                       color: AppColors.primaryColor,
