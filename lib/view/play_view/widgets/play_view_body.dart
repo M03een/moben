@@ -39,7 +39,7 @@ class PlayViewBody extends StatelessWidget {
           ReaderAndDownloadWidget(
 
             downloadOnTap: () {
-              nextUpdateSnackBar();
+              MobenSnackBars().nextUpdateSnackBar();
             },
           ),
           (screenHeight(context) * 0.01).sh,

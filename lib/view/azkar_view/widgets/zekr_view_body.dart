@@ -27,7 +27,7 @@ class ZekrViewBody extends GetView<AzkarController> {
         children: [
           (screenHeight(context) * 0.06).sh,
           Obx(
-            () => GradientText(
+                () => GradientText(
               text: controller.selectedCategory.value?.name ?? '',
               gradient: const LinearGradient(colors: [
                 AppColors.accentColor,
@@ -42,29 +42,57 @@ class ZekrViewBody extends GetView<AzkarController> {
             if (category == null) {
               return const Center(child: Text('لم يتم اختيار اي ذكر'));
             }
-           return Expanded(
-             child: ListView.builder(
-               scrollDirection: Axis.horizontal,
-                 itemCount: category.items.length,
-                 itemBuilder: (context, index){
-                   final item = category.items[index];
-                   return ZekrContainer(
-                     onTap: () {},
-                     finishedCount: 0,
-                     totalCount: item.count,
-                     child: Text(
-                       item.content,
-                       textAlign: TextAlign.center,
-                       style: AppStyles.quranTextStyle30.copyWith(
-                           color: AppColors.primaryColor,
-                           height: 2,
-                           fontWeight: FontWeight.bold),
-                     ),
-                   );
-             }),
-           );
+            return Expanded(
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: category.items.length,
+                controller: controller.scrollController,
+                itemBuilder: (context, index) {
+                  final item = category.items[index];
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Obx(
+                            () {
+                          final currentCount = controller.currentCounts[
+                          '${category.name}_${item.content}']
+                              ?.value ??
+                              0;
+                          final isFinished = controller.isZekrFinished(
+                              category.name, item.content);
+                          return ZekrContainer(
+                            onTap: () {
+                              controller.incrementCount(
+                                  category.name, item.content);
+                              if (isFinished) {
+                                controller.scrollToNextIndex(index + 1, context);
+                              }
+                            },
+                            zekr: item.content,
+                            finishedCount: currentCount,
+                            totalCount: item.count,
+                            isZekrFinished: isFinished,
+                          );
+                        },
+                      ),
+                      SizedBox(
+                        width:screenWidth(context) * 0.9,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            maxLines: 3,
+                            item.description,
+                            style: AppStyles.textStyle15,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            );
           }),
-
           const ProgressBar(),
         ],
       ),
