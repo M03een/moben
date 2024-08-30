@@ -1,4 +1,3 @@
-import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../utils/colors.dart';
@@ -20,7 +19,7 @@ class ProgressBar extends GetView<AzkarController> {
         decoration: BoxDecoration(
           color: AppColors.whiteColor.withOpacity(0.1),
           borderRadius:
-          SmoothBorderRadius(cornerRadius: 25, cornerSmoothing: 0.6),
+          BorderRadius.circular(25),
         ),
         child: Obx(() {
           return Container(
@@ -36,7 +35,7 @@ class ProgressBar extends GetView<AzkarController> {
                 ],
               ),
               borderRadius:
-              SmoothBorderRadius(cornerRadius: 25, cornerSmoothing: 0.6),
+              BorderRadius.circular(25),
             ),
           );
         }),

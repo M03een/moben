@@ -1,4 +1,3 @@
-import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moben/view/pray_view/widgets/pray_counter.dart';
@@ -23,15 +22,9 @@ class NewPray extends StatelessWidget {
       height: screenHeight(context) * 0.43,
       width: screenWidth(context) * 0.9,
       padding: const EdgeInsets.all(10),
-      decoration: ShapeDecoration(
-        shape: SmoothRectangleBorder(
-          side: BorderSide(
-              color: AppColors.whiteColor.withOpacity(0.3), width: 2),
-          borderRadius: SmoothBorderRadius(
-            cornerRadius: 20,
-            cornerSmoothing: 1,
-          ),
-        ),
+      decoration: BoxDecoration(
+        border: Border.all(color: AppColors.whiteColor.withOpacity(0.3), width: 2),
+        borderRadius: BorderRadius.circular(20),
       ),
       child: GetBuilder(
         init: prayCounterController,

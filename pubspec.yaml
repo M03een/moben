@@ -43,9 +43,10 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   flutter_svg: ^2.0.10+1
   mesh: ^0.4.1
-  figma_squircle: ^0.5.3
+  smooth_corner: ^1.1.0
   flutter_qiblah: ^2.2.1
   permission_handler: ^11.3.1
+  hugeicons: ^0.0.7
 
 dev_dependencies:
   flutter_test:

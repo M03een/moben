@@ -1,4 +1,3 @@
-import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 import 'package:moben/utils/styles.dart';
 
@@ -41,8 +40,7 @@ class ZekrContainer extends StatelessWidget {
               AppColors.secAccentColor.withOpacity(isZekrFinished ? 0.1 : 0.6),
             ],
           ),
-          borderRadius:
-          SmoothBorderRadius(cornerRadius: 25, cornerSmoothing: 0.6),
+          borderRadius: BorderRadius.circular(25),
         ),
         child: Column(
           children: [

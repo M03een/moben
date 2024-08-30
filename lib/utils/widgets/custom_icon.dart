@@ -40,6 +40,7 @@ class SvgIconButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: SvgPicture.asset(
+        fit: BoxFit.cover,
         width: width,
         height: height,
         'assets/icons/svg_icons/$icon',
