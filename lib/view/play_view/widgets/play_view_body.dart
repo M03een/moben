@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:moben/utils/helper.dart';
-import 'package:moben/utils/widgets/snack_bars.dart';
+import 'package:moben/core/utils/helper.dart';
+import 'package:moben/core/utils/widgets/snack_bars.dart';
 
 import 'package:moben/view/play_view/widgets/play_view_appbar.dart';
 import 'package:moben/view/play_view/widgets/reader_and_download_widget.dart';
@@ -10,7 +10,7 @@ import 'package:moben/view/play_view/widgets/surah_widget.dart';
 import '../../../controller/audio_palylist_controller.dart';
 import '../../../controller/surah_controller.dart';
 import '../../../model/surah_model.dart';
-import '../../../utils/size_config.dart';
+import '../../../core/utils/size_config.dart';
 import 'audio_controller_widget.dart';
 import 'audio_time_line.dart';
 import 'auto_play.dart';

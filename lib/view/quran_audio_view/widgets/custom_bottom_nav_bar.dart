@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:moben/utils/colors.dart';
-import 'package:moben/utils/styles.dart';
-import 'package:moben/utils/widgets/custom_icon.dart';
+import 'package:moben/core/utils/colors.dart';
+import 'package:moben/core/utils/styles.dart';
+import 'package:moben/core/utils/widgets/custom_icon.dart';
 import '../../../controller/audio_palylist_controller.dart';
 import '../../../controller/bottom_nav_controller.dart';
-import '../../../utils/size_config.dart';
+import '../../../core/utils/size_config.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
   CustomBottomNavBar({super.key});

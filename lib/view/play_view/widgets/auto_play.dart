@@ -1,13 +1,12 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 
 import '../../../controller/audio_palylist_controller.dart';
-import '../../../utils/colors.dart';
-import '../../../utils/size_config.dart';
-import '../../../utils/styles.dart';
-import '../../../utils/widgets/glass_container.dart';
+import '../../../core/utils/colors.dart';
+import '../../../core/utils/size_config.dart';
+import '../../../core/utils/styles.dart';
+import '../../../core/utils/widgets/glass_container.dart';
 
 class AutoPlay extends StatelessWidget {
   final AudioPlaylistController audioPlaylistController =

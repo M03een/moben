@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../utils/colors.dart';
-import '../../../utils/size_config.dart';
+import '../../../core/utils/colors.dart';
+import '../../../core/utils/size_config.dart';
 import '../../../controller/azkar_controller.dart';
 
 class ProgressBar extends GetView<AzkarController> {

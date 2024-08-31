@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:moben/utils/widgets/snack_bars.dart';
+import 'package:moben/core/utils/widgets/snack_bars.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../utils/app_router.dart';
+import '../core/utils/app_router.dart';
 
 class UserAuthController extends GetxController {
   final loginFormKey = GlobalKey<FormState>();

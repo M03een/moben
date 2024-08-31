@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:moben/utils/app_router.dart';
-import 'package:moben/utils/size_config.dart';
-import 'package:moben/utils/widgets/custom_icon.dart';
+import 'package:moben/core/utils/app_router.dart';
+import 'package:moben/core/utils/size_config.dart';
+import 'package:moben/core/utils/widgets/custom_icon.dart';
 
-import '../../../utils/colors.dart';
+import '../../../core/utils/colors.dart';
 
 class CustomAppbar extends StatelessWidget {
   const CustomAppbar({

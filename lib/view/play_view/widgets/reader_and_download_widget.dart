@@ -4,11 +4,11 @@ import 'package:get/get.dart';
 import 'package:moben/controller/reader_controller.dart';
 import 'package:moben/view/play_view/widgets/reader_bottom_sheet_body.dart';
 
-import '../../../utils/colors.dart';
-import '../../../utils/size_config.dart';
-import '../../../utils/styles.dart';
-import '../../../utils/widgets/custom_bottom_sheet.dart';
-import '../../../utils/widgets/glass_container.dart';
+import '../../../core/utils/colors.dart';
+import '../../../core/utils/size_config.dart';
+import '../../../core/utils/styles.dart';
+import '../../../core/utils/widgets/custom_bottom_sheet.dart';
+import '../../../core/utils/widgets/glass_container.dart';
 
 class ReaderAndDownloadWidget extends StatelessWidget {
   ReaderAndDownloadWidget({

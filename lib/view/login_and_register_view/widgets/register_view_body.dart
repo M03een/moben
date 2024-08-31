@@ -4,14 +4,13 @@ import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 import '../../../controller/user_auth_controller.dart';
-import '../../../utils/app_router.dart';
-import '../../../utils/colors.dart';
-import '../../../utils/size_config.dart';
-import '../../../utils/styles.dart';
-import '../../../utils/widgets/custom_text_field.dart';
-import '../../../utils/widgets/gradient_button.dart';
-import '../../../utils/widgets/snack_bars.dart';
-
+import '../../../core/utils/app_router.dart';
+import '../../../core/utils/colors.dart';
+import '../../../core/utils/size_config.dart';
+import '../../../core/utils/styles.dart';
+import '../../../core/utils/widgets/custom_text_field.dart';
+import '../../../core/utils/widgets/gradient_button.dart';
+import '../../../core/utils/widgets/snack_bars.dart';
 class RegisterViewBody extends StatelessWidget {
   const RegisterViewBody({super.key});
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:moben/utils/styles.dart';
+import 'package:moben/core/utils/styles.dart';
 
-import '../../../utils/colors.dart';
-import '../../../utils/size_config.dart';
+import '../../../core/utils/colors.dart';
+import '../../../core/utils/size_config.dart';
 
 class ZekrContainer extends StatelessWidget {
   const ZekrContainer({

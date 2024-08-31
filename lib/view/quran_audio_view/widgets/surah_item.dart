@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../utils/size_config.dart';
-import '../../../utils/styles.dart';
-import '../../../utils/widgets/glass_container.dart';
+import '../../../core/utils/size_config.dart';
+import '../../../core/utils/styles.dart';
+import '../../../core/utils/widgets/glass_container.dart';
 
 class SurahItem extends StatelessWidget {
   final String surahName;

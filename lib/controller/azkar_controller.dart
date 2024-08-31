@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' as rootBundle;
-import 'package:moben/utils/size_config.dart';
-import 'package:moben/utils/widgets/snack_bars.dart';
+import 'package:moben/core/utils/size_config.dart';
+import 'package:moben/core/utils/widgets/snack_bars.dart';
 import '../model/azkar_category.dart';
 import '../model/azkar_item_model.dart';
 

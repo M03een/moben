@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mesh/mesh.dart';
 import 'package:moben/controller/counter_controller.dart';
-import 'package:moben/utils/colors.dart';
-import 'package:moben/utils/size_config.dart';
-import 'package:moben/utils/styles.dart';
+import 'package:moben/core/utils/colors.dart';
+import 'package:moben/core/utils/size_config.dart';
+import 'package:moben/core/utils/styles.dart';
 
 import 'mesh.dart';
 

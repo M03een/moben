@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../utils/colors.dart';
-import '../../../utils/size_config.dart';
-import '../../../utils/styles.dart';
+import '../../../core/utils/colors.dart';
+import '../../../core/utils/size_config.dart';
+import '../../../core/utils/styles.dart';
 
 class ReaderItem extends StatelessWidget {
   final String readerName;

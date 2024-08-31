@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:moben/utils/colors.dart';
-import 'package:moben/utils/size_config.dart';
-import 'package:moben/utils/styles.dart';
-import 'package:moben/utils/widgets/custom_icon.dart';
+import 'package:moben/core/utils/colors.dart';
+import 'package:moben/core/utils/size_config.dart';
+import 'package:moben/core/utils/styles.dart';
+import 'package:moben/core/utils/widgets/custom_icon.dart';
 import '../../../controller/azkar_controller.dart';
 import '../../../model/azkar_category.dart';
 import 'azkar_item.dart';

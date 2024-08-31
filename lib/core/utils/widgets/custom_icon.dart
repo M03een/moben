@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:moben/utils/colors.dart';
+import 'package:moben/core/utils/colors.dart';
 
 class CustomIcon extends StatelessWidget {
   const CustomIcon({super.key, required this.icon, required this.onTap, required this.color, this.isSelected, this.width, this.height, });

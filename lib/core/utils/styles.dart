@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:moben/utils/colors.dart';
+import 'package:moben/core/utils/colors.dart';
 
 class AppStyles {
   static const TextStyle textStyle15 = TextStyle(

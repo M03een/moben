@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:moben/utils/colors.dart';
-import 'package:moben/utils/size_config.dart';
+import 'package:moben/core/utils/colors.dart';
+import 'package:moben/core/utils/size_config.dart';
 
 import '../../../controller/reader_controller.dart';
 

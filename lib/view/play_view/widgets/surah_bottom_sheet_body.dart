@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moben/controller/surah_controller.dart';
 import '../../../controller/audio_palylist_controller.dart';
-import '../../../utils/colors.dart';
-import '../../../utils/styles.dart';
+import '../../../core/utils/colors.dart';
+import '../../../core/utils/styles.dart';
 
 class SurahBottomSheetBody extends StatelessWidget {
   final SurahController surahController = Get.put(SurahController());

@@ -3,10 +3,10 @@ import 'package:get/get.dart';
 import 'package:moben/view/pray_view/widgets/pray_counter.dart';
 
 import '../../../controller/pray_counter_controller.dart';
-import '../../../utils/colors.dart';
-import '../../../utils/size_config.dart';
-import '../../../utils/styles.dart';
-import '../../../utils/widgets/custom_text_field.dart';
+import '../../../core/utils/colors.dart';
+import '../../../core/utils/size_config.dart';
+import '../../../core/utils/styles.dart';
+import '../../../core/utils/widgets/custom_text_field.dart';
 
 class NewPray extends StatelessWidget {
   NewPray({

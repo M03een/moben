@@ -1,13 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:moben/utils/size_config.dart';
-import 'package:moben/utils/styles.dart';
-import 'package:moben/utils/widgets/glow_background.dart';
-import 'package:moben/view/quran_audio_view/widgets/custom_bottom_nav_bar.dart';
+import 'package:moben/core/utils/size_config.dart';
+import 'package:moben/core/utils/widgets/glow_background.dart';
 import '../../controller/surah_controller.dart';
 import '../../controller/network_controller.dart'; // Import the NetworkController
-import '../../utils/colors.dart';
+import '../../core/utils/colors.dart';
 import 'widgets/quran_audio_view_body.dart';
 
 class QuranAudioView extends StatelessWidget {

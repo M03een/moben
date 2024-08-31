@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:moben/utils/size_config.dart';
-import '../../utils/widgets/glow_container.dart';
+import 'package:moben/core/utils/size_config.dart';
+import 'glow_container.dart';
 
 class GlowBackground extends StatelessWidget {
   const GlowBackground({

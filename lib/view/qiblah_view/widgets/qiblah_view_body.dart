@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:moben/utils/size_config.dart';
-import 'package:moben/utils/styles.dart';
+import 'package:moben/core/utils/size_config.dart';
+import 'package:moben/core/utils/styles.dart';
 import 'package:moben/view/qiblah_view/widgets/qiblah_compass.dart';
 import 'package:moben/view/qiblah_view/widgets/qiblah_mesh.dart';
 
-import '../../../utils/widgets/glassMorphism.dart';
+import '../../../core/utils/widgets/glassMorphism.dart';
 
 class QiblahViewBody extends StatelessWidget {
   const QiblahViewBody({super.key});

@@ -2,7 +2,7 @@ gradle-wrapper.jar
 /.gradle
 /captures/
 /gradlew
-ROOTDIRECTORY/assets/.env
+/assets/.env
 /gradlew.bat
 /local.properties
 GeneratedPluginRegistrant.java

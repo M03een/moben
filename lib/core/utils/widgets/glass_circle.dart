@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:moben/utils/colors.dart';
+import 'package:moben/core/utils/colors.dart';
 
 class GlassCircle extends StatelessWidget {
   const GlassCircle({

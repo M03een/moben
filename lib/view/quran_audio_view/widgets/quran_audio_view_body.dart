@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:moben/utils/styles.dart';
+import 'package:moben/core/utils/styles.dart';
 import '../../../controller/audio_palylist_controller.dart';
 import '../../../controller/surah_controller.dart';
 import '../../../model/surah_model.dart';
-import '../../../utils/widgets/custom_text_field.dart';
+import '../../../core/utils/widgets/custom_text_field.dart';
 import 'custom_appbar.dart';
 import 'surah_item.dart';
-import 'package:moben/utils/app_router.dart';
-import 'package:moben/utils/size_config.dart';
+import 'package:moben/core/utils/app_router.dart';
+import 'package:moben/core/utils/size_config.dart';
 
 class QuranAudioViewBody extends StatelessWidget {
   const QuranAudioViewBody({super.key});

@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 
-import '../../../utils/colors.dart';
-import '../../../utils/size_config.dart';
-import '../../../utils/widgets/glass_circle.dart';
+import '../../../core/utils/colors.dart';
+import '../../../core/utils/size_config.dart';
+import '../../../core/utils/widgets/glass_circle.dart';
 
 class AudioControllerWidget extends StatelessWidget {
   const AudioControllerWidget({

@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:moben/view/play_view/widgets/surah_bottom_sheet_body.dart';
 
-import '../../../utils/colors.dart';
-import '../../../utils/size_config.dart';
-import '../../../utils/styles.dart';
-import '../../../utils/widgets/custom_bottom_sheet.dart';
-import '../../../utils/widgets/glass_container.dart';
+import '../../../core/utils/colors.dart';
+import '../../../core/utils/size_config.dart';
+import '../../../core/utils/styles.dart';
+import '../../../core/utils/widgets/custom_bottom_sheet.dart';
+import '../../../core/utils/widgets/glass_container.dart';
 
 class SurahWidget extends StatelessWidget {
   const SurahWidget({

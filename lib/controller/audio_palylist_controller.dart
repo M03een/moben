@@ -3,7 +3,7 @@ import 'package:just_audio_background/just_audio_background.dart';
 import 'package:get/get.dart';
 import 'package:moben/controller/reader_controller.dart';
 import 'package:moben/controller/surah_controller.dart';
-import 'package:moben/utils/helper.dart';
+import 'package:moben/core/utils/helper.dart';
 
 class AudioPlaylistController extends GetxController {
   var isPlay = false.obs;

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:moben/utils/size_config.dart';
-import 'package:moben/utils/widgets/gradient_text.dart';
+import 'package:moben/core/utils/size_config.dart';
+import 'package:moben/core/utils/widgets/gradient_text.dart';
 import 'package:moben/view/azkar_view/widgets/progress_bar.dart';
 import 'package:moben/view/azkar_view/widgets/zekr_container.dart';
 
 import '../../../controller/azkar_controller.dart';
-import '../../../utils/colors.dart';
-import '../../../utils/styles.dart';
+import '../../../core/utils/colors.dart';
+import '../../../core/utils/styles.dart';
 
 class ZekrViewBody extends GetView<AzkarController> {
   const ZekrViewBody({super.key});

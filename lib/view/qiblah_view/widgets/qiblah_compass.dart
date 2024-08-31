@@ -3,9 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_qiblah/flutter_qiblah.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:moben/utils/colors.dart';
-import 'package:moben/utils/styles.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:moben/core/utils/colors.dart';
+import 'package:moben/core/utils/styles.dart';
 
 class QiblahCompass extends StatefulWidget {
   const QiblahCompass({super.key});

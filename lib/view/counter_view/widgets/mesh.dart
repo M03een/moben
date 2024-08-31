@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mesh/mesh.dart';
-import 'package:moben/utils/colors.dart';
+import 'package:moben/core/utils/colors.dart';
 
 final meshRect = OMeshRect(
   width: 3,

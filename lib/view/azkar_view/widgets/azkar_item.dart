@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../controller/azkar_controller.dart';
-import '../../../utils/app_router.dart';
-import '../../../utils/size_config.dart';
-import '../../../utils/styles.dart';
-import '../../../utils/widgets/glass_container.dart';
+import '../../../core/utils/app_router.dart';
+import '../../../core/utils/size_config.dart';
+import '../../../core/utils/styles.dart';
+import '../../../core/utils/widgets/glass_container.dart';
 
 class AzkarrItem extends GetView<AzkarController> {
   const AzkarrItem({

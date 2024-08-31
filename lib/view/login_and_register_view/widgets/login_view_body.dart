@@ -2,15 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
-import 'package:moben/utils/colors.dart';
-import 'package:moben/utils/size_config.dart';
-import 'package:moben/utils/styles.dart';
-import 'package:moben/utils/widgets/custom_text_field.dart';
-import 'package:moben/utils/widgets/snack_bars.dart';
+import 'package:moben/core/utils/colors.dart';
+import 'package:moben/core/utils/size_config.dart';
+import 'package:moben/core/utils/styles.dart';
+import 'package:moben/core/utils/widgets/custom_text_field.dart';
+import 'package:moben/core/utils/widgets/snack_bars.dart';
 
 import '../../../controller/user_auth_controller.dart';
-import '../../../utils/app_router.dart';
-import '../../../utils/widgets/gradient_button.dart';
+import '../../../core/utils/app_router.dart';
+import '../../../core/utils/widgets/gradient_button.dart';
 
 class LoginViewBody extends StatelessWidget {
   const LoginViewBody({super.key});

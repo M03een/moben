@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:moben/utils/size_config.dart';
+import 'package:moben/core/utils/size_config.dart';
 
-import '../../../utils/colors.dart';
-import '../../../utils/styles.dart';
+import '../../../core/utils/colors.dart';
+import '../../../core/utils/styles.dart';
 
 class PrayCounter extends StatelessWidget {
   const PrayCounter({

@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../utils/colors.dart';
-import '../../utils/size_config.dart';
-import '../../utils/widgets/glow_background.dart';
+import '../../core/utils/colors.dart';
+import '../../core/utils/size_config.dart';
+import '../../core/utils/widgets/glow_background.dart';
 import 'widgets/download_view_body.dart';
 
 class DownloadView extends StatelessWidget {
