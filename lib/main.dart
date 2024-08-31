@@ -10,11 +10,13 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'core/env/env.dart';
 import 'core/service/permission_handler.dart';
+import 'core/shared_prefrences/auth_shared_pref.dart';
 
 Future<void> main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
-
+  final AuthSharedPref authSharedPref = AuthSharedPref();
+  bool isLoggedIn = await authSharedPref.isLoggedIn();
   await Supabase.initialize(
     url: Env.supabaseUrl,      // Access the environment variable
     anonKey: Env.supabaseAnonKey, // Access the environment variable
@@ -26,11 +28,12 @@ Future<void> main() async {
     androidNotificationOngoing: true,
   );
 
-  runApp(MyApp());
+  runApp(MyApp(isLoggedIn: isLoggedIn,));
 }
 
 class MyApp extends StatelessWidget {
-    MyApp({super.key});
+  final bool isLoggedIn;
+    MyApp({super.key, required this.isLoggedIn});
   final deviceSupport = FlutterQiblah.androidDeviceSensorSupport();
     final MobenPermissionHandler _mobenPermissionHandler = MobenPermissionHandler();
 
@@ -60,6 +63,7 @@ class MyApp extends StatelessWidget {
             )),
         translations: AppStrings(),
         locale: const Locale('ar'),
+        initialRoute: isLoggedIn ? AppRouter.bottomNavigationPath : AppRouter.loginViewPath,
         getPages: AppRouter.routes,
       ),
     );

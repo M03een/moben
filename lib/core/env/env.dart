@@ -2,7 +2,7 @@ import 'package:envied/envied.dart';
 
 part 'env.g.dart';
 
-@Envied(path: 'assets/.env')  // Specify the path to your .env file
+@Envied(path: 'assets/.env')
 abstract class Env {
   @EnviedField(varName: 'SUPABASE_URL')
   static const String supabaseUrl = _Env.supabaseUrl;

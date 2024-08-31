@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:moben/core/shared_prefrences/auth_shared_pref.dart';
 import 'package:moben/core/utils/colors.dart';
 import 'package:moben/core/utils/size_config.dart';
 import 'package:moben/core/utils/styles.dart';
@@ -18,6 +19,7 @@ class LoginViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final UserAuthController authController = Get.put(UserAuthController());
+    final AuthSharedPref authSharedPref = AuthSharedPref();
 
     return Container(
       width: screenWidth(context),
@@ -78,37 +80,39 @@ class LoginViewBody extends StatelessWidget {
               ),
               (screenHeight(context) * 0.02).sh,
               Obx(() => CustomTextField(
-                    textInputType: TextInputType.visiblePassword,
-                    controller:
-                        authController.loginPasswordTextController.value,
-                    onChanged: (val) {},
-                    obscureText: authController.isLoginPasswordVisible.value,
-                    hint: 'الباسورد',
-                    color: AppColors.whiteColor,
-                    icon: CupertinoIcons.lock,
-                    suffixIcon: IconButton(
-                      onPressed: authController.toggleLoginPasswordVisibility,
-                      icon: Icon(
-                        authController.isLoginPasswordVisible.value
-                            ? HugeIcons.strokeRoundedViewOff
-                            : HugeIcons.strokeRoundedView,
-                        color: AppColors.whiteColor.withOpacity(0.3),
-                        size: 30,
-                      ),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'الرجاء إدخال كلمة المرور';
-                      } else if (value.length < 6) {
-                        return 'كلمة المرور يجب أن تكون على الأقل 6 أحرف';
-                      }
-                      return null;
-                    },
-                  )),
+                textInputType: TextInputType.visiblePassword,
+                controller:
+                authController.loginPasswordTextController.value,
+                onChanged: (val) {},
+                obscureText: authController.isLoginPasswordVisible.value,
+                hint: 'الباسورد',
+                color: AppColors.whiteColor,
+                icon: CupertinoIcons.lock,
+                suffixIcon: IconButton(
+                  onPressed: authController.toggleLoginPasswordVisibility,
+                  icon: Icon(
+                    authController.isLoginPasswordVisible.value
+                        ? HugeIcons.strokeRoundedViewOff
+                        : HugeIcons.strokeRoundedView,
+                    color: AppColors.whiteColor.withOpacity(0.3),
+                    size: 30,
+                  ),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'الرجاء إدخال كلمة المرور';
+                  } else if (value.length < 6) {
+                    return 'كلمة المرور يجب أن تكون على الأقل 6 أحرف';
+                  }
+                  return null;
+                },
+              )),
               (screenHeight(context) * 0.01).sh,
               TextButton(
-                onPressed: () {
-                  Get.offNamed(AppRouter.registerViewPath);
+                onPressed: () async {
+                  await authSharedPref.setLoggedIn(true);
+                  print('==========================${authSharedPref.isLoggedIn()}');
+                  Get.offNamed(AppRouter.bottomNavigationPath);
                 },
                 child: Text(
                   'ليس لديك حساب ؟',
@@ -121,22 +125,25 @@ class LoginViewBody extends StatelessWidget {
               ),
               (screenHeight(context) * 0.03).sh,
               Obx(
-                () => GradientButton(
+                    () => GradientButton(
                   width: screenWidth(context) * 0.9,
                   onTap: () {
                     if (authController.loginFormKey.currentState!.validate()) {
-                      authController.accountLogin(context);
+                      authController.accountLogin(context).then((_) {
+                        authSharedPref.setLoggedIn(true);
+                        Get.offNamed(AppRouter.bottomNavigationPath);
+                      });
                     }
                   },
                   child: authController.isLoading.value
                       ? const CircularProgressIndicator(
-                          color: AppColors.primaryColor,)
+                    color: AppColors.primaryColor,)
                       : Text(
-                          'تسجيل الدخول',
-                          style: AppStyles.textStyle24.copyWith(
-                            color: AppColors.primaryColor,
-                          ),
-                        ),
+                    'تسجيل الدخول',
+                    style: AppStyles.textStyle24.copyWith(
+                      color: AppColors.primaryColor,
+                    ),
+                  ),
                 ),
               ),
               (screenHeight(context) * 0.02).sh,
