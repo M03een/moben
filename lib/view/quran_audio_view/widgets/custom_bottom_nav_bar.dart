@@ -81,7 +81,7 @@ class CustomBottomNavBar extends StatelessWidget {
           padding:
               EdgeInsets.symmetric(horizontal: screenWidth(context) * 0.05),
           height: screenHeight(context) * 0.06,
-          width: screenWidth(context) * 0.5,
+          width: screenWidth(context) * 0.6,
           margin: EdgeInsets.only(bottom: screenHeight(context) * 0.03),
           child: Obx(
             () => Row(
@@ -108,7 +108,7 @@ class CustomBottomNavBar extends StatelessWidget {
                       : AppColors.whiteColor.withOpacity(0.2),
                 ),
                 CustomIcon(
-                  icon: 'navigation.svg',
+                  icon: 'circle-user.svg',
                   onTap: () {
                     controller.updateCurrentIndex(2);
                   },
@@ -118,12 +118,22 @@ class CustomBottomNavBar extends StatelessWidget {
                       : AppColors.whiteColor.withOpacity(0.2),
                 ),
                 CustomIcon(
-                  icon: 'person-praying.svg',
+                  icon: 'navigation.svg',
                   onTap: () {
                     controller.updateCurrentIndex(3);
                   },
                   isSelected: controller.currentSelectedIndex.value == 3,
                   color: controller.currentSelectedIndex.value == 3
+                      ? AppColors.secAccentColor
+                      : AppColors.whiteColor.withOpacity(0.2),
+                ),
+                CustomIcon(
+                  icon: 'person-praying.svg',
+                  onTap: () {
+                    controller.updateCurrentIndex(4);
+                  },
+                  isSelected: controller.currentSelectedIndex.value == 4,
+                  color: controller.currentSelectedIndex.value == 4
                       ? AppColors.secAccentColor
                       : AppColors.whiteColor.withOpacity(0.2),
                 ),

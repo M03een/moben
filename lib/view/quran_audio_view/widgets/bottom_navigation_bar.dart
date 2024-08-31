@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:moben/view/account_view/account_view.dart';
 import 'package:moben/view/counter_view/counter_view.dart';
 import 'package:moben/view/qiblah_view/qiblah_view.dart';
 import 'package:moben/view/quran_audio_view/widgets/custom_bottom_nav_bar.dart';
@@ -16,6 +17,7 @@ class BottomNavBar extends StatelessWidget {
   final List<Widget> pages = [
     QuranAudioView(),
     const CounterView(),
+    const AccountView(),
     const QiblahView(),
     const PrayView()
   ];
