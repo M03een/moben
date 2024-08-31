@@ -12,6 +12,7 @@ import 'core/env/env.dart';
 import 'core/service/permission_handler.dart';
 
 Future<void> main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
 
   await Supabase.initialize(
