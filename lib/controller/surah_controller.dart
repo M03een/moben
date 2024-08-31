@@ -1,6 +1,7 @@
+import 'dart:convert';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../model/surah_model.dart';
-import '../service/surahs_api.dart';
 
 class SurahController extends GetxController {
   var surahs = <Surah>[].obs;
@@ -17,9 +18,18 @@ class SurahController extends GetxController {
   void fetchSurahs() async {
     try {
       isLoading(true);
-      List<Surah>? surahList = await SurahsApi().fetchSurahs();
-      surahs.addAll(surahList as Iterable<Surah>);
-      filteredSurahs.addAll(surahList as Iterable<Surah>);
+
+      // Load JSON data from the asset file
+      final String response = await rootBundle.loadString('assets/json/surahs/surahs.json');
+      final data = json.decode(response);
+
+      // Convert the JSON data into a list of Surah objects
+      List<Surah> surahList = (data['suwar'] as List)
+          .map((surahJson) => Surah.fromJson(surahJson))
+          .toList();
+
+      surahs.addAll(surahList);
+      filteredSurahs.addAll(surahList);
     } catch (error) {
       print("Error fetching surahs: $error");
     } finally {

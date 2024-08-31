@@ -80,6 +80,7 @@ flutter:
     - assets/icons/svg_icons/
     - assets/images/azkar_avatars/
     - assets/json/azkar/azkar.json
+    - assets/json/surahs/surahs.json
     - assets/.env
   #   - images/a_dot_ham.jpeg
 

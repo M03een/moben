@@ -4,7 +4,6 @@ import 'package:moben/utils/styles.dart';
 import '../../../controller/audio_palylist_controller.dart';
 import '../../../controller/surah_controller.dart';
 import '../../../model/surah_model.dart';
-import '../../../service/surahs_api.dart';
 import '../../../utils/widgets/custom_text_field.dart';
 import 'custom_appbar.dart';
 import 'surah_item.dart';
@@ -35,20 +34,20 @@ class QuranAudioViewBody extends StatelessWidget {
               },
             ),
             FutureBuilder<List<Surah>>(
-              future: SurahsApi().fetchSurahs(),
+              future: Future.value(surahController.surahs),
               builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
+                if (surahController.isLoading.value) {
                   return const CircularProgressIndicator();
                 } else if (snapshot.hasError) {
                   return const Center(
                     child: Text('Error fetching Surahs', style: AppStyles.textStyle35),
                   );
-                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                } else if (surahController.surahs.isEmpty) {
                   return const Center(
                     child: Text('لا توجد سورة بهذا الأسم', style: AppStyles.textStyle35),
                   );
                 } else {
-                  final surahs = snapshot.data!;
+                  final surahs = surahController.surahs;
                   return ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,

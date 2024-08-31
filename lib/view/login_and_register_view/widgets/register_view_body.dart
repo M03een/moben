@@ -137,18 +137,26 @@ class RegisterViewBody extends StatelessWidget {
                 ),
               ),
               (screenHeight(context) * 0.01).sh,
-              GradientButton(
-                width: screenWidth(context) * 0.9,
-                onTap: () {
-                  if (authController.registerFormKey.currentState!.validate()) {
-                    authController.accountRegister(context);
-                  }
-                },
-                child: Text(
-                  'إنشئ حساب',
-                  style: AppStyles.textStyle24.copyWith(
-                    color: AppColors.primaryColor,
-                  ),
+
+              Obx(
+                () => GradientButton(
+                  width: screenWidth(context) * 0.9,
+                  onTap: () {
+                    if (authController.registerFormKey.currentState!
+                        .validate()) {
+                      authController.accountRegister(context);
+                    }
+                  },
+                  child: authController.isLoading.value
+                      ? const CircularProgressIndicator(
+                          color: AppColors.primaryColor,
+                        )
+                      : Text(
+                          'إنشئ حساب',
+                          style: AppStyles.textStyle24.copyWith(
+                            color: AppColors.primaryColor,
+                          ),
+                        ),
                 ),
               ),
               (screenHeight(context) * 0.02).sh,
@@ -159,7 +167,6 @@ class RegisterViewBody extends StatelessWidget {
                     width: screenWidth(context) * 0.15,
                     onTap: () {
                       MobenSnackBars().nextUpdateSnackBar();
-
                     },
                     child: const HugeIcon(
                       icon: HugeIcons.strokeRoundedNewTwitter,
@@ -171,7 +178,6 @@ class RegisterViewBody extends StatelessWidget {
                     width: screenWidth(context) * 0.15,
                     onTap: () {
                       MobenSnackBars().nextUpdateSnackBar();
-
                     },
                     child: const HugeIcon(
                       icon: HugeIcons.strokeRoundedGoogle,

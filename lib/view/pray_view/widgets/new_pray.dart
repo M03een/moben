@@ -19,7 +19,7 @@ class NewPray extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: screenHeight(context) * 0.43,
+      height: screenHeight(context) * 0.5,
       width: screenWidth(context) * 0.9,
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
@@ -74,17 +74,15 @@ class NewPray extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(
+                  CustomTextField(
+                    height:  screenHeight(context) * 0.09,
                     width: screenWidth(context) * 0.6,
-                    height: screenHeight(context) * 0.05,
-                    child: CustomTextField(
-                      onChanged: (val) {},
-                      obscureText: true,
-                      hint: 'مثال: صلاة الظهر',
-                      color: AppColors.secAccentColor,
-                      textInputType: TextInputType.number,
-                      icon: Icons.clean_hands_rounded,
-                    ),
+                    onChanged: (val) {},
+                    obscureText: true,
+                    hint: 'مثال: صلاة الظهر',
+                    color: AppColors.secAccentColor,
+                    textInputType: TextInputType.number,
+                    icon: Icons.clean_hands_rounded,
                   ),
                   InkWell(
                     onTap: () {},

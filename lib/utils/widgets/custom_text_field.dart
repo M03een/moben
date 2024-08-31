@@ -16,7 +16,7 @@ class CustomTextField extends StatelessWidget {
     this.controller,
     this.suffixIcon,
     this.validator,
-    required this.obscureText,
+    required this.obscureText, this.width, this.height,
   });
 
   final Function(String) onChanged;
@@ -28,46 +28,52 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController? controller;
   final String? Function(String?)? validator;
   final bool obscureText;
+  final double? width;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
-    return GlassContainer(
-      borderRadius: 12,
-      height: screenHeight(context) * 0.07,
-      width: screenWidth(context) * 0.9,
-      verticalPadding: 10,
-      horizontalPadding: 10,
-      child: TextFormField(
-        obscureText: obscureText,
-        validator: validator,
-        controller: controller,
-        keyboardType: textInputType ?? TextInputType.none,
-        onChanged: onChanged,
-        style: TextStyle(color: color ?? AppColors.accentColor),
-        decoration: InputDecoration(
-          prefixIcon: Icon(
-            icon ?? CupertinoIcons.search,
-            color: color?.withOpacity(0.6) ??
-                AppColors.accentColor.withOpacity(0.6),
-          ),
-          suffixIcon: suffixIcon,
-          hintText: hint,
-          hintStyle: TextStyle(
-            color: color?.withOpacity(0.6) ??
-                AppColors.accentColor.withOpacity(0.6),
-            fontSize: 20,
-          ),
-          // Remove borders
-          border: InputBorder.none,
-          focusedBorder: InputBorder.none,
-          enabledBorder: InputBorder.none,
-          errorBorder: InputBorder.none,
-          disabledBorder: InputBorder.none,
-          focusedErrorBorder: InputBorder.none,
-          // Display error text with custom style
-          errorStyle: const TextStyle(
-            color: AppColors.errorColor,
-            fontSize: 14,
+    return SizedBox(
+      height: height ?? screenHeight(context) * 0.07,
+      width: width  ?? screenWidth(context) * 0.9,
+      child: GlassContainer(
+        borderRadius: 12,
+        height: screenHeight(context) * 0.07,
+        width: screenWidth(context) * 0.9,
+        verticalPadding: 10,
+        horizontalPadding: 10,
+        child: TextFormField(
+          obscureText: obscureText,
+          validator: validator,
+          controller: controller,
+          keyboardType: textInputType ?? TextInputType.none,
+          onChanged: onChanged,
+          style: TextStyle(color: color ?? AppColors.accentColor),
+          decoration: InputDecoration(
+            prefixIcon: Icon(
+              icon ?? CupertinoIcons.search,
+              color: color?.withOpacity(0.6) ??
+                  AppColors.accentColor.withOpacity(0.6),
+            ),
+            suffixIcon: suffixIcon,
+            hintText: hint,
+            hintStyle: TextStyle(
+              color: color?.withOpacity(0.6) ??
+                  AppColors.accentColor.withOpacity(0.6),
+              fontSize: 20,
+            ),
+            // Remove borders
+            border: InputBorder.none,
+            focusedBorder: InputBorder.none,
+            enabledBorder: InputBorder.none,
+            errorBorder: InputBorder.none,
+            disabledBorder: InputBorder.none,
+            focusedErrorBorder: InputBorder.none,
+            // Display error text with custom style
+            errorStyle: const TextStyle(
+              color: AppColors.errorColor,
+              fontSize: 14,
+            ),
           ),
         ),
       ),

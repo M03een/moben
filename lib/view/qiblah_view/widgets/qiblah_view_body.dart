@@ -30,7 +30,7 @@ class QiblahViewBody extends StatelessWidget {
                     'القبلة',
                     style: AppStyles.quranTextStyle50,
                   ),
-                  (screenHeight(context) * 0.1).sh,
+                  (screenHeight(context) * 0.05).sh,
                   const QiblahCompass(),
                   Image.asset(
                     'assets/images/logo.png',

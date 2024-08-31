@@ -6,7 +6,6 @@ import 'package:moben/utils/styles.dart';
 import 'package:moben/utils/widgets/custom_icon.dart';
 import '../../../controller/azkar_controller.dart';
 import '../../../model/azkar_category.dart';
-import '../../../utils/app_router.dart';
 import 'azkar_item.dart';
 
 class AzkarViewBody extends StatelessWidget {

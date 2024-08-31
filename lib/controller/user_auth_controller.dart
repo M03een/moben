@@ -69,11 +69,7 @@ class UserAuthController extends GetxController {
         return;
       }
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text(
-                'Registration successful! Please check your email for verification.')),
-      );
+      MobenSnackBars().registerSnackBar();
 
       if (!context.mounted) return;
       isLoading.value = false;
