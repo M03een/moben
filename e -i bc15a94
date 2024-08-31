@@ -1,0 +1,66 @@
+[33m9bf1753[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m Ensured assets/.env is in .gitignore
+[33m0ba8e3f[m decline surahs api
+[33m5cd2f7d[m decline surahs api
+[33ma392c07[m شويه حاجه تافهه متقلثش
+[33m975432d[m Auth_finished
+[33mdd19d17[m login ui
+[33mbc15a94[m finish_azkar_feature
+[33mf53864e[m display zikr without logic
+[33m417e2ed[m finish Azkar UI
+[33m80e0b5f[m yousser
+[33me870f34[m bakr
+[33mf8de1c3[m bakr
+[33mf1ecab7[m bottom nav bar surah playing
+[33m95baaba[m modify appbar
+[33m8376a5e[m add praying UI and fix some issues and add ios permission
+[33m04c115a[m rerange ui and im middle of praying
+[33m341d4d8[m new bottom navigation bar update
+[33m5dff570[m new bottom navigation bar
+[33mb035e96[m improve fetching surhas performance
+[33m54b8943[m add animated mesh and with preparing for qiblah
+[33m57f54ff[m add counter and mesh to the app
+[33m2ff61eb[m add bottom_navigation_bar.dart and prepare for another features
+[33m1864f0e[m trigger reader bottom sheet items and fix other things in UI
+[33ma9e952d[m everything is zy el fol (mobile testing phase)
+[33mc8eb473[m solve play specific surah problem and trigger bottom playing widget
+[33mf93455b[m finish play list functionality with specific play problem
+[33m639b75c[m uncommented
+[33m0438c30[m add playlist playing logic without trigger
+[33m6899dd8[m bottom_playing_widget.dart surah name and icon without actions
+[33m532bdef[m internet connection checker done
+[33m31561cd[m internet connection checker basically
+[33m53d89b8[m playlist audio service 'Tagrob'
+[33mdf0377e[m refactor code and add bottom playing widget
+[33m5a3b794[m add background audio with custom notification icon
+[33me043677[m add background audio
+[33me26c021[m play when press on surah item
+[33mb96a50f[m download icon snack bar
+[33m10ca35f[m fix some UI problems and trigger surah changer view
+[33m1a39f5e[m add scrollbar
+[33m41b4892[m add app icon
+[33m4ab75db[m add readers  images
+[33mb30c4c1[m remove readers  images
+[33mc0c3844[m finish readers and autoplay features with little mistakes in autoplay logic
+[33m409016c[m finish readers and autoplay features with little mistakes in autoplay logic
+[33mc31cc22[m Merge remote-tracking branch 'origin/master'
+[33md042cfe[m add app icon
+[33mfcd45c9[m add splash view
+[33mb335aed[m add logo assets
+[33m98d4838[m UI improvements
+[33m80fb616[m add animation
+[33mf9690d0[m add loading widget
+[33mc8ff9de[m refactor controller code
+[33m3ced09f[m handel timeline controller and download snackbar
+[33mc1e4764[m update surah_item.dart
+[33mcce87d7[m update tagrob file
+[33ma6dcaa7[m controlling buttons with icons and isPause state
+[33m9543207[m controlling buttons without icons and isPause state
+[33mde55009[m audio controller
+[33m84d8ce2[m refactor code
+[33m20e232e[m audio time line
+[33ma0281f4[m display data and finish search method
+[33m7e6ee44[m finish all UI and handel api requests without display the data
+[33mbdaf92d[m unfinished play view
+[33m122fd9f[m download_view.dart ui done
+[33mc69504d[m download navigation
+[33m8259348[m Initial commit
