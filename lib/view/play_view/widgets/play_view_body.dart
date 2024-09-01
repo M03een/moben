@@ -5,6 +5,7 @@ import 'package:moben/core/utils/widgets/snack_bars.dart';
 
 import 'package:moben/view/play_view/widgets/play_view_appbar.dart';
 import 'package:moben/view/play_view/widgets/reader_and_download_widget.dart';
+import 'package:moben/view/play_view/widgets/reading_button.dart';
 import 'package:moben/view/play_view/widgets/surah_widget.dart';
 
 import '../../../controller/audio_palylist_controller.dart';
@@ -37,7 +38,6 @@ class PlayViewBody extends StatelessWidget {
           ),
           (screenHeight(context) * 0.02).sh,
           ReaderAndDownloadWidget(
-
             downloadOnTap: () {
               MobenSnackBars().nextUpdateSnackBar();
             },
@@ -52,6 +52,8 @@ class PlayViewBody extends StatelessWidget {
           ),
           (screenHeight(context) * 0.01).sh,
           AutoPlay(),
+          (screenHeight(context) * 0.01).sh,
+          const ReadingButton(),
           const Spacer(),
           AudioTimeLine(
             onChanged: (value) {
@@ -65,6 +67,7 @@ class PlayViewBody extends StatelessWidget {
             playedDuration: HelperFunctions()
                 .formatDuration(audioPlaylistController.position.value),
           ),
+
           (screenHeight(context) * 0.04).sh,
           AudioControllerWidget(
             isPaused: audioPlaylistController.isPlay.value,

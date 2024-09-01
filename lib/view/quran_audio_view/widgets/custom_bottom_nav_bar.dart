@@ -88,7 +88,7 @@ class CustomBottomNavBar extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CustomIcon(
-                  icon: 'waveform.svg',
+                  icon: 'book-quran.svg',
                   onTap: () {
                     controller.updateCurrentIndex(0);
                   },
@@ -128,7 +128,7 @@ class CustomBottomNavBar extends StatelessWidget {
                       : AppColors.whiteColor.withOpacity(0.2),
                 ),
                 CustomIcon(
-                  icon: 'person-praying.svg',
+                  icon: 'prayer-rug-02-stroke-rounded.svg',
                   onTap: () {
                     controller.updateCurrentIndex(4);
                   },
