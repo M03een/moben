@@ -88,7 +88,7 @@ class CustomBottomNavBar extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CustomIcon(
-                  icon: 'book-quran.svg',
+                  icon: 'waveform.svg',
                   onTap: () {
                     controller.updateCurrentIndex(0);
                   },
@@ -108,7 +108,7 @@ class CustomBottomNavBar extends StatelessWidget {
                       : AppColors.whiteColor.withOpacity(0.2),
                 ),
                 CustomIcon(
-                  icon: 'circle-user.svg',
+                  icon: 'navigation.svg',
                   onTap: () {
                     controller.updateCurrentIndex(2);
                   },
@@ -118,22 +118,12 @@ class CustomBottomNavBar extends StatelessWidget {
                       : AppColors.whiteColor.withOpacity(0.2),
                 ),
                 CustomIcon(
-                  icon: 'navigation.svg',
+                  icon: 'prayer-rug-02-stroke-rounded.svg',
                   onTap: () {
                     controller.updateCurrentIndex(3);
                   },
                   isSelected: controller.currentSelectedIndex.value == 3,
                   color: controller.currentSelectedIndex.value == 3
-                      ? AppColors.secAccentColor
-                      : AppColors.whiteColor.withOpacity(0.2),
-                ),
-                CustomIcon(
-                  icon: 'prayer-rug-02-stroke-rounded.svg',
-                  onTap: () {
-                    controller.updateCurrentIndex(4);
-                  },
-                  isSelected: controller.currentSelectedIndex.value == 4,
-                  color: controller.currentSelectedIndex.value == 4
                       ? AppColors.secAccentColor
                       : AppColors.whiteColor.withOpacity(0.2),
                 ),

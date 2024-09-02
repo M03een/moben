@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moben/core/utils/widgets/snack_bars.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../core/utils/app_router.dart';
@@ -26,6 +27,11 @@ class UserAuthController extends GetxController {
     isRegisterPasswordVisible.value = !isRegisterPasswordVisible.value;
   }
 
+  Future<void> _saveUserName(String name) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('userName', name);
+  }
+
   Future<void> accountLogin(BuildContext context) async {
     isLoading.value = true;
     try {
@@ -40,6 +46,13 @@ class UserAuthController extends GetxController {
             .erroeSnackBar(title: 'خطأ', subtitle: 'إيميل او باسورد غلط');
         return;
       }
+
+      // Retrieve user metadata
+      final user = response.user;
+      final userName = user?.userMetadata?['name'] ?? 'No Name Found';
+
+      // Save the user name to shared preferences
+      await _saveUserName(userName);
 
       if (!context.mounted) return;
       isLoading.value = false;
@@ -60,6 +73,9 @@ class UserAuthController extends GetxController {
       final response = await Supabase.instance.client.auth.signUp(
         email: registerEmailTextController.value.text.trim(),
         password: registerPasswordTextController.value.text.trim(),
+        data: {
+          'name': nameTextController.value.text.trim(),
+        },
       );
 
       if (response.user == null) {
@@ -68,6 +84,13 @@ class UserAuthController extends GetxController {
             title: 'خطأ', subtitle: 'حدث خطأ اثناء التسجيل . جرب مرة تانية');
         return;
       }
+
+      // Retrieve user metadata
+      final user = response.user;
+      final userName = user?.userMetadata?['name'] ?? 'No Name Found';
+
+      // Save the user name to shared preferences
+      await _saveUserName(userName);
 
       MobenSnackBars().registerSnackBar();
 

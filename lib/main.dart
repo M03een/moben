@@ -18,9 +18,12 @@ Future<void> main() async {
   final AuthSharedPref authSharedPref = AuthSharedPref();
   bool isLoggedIn = await authSharedPref.isLoggedIn();
   await Supabase.initialize(
-    url: Env.supabaseUrl,      // Access the environment variable
-    anonKey: Env.supabaseAnonKey, // Access the environment variable
+    url: Env.supabaseUrl,
+    anonKey: Env.supabaseAnonKey,
   );
+
+  print('=======================');
+  print('${Supabase.instance.client.auth.getUser()}');
 
   await JustAudioBackground.init(
     androidNotificationChannelId: 'com.example.moben',

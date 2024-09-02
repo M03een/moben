@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../model/surah_model.dart';
 
 class SurahController extends GetxController {
+  final GlobalKey<ScaffoldState> key = GlobalKey();
   var surahs = <Surah>[].obs;
   var filteredSurahs = <Surah>[].obs;
   var isLoading = true.obs;

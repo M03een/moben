@@ -24,7 +24,7 @@ class QuranAudioViewBody extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            const CustomAppbar(),
+             CustomAppbar(),
             (screenHeight(context) * 0.02).sh,
             CustomTextField(
               hint: '2'.tr,

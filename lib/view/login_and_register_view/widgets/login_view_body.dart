@@ -110,9 +110,8 @@ class LoginViewBody extends StatelessWidget {
               (screenHeight(context) * 0.01).sh,
               TextButton(
                 onPressed: () async {
-                  await authSharedPref.setLoggedIn(true);
-                  print('==========================${authSharedPref.isLoggedIn()}');
-                  Get.offNamed(AppRouter.bottomNavigationPath);
+
+                  Get.offNamed(AppRouter.registerViewPath);
                 },
                 child: Text(
                   'ليس لديك حساب ؟',
@@ -131,7 +130,6 @@ class LoginViewBody extends StatelessWidget {
                     if (authController.loginFormKey.currentState!.validate()) {
                       authController.accountLogin(context).then((_) {
                         authSharedPref.setLoggedIn(true);
-                        Get.offNamed(AppRouter.bottomNavigationPath);
                       });
                     }
                   },
