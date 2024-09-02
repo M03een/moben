@@ -25,7 +25,6 @@ class DownloadViewBody extends StatelessWidget {
         alignment: Alignment.topCenter,
         child: Column(
           children: [
-            (screenHeight(context) * 0.03).sh,
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

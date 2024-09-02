@@ -81,7 +81,7 @@ class CustomBottomNavBar extends StatelessWidget {
           padding:
               EdgeInsets.symmetric(horizontal: screenWidth(context) * 0.05),
           height: screenHeight(context) * 0.06,
-          width: screenWidth(context) * 0.6,
+          width: screenWidth(context) * 0.5,
           margin: EdgeInsets.only(bottom: screenHeight(context) * 0.03),
           child: Obx(
             () => Row(

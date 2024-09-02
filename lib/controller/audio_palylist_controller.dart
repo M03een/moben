@@ -1,6 +1,9 @@
+import 'dart:io';
+import 'package:dio/dio.dart';
+import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
-import 'package:get/get.dart';
 import 'package:moben/controller/reader_controller.dart';
 import 'package:moben/controller/surah_controller.dart';
 import 'package:moben/core/utils/helper.dart';
@@ -17,9 +20,18 @@ class AudioPlaylistController extends GetxController {
   var isShuffle = false.obs;
   var repeatMode = LoopMode.off.obs;
 
+  var isDownloading = false.obs;
+  var downloadProgress = 0.0.obs;  // Progress from 0.0 to 1.0
+  var downloadStatus = 'download'.obs;  // Status text: 'download', 'downloading', 'downloaded'
+
+
+
+
+
   AudioPlayer audioPlayer = AudioPlayer();
   final ReaderController readerController = Get.put(ReaderController());
   final SurahController surahController = Get.put(SurahController());
+  final Dio dio = Dio(); // Dio instance for downloading
 
   late ConcatenatingAudioSource _playlist;
 
@@ -51,6 +63,39 @@ class AudioPlaylistController extends GetxController {
     });
   }
 
+  Future<void> downloadSurah(int surahIndex) async {
+    isDownloading.value = true;
+    downloadStatus.value = 'downloading';
+
+    try {
+      // Get the directory path
+      Directory appDocDir = await getApplicationDocumentsDirectory();
+      String readerFolder = '${appDocDir.path}/${readerController.selectedReader.value}';
+      await Directory(readerFolder).create(recursive: true);
+
+      String surahUrl = '${HelperFunctions().readerUrl(id: readerController.readerIndex.value)}${(surahIndex + 1).toString().padLeft(3, '0')}.mp3';
+      String savePath = '$readerFolder/${(surahIndex + 1).toString().padLeft(3, '0')}.mp3';
+
+      // Download the file
+      await dio.download(
+        surahUrl,
+        savePath,
+        onReceiveProgress: (received, total) {
+          if (total != -1) {
+            downloadProgress.value = received / total;
+          }
+        },
+      );
+
+      downloadStatus.value = 'downloaded';
+    } catch (e) {
+      print("Download failed: $e");
+      downloadStatus.value = 'download'; // Reset to initial status
+    } finally {
+      isDownloading.value = false;
+    }
+  }
+
   void _handleReaderChange() async {
     int currentSurahIndex = surahIndex.value;
     await audioPlayer.stop();
@@ -71,8 +116,7 @@ class AudioPlaylistController extends GetxController {
     try {
       await audioPlayer.stop();
       surahIndex.value = newIndex - 1;
-      surahName.value =
-          surahController.surahs[newIndex].name ?? 'Unknown Surah';
+      surahName.value = surahController.surahs[newIndex].name ?? 'Unknown Surah';
       await audioPlayer.seek(Duration.zero, index: newIndex);
       await audioPlayer.play();
       loading.value = true;
@@ -131,7 +175,7 @@ class AudioPlaylistController extends GetxController {
           (index) {
         return AudioSource.uri(
           Uri.parse(
-              '${HelperFunctions().readerUrl(id: readerController.readerIndex.value)}${(index+1).toString().padLeft(3, '0')}.mp3'),
+              '${HelperFunctions().readerUrl(id: readerController.readerIndex.value)}${(index + 1).toString().padLeft(3, '0')}.mp3'),
           tag: MediaItem(
             id: '${index + 1}',
             album: readerController.selectedReader.value,
@@ -144,8 +188,6 @@ class AudioPlaylistController extends GetxController {
       },
     );
   }
-
-
 
   void _setupListeners() {
     audioPlayer.playerStateStream.listen((playerState) {

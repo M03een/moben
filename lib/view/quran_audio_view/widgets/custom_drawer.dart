@@ -80,7 +80,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
           DrawerButton(
             surahController: surahController,
             onTap: () {
-              MobenSnackBars().nextUpdateSnackBar();
+              Get.toNamed(AppRouter.downloadViewPath);
             },
             icon: HugeIcons.strokeRoundedInboxDownload,
             label: 'التحميلات',
