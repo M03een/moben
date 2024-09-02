@@ -22,8 +22,9 @@ class AudioPlaylistController extends GetxController {
   var repeatMode = LoopMode.off.obs;
 
   var isDownloading = false.obs;
-  var downloadProgress = 0.0.obs;  // Progress from 0.0 to 1.0
-  var downloadStatus = 'download'.obs;  // Status text: 'download', 'downloading', 'downloaded'
+  var downloadProgress = 0.0.obs; // Progress from 0.0 to 1.0
+  var downloadStatus =
+      'download'.obs; // Status text: 'download', 'downloading', 'downloaded'
 
   AudioPlayer audioPlayer = AudioPlayer();
   final ReaderController readerController = Get.put(ReaderController());
@@ -67,11 +68,14 @@ class AudioPlaylistController extends GetxController {
     try {
       // Get the directory path
       Directory appDocDir = await getApplicationDocumentsDirectory();
-      String readerFolder = '${appDocDir.path}/${readerController.selectedReader.value}';
+      String readerFolder =
+          '${appDocDir.path}/${readerController.selectedReader.value}';
       await Directory(readerFolder).create(recursive: true);
 
-      String surahUrl = '${HelperFunctions().readerUrl(id: readerController.readerIndex.value)}${(surahIndex + 1).toString().padLeft(3, '0')}.mp3';
-      String savePath = '$readerFolder/${(surahIndex + 1).toString().padLeft(3, '0')}.mp3';
+      String surahUrl =
+          '${HelperFunctions().readerUrl(id: readerController.readerIndex.value)}${(surahIndex + 1).toString().padLeft(3, '0')}.mp3';
+      String savePath =
+          '$readerFolder/${(surahIndex + 1).toString().padLeft(3, '0')}.mp3';
 
       File file = File(savePath);
       if (await file.exists()) {
@@ -93,10 +97,12 @@ class AudioPlaylistController extends GetxController {
       );
 
       downloadStatus.value = 'downloaded';
-      Get.snackbar('Success', 'Surah downloaded successfully', snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar('Success', 'Surah downloaded successfully',
+          snackPosition: SnackPosition.BOTTOM);
     } catch (e) {
       print("Download failed: $e");
-      Get.snackbar('Error', 'Download failed: $e', snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar('Error', 'Download failed: $e',
+          snackPosition: SnackPosition.BOTTOM);
       downloadStatus.value = 'download'; // Reset to initial status
     } finally {
       isDownloading.value = false;
@@ -109,7 +115,8 @@ class AudioPlaylistController extends GetxController {
     await audioPlayer.stop();
     _initializePlaylist();
     surahIndex.value = currentSurahIndex;
-    surahName.value = surahController.surahs[currentSurahIndex].name ?? 'Unknown Surah';
+    surahName.value =
+        surahController.surahs[currentSurahIndex].name ?? 'Unknown Surah';
     await audioPlayer.seek(Duration.zero, index: currentSurahIndex);
     await audioPlayer.play();
     loading.value = true;
@@ -124,7 +131,8 @@ class AudioPlaylistController extends GetxController {
     try {
       await audioPlayer.stop();
       surahIndex.value = newIndex - 1;
-      surahName.value = surahController.surahs[newIndex].name ?? 'Unknown Surah';
+      surahName.value =
+          surahController.surahs[newIndex].name ?? 'Unknown Surah';
       await audioPlayer.seek(Duration.zero, index: newIndex);
       await audioPlayer.play();
       loading.value = true;
@@ -180,7 +188,7 @@ class AudioPlaylistController extends GetxController {
   List<AudioSource> _createAudioSources() {
     return List.generate(
       surahController.surahs.length,
-          (index) {
+      (index) {
         return AudioSource.uri(
           Uri.parse(
               '${HelperFunctions().readerUrl(id: readerController.readerIndex.value)}${(index + 1).toString().padLeft(3, '0')}.mp3'),

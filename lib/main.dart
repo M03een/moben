@@ -13,7 +13,6 @@ import 'core/service/permission_handler.dart';
 import 'core/shared_prefrences/auth_shared_pref.dart';
 
 Future<void> main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
   final AuthSharedPref authSharedPref = AuthSharedPref();
   bool isLoggedIn = await authSharedPref.isLoggedIn();
@@ -31,19 +30,24 @@ Future<void> main() async {
     androidNotificationOngoing: true,
   );
 
-  runApp(MyApp(isLoggedIn: isLoggedIn,));
+  runApp(MyApp(
+    isLoggedIn: isLoggedIn,
+  ));
 }
 
 class MyApp extends StatelessWidget {
   final bool isLoggedIn;
-    MyApp({super.key, required this.isLoggedIn});
+
+  MyApp({super.key, required this.isLoggedIn});
+
   final deviceSupport = FlutterQiblah.androidDeviceSensorSupport();
-    final MobenPermissionHandler _mobenPermissionHandler = MobenPermissionHandler();
+  final MobenPermissionHandler _mobenPermissionHandler =
+      MobenPermissionHandler();
 
   @override
   Widget build(BuildContext context) {
-
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.top]);
 
     _mobenPermissionHandler.checkLocationPermission();
     return AnnotatedRegion(
@@ -54,6 +58,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Moben',
         theme: ThemeData(
+            appBarTheme:
+                const AppBarTheme(backgroundColor: AppColors.primaryColor),
             scaffoldBackgroundColor: AppColors.primaryColor,
             colorScheme: ColorScheme.fromSeed(seedColor: AppColors.accentColor),
             useMaterial3: true,
@@ -66,7 +72,9 @@ class MyApp extends StatelessWidget {
             )),
         translations: AppStrings(),
         locale: const Locale('ar'),
-        initialRoute: isLoggedIn ? AppRouter.bottomNavigationPath : AppRouter.loginViewPath,
+        initialRoute: isLoggedIn
+            ? AppRouter.bottomNavigationPath
+            : AppRouter.loginViewPath,
         getPages: AppRouter.routes,
       ),
     );
