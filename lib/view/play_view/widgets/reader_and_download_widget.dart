@@ -113,28 +113,32 @@ class ReaderAndDownloadWidget extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             if (audioPlaylistController.isDownloading.value)
-                              Text(
-                                'تحميل... ${((audioPlaylistController
-                                    .downloadProgress.value) * 100)
-                                    .toStringAsFixed(0)}%',
-                                style: AppStyles.textStyle15.copyWith(
-                                    color: AppColors.primaryColor),
+                              Flexible(
+                                child: Text(
+                                  'تحميل... ${((audioPlaylistController.downloadProgress.value) * 100).toStringAsFixed(0)}%',
+                                  style: AppStyles.textStyle15.copyWith(color: AppColors.primaryColor),
+                                  overflow: TextOverflow.ellipsis, // Handles overflow gracefully
+                                  maxLines: 1, // Limits the text to a single line
+                                ),
+                              )
+                            else if (audioPlaylistController.downloadStatus.value == 'downloaded')
+                              Flexible(
+                                child: Text(
+                                  'تم التحميل',
+                                  style: AppStyles.textStyle19.copyWith(color: AppColors.primaryColor),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
                               )
                             else
-                              if (audioPlaylistController.downloadStatus
-                                  .value == 'downloaded')
-                                Text(
-                                  'تم التحميل',
-                                  style: AppStyles.textStyle19.copyWith(
-                                      color: AppColors.primaryColor),
-                                )
-                              else
-                                Column(
+                              Flexible(
+                                child: Column(
                                   children: [
                                     Text(
                                       'تحميل',
-                                      style: AppStyles.textStyle19.copyWith(
-                                          color: AppColors.primaryColor),
+                                      style: AppStyles.textStyle19.copyWith(color: AppColors.primaryColor),
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
                                     ),
                                     const Icon(
                                       CupertinoIcons.down_arrow,
@@ -142,8 +146,10 @@ class ReaderAndDownloadWidget extends StatelessWidget {
                                     ),
                                   ],
                                 ),
+                              ),
                           ],
-                        ),
+                        )
+
                       ),
                     ),
                   ],
