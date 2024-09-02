@@ -27,7 +27,7 @@ class AppRouter {
     GetPage(name: loginViewPath, page: () => const LoginView()),
     GetPage(name: registerViewPath, page: () => const RegisterView()),
     GetPage(name: bottomNavigationPath, page: () => BottomNavBar()),
-    GetPage(name: downloadViewPath, page: () =>  DownloadView()),
+    GetPage(name: downloadViewPath, page: () =>  DownloadedSurahView()),
     GetPage(name: playViewPath, page: () => const PlayView()),
     GetPage(name: azkarViewPath, page: () => const AzkarView()),
     GetPage(name: zekrViewPath, page: () => const ZekrView()),
