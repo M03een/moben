@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:moben/core/utils/widgets/snack_bars.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
@@ -23,10 +24,6 @@ class AudioPlaylistController extends GetxController {
   var isDownloading = false.obs;
   var downloadProgress = 0.0.obs;  // Progress from 0.0 to 1.0
   var downloadStatus = 'download'.obs;  // Status text: 'download', 'downloading', 'downloaded'
-
-
-
-
 
   AudioPlayer audioPlayer = AudioPlayer();
   final ReaderController readerController = Get.put(ReaderController());
@@ -76,7 +73,15 @@ class AudioPlaylistController extends GetxController {
       String surahUrl = '${HelperFunctions().readerUrl(id: readerController.readerIndex.value)}${(surahIndex + 1).toString().padLeft(3, '0')}.mp3';
       String savePath = '$readerFolder/${(surahIndex + 1).toString().padLeft(3, '0')}.mp3';
 
-      // Download the file
+      File file = File(savePath);
+      if (await file.exists()) {
+        MobenSnackBars().existSurahSnackBar();
+        isDownloading.value = false;
+        downloadStatus.value = 'downloaded'; // Mark status as downloaded
+        return; // Exit the function to prevent further download
+      }
+
+      // Proceed with download if file doesn't exist
       await dio.download(
         surahUrl,
         savePath,
@@ -88,11 +93,14 @@ class AudioPlaylistController extends GetxController {
       );
 
       downloadStatus.value = 'downloaded';
+      Get.snackbar('Success', 'Surah downloaded successfully', snackPosition: SnackPosition.BOTTOM);
     } catch (e) {
       print("Download failed: $e");
+      Get.snackbar('Error', 'Download failed: $e', snackPosition: SnackPosition.BOTTOM);
       downloadStatus.value = 'download'; // Reset to initial status
     } finally {
       isDownloading.value = false;
+      downloadStatus.value = 'download';
     }
   }
 

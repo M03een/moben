@@ -5,8 +5,8 @@ import 'package:hugeicons/hugeicons.dart';
 
 import '../colors.dart';
 
-class MobenSnackBars{
-  nextUpdateSnackBar(){
+class MobenSnackBars {
+  nextUpdateSnackBar() {
     return Get.snackbar(
       'هذه الخدمة غير متوفرة ',
       "ستتوفر هذة الميزة في التحديث القادم للتطبيق",
@@ -20,7 +20,24 @@ class MobenSnackBars{
       borderWidth: 2,
     );
   }
-  finishZekrSnackBar(){
+
+  existSurahSnackBar() {
+    return Get.snackbar(
+      'عذرا ',
+      "هذة السورة تم تحميلها من قبل",
+      colorText: Colors.white,
+      backgroundColor: AppColors.primaryColor,
+      icon: const HugeIcon(
+        icon: HugeIcons.strokeRoundedDownload03,
+        color: AppColors.accentColor,
+      ),
+      borderColor: AppColors.accentColor,
+      borderWidth: 2,
+      snackPosition: SnackPosition.BOTTOM,
+    );
+  }
+
+  finishZekrSnackBar() {
     return Get.snackbar(
       'تهانينا',
       'لقد أكملت جميع الأذكار في هذه الفئة!',
@@ -36,7 +53,8 @@ class MobenSnackBars{
       borderWidth: 2,
     );
   }
-  registerSnackBar(){
+
+  registerSnackBar() {
     return Get.snackbar(
       'تم',
       'تم إنشاء حساب بنجاح!',
@@ -53,18 +71,19 @@ class MobenSnackBars{
     );
   }
 
-  erroeSnackBar({required String title,required String subtitle}){
+  erroeSnackBar({required String title, required String subtitle}) {
     return Get.snackbar(
       title,
-     subtitle,
+      subtitle,
       snackPosition: SnackPosition.BOTTOM,
       duration: const Duration(seconds: 3),
-      icon: const HugeIcon(icon: HugeIcons.strokeRoundedMedicalMask, color: AppColors.errorColor),
+      icon: const HugeIcon(
+          icon: HugeIcons.strokeRoundedMedicalMask,
+          color: AppColors.errorColor),
       backgroundColor: AppColors.whiteColor.withOpacity(0.2),
-      colorText:AppColors.errorColor,
+      colorText: AppColors.errorColor,
       borderColor: AppColors.errorColor,
       borderWidth: 2,
     );
   }
-
 }
