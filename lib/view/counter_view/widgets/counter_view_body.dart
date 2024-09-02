@@ -1,3 +1,4 @@
+import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mesh/mesh.dart';
@@ -26,15 +27,21 @@ class CounterViewBody extends StatelessWidget {
               children: [
                 Text(
                   'المسبحة',
-                  style: AppStyles.quranTextStyle50.copyWith(color: AppColors.primaryColor),
+                  style: AppStyles.quranTextStyle50
+                      .copyWith(color: AppColors.primaryColor),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.info,color: AppColors.primaryColor,),
+                    const Icon(
+                      Icons.info,
+                      color: AppColors.primaryColor,
+                    ),
                     Text(
                       'إضغط مطولا للإعادة ',
-                      style: AppStyles.textStyle19.copyWith(color: AppColors.primaryColor,fontWeight: FontWeight.w700),
+                      style: AppStyles.textStyle19.copyWith(
+                          color: AppColors.primaryColor,
+                          fontWeight: FontWeight.w700),
                     ),
                   ],
                 ),
@@ -54,12 +61,14 @@ class CounterViewBody extends StatelessWidget {
                   onLongPress: () {
                     value.reset();
                   },
-                  child: Text(
-                    '${value.counter}',
-                    style:  TextStyle(
-                        fontSize: value.counter > 99 ? 250 : 300,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.primaryColor),
+                  child: AnimatedFlipCounter(
+                    duration: const Duration(milliseconds: 300),
+                    textStyle: TextStyle(
+                      fontSize: value.counter > 99 ? 250 : 300,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.primaryColor,
+                    ),
+                    value: value.counter,
                   ),
                 );
               },

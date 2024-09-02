@@ -77,7 +77,6 @@ class ReaderAndDownloadWidget extends StatelessWidget {
         Expanded(
           child: InkWell(
             onTap: () {
-              // Handle download button click
               if (audioPlaylistController.downloadStatus.value == 'download') {
                 audioPlaylistController.downloadSurah(
                     audioPlaylistController.surahIndex.value);
@@ -117,8 +116,8 @@ class ReaderAndDownloadWidget extends StatelessWidget {
                                 child: Text(
                                   'تحميل... ${((audioPlaylistController.downloadProgress.value) * 100).toStringAsFixed(0)}%',
                                   style: AppStyles.textStyle15.copyWith(color: AppColors.primaryColor),
-                                  overflow: TextOverflow.ellipsis, // Handles overflow gracefully
-                                  maxLines: 1, // Limits the text to a single line
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
                                 ),
                               )
                             else if (audioPlaylistController.downloadStatus.value == 'downloaded')

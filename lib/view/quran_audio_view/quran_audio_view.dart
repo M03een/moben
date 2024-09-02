@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:moben/core/utils/size_config.dart';
 import 'package:moben/core/utils/widgets/glow_background.dart';
 import '../../controller/surah_controller.dart';
-import '../../controller/network_controller.dart'; // Import the NetworkController
+import '../../controller/network_controller.dart';
 import '../../core/utils/colors.dart';
 import 'widgets/quran_audio_view_body.dart';
 

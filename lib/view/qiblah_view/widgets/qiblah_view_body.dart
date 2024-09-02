@@ -43,7 +43,7 @@ class QiblahViewBody extends StatelessWidget {
             ),
           ),
         ],
-      ), // Reusable mesh animation component
+      ),
     );
   }
 }

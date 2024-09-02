@@ -10,7 +10,7 @@ class AuthSharedPref {
 
   Future<bool> isLoggedIn() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(_keyIsLoggedIn) ?? false; // Default to false if not set
+    return prefs.getBool(_keyIsLoggedIn) ?? false;
   }
 
   Future<void> logout() async {

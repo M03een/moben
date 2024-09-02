@@ -27,7 +27,6 @@ class DownloadedSurahsViewBody extends StatelessWidget {
         rightPosition: screenWidth(context) * -0.5,
         secRightPosition: -(screenWidth(context) * 0.8),
         tPadding: 0,
-        // Changed from negative value to 0
         child: Column(
           children: [
             (screenHeight(context) * 0.04).sh,
@@ -68,7 +67,6 @@ class DownloadedSurahsViewBody extends StatelessWidget {
 
                           return GlassContainer(
                             height: screenHeight(context) * 0.08,
-                            // Adjusted height
                             width: screenWidth(context) * 0.8,
                             virMargin: screenHeight(context) * 0.01,
                             verticalPadding: screenHeight(context) * 0.005,

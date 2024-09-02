@@ -42,7 +42,6 @@ class DownloadedSurahsPlayerView extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.skip_previous),
                 onPressed: () {
-                  // Logic to play the previous Surah
                   audioController.playSurah(audioController.downloadedSurahs[
                   (audioController.downloadedSurahs.indexOf(File(
                       audioController.currentSurahName.value)) -
@@ -63,7 +62,6 @@ class DownloadedSurahsPlayerView extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.skip_next),
                 onPressed: () {
-                  // Logic to play the next Surah
                   audioController.playSurah(audioController.downloadedSurahs[
                   (audioController.downloadedSurahs.indexOf(File(
                       audioController.currentSurahName.value)) +

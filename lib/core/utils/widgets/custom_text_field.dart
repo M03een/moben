@@ -62,14 +62,12 @@ class CustomTextField extends StatelessWidget {
                   AppColors.accentColor.withOpacity(0.6),
               fontSize: 20,
             ),
-            // Remove borders
             border: InputBorder.none,
             focusedBorder: InputBorder.none,
             enabledBorder: InputBorder.none,
             errorBorder: InputBorder.none,
             disabledBorder: InputBorder.none,
             focusedErrorBorder: InputBorder.none,
-            // Display error text with custom style
             errorStyle: const TextStyle(
               color: AppColors.errorColor,
               fontSize: 14,

@@ -63,7 +63,7 @@ class ZekrViewBody extends GetView<AzkarController> {
                           return ZekrContainer(
                             onTap: () {
                               controller.incrementCount(
-                                  category.name, item.content);
+                                  category.name, item.content,context);
                               if (isFinished) {
                                 controller.scrollToNextIndex(index + 1, context);
                               }

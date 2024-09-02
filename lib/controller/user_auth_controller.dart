@@ -47,11 +47,9 @@ class UserAuthController extends GetxController {
         return;
       }
 
-      // Retrieve user metadata
       final user = response.user;
       final userName = user?.userMetadata?['name'] ?? 'No Name Found';
 
-      // Save the user name to shared preferences
       await _saveUserName(userName);
 
       if (!context.mounted) return;
@@ -85,11 +83,9 @@ class UserAuthController extends GetxController {
         return;
       }
 
-      // Retrieve user metadata
       final user = response.user;
       final userName = user?.userMetadata?['name'] ?? 'No Name Found';
 
-      // Save the user name to shared preferences
       await _saveUserName(userName);
 
       MobenSnackBars().registerSnackBar();

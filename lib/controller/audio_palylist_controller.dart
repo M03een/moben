@@ -22,14 +22,14 @@ class AudioPlaylistController extends GetxController {
   var repeatMode = LoopMode.off.obs;
 
   var isDownloading = false.obs;
-  var downloadProgress = 0.0.obs; // Progress from 0.0 to 1.0
+  var downloadProgress = 0.0.obs;
   var downloadStatus =
-      'download'.obs; // Status text: 'download', 'downloading', 'downloaded'
+      'download'.obs;
 
   AudioPlayer audioPlayer = AudioPlayer();
   final ReaderController readerController = Get.put(ReaderController());
   final SurahController surahController = Get.put(SurahController());
-  final Dio dio = Dio(); // Dio instance for downloading
+  final Dio dio = Dio();
 
   late ConcatenatingAudioSource _playlist;
 
@@ -66,7 +66,6 @@ class AudioPlaylistController extends GetxController {
     downloadStatus.value = 'downloading';
 
     try {
-      // Get the directory path
       Directory appDocDir = await getApplicationDocumentsDirectory();
       String readerFolder =
           '${appDocDir.path}/${readerController.selectedReader.value}';
@@ -81,11 +80,10 @@ class AudioPlaylistController extends GetxController {
       if (await file.exists()) {
         MobenSnackBars().existSurahSnackBar();
         isDownloading.value = false;
-        downloadStatus.value = 'downloaded'; // Mark status as downloaded
-        return; // Exit the function to prevent further download
+        downloadStatus.value = 'downloaded';
+        return;
       }
 
-      // Proceed with download if file doesn't exist
       await dio.download(
         surahUrl,
         savePath,
@@ -103,7 +101,7 @@ class AudioPlaylistController extends GetxController {
       print("Download failed: $e");
       Get.snackbar('Error', 'Download failed: $e',
           snackPosition: SnackPosition.BOTTOM);
-      downloadStatus.value = 'download'; // Reset to initial status
+      downloadStatus.value = 'download';
     } finally {
       isDownloading.value = false;
       downloadStatus.value = 'download';

@@ -21,11 +21,9 @@ class SurahController extends GetxController {
     try {
       isLoading(true);
 
-      // Load JSON data from the asset file
       final String response = await rootBundle.loadString('assets/json/surahs/surahs.json');
       final data = json.decode(response);
 
-      // Convert the JSON data into a list of Surah objects
       List<Surah> surahList = (data['suwar'] as List)
           .map((surahJson) => Surah.fromJson(surahJson))
           .toList();
