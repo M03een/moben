@@ -1,215 +1,153 @@
 /*
 
-
-import 'package:just_audio/just_audio.dart';
-import 'package:just_audio_background/just_audio_background.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:moben/controller/reader_controller.dart';
-import 'package:moben/controller/surah_controller.dart';
-import 'package:moben/core/utils/helper.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart' as rootBundle;
+import 'package:moben/core/utils/size_config.dart';
+import 'package:moben/core/utils/widgets/snack_bars.dart';
+import '../model/azkar_category.dart';
+import '../model/azkar_item_model.dart';
 
-class AudioPlaylistController extends GetxController {
-  var isPlay = false.obs;
-  var surahIndex = 0.obs;
-  var surahName = 'لايوجد سورة'.obs;
-  var readerName = ''.obs;
-
-  var duration = const Duration().obs;
-  var position = const Duration().obs;
-  var loading = false.obs;
-  var isShuffle = false.obs;
-  var repeatMode = LoopMode.off.obs;
-
-  AudioPlayer audioPlayer = AudioPlayer();
-  final ReaderController readerController = Get.put(ReaderController());
-  final SurahController surahController = Get.put(SurahController());
-
-  late ConcatenatingAudioSource _playlist;
+class AzkarController extends GetxController {
+  final ScrollController scrollController = ScrollController();
+  var azkarCategories = <String, AzkarCategory>{}.obs;
+  var isLoading = true.obs;
+  var selectedCategory = Rx<AzkarCategory?>(null);
+  var currentCounts = <String, RxInt>{}.obs;
+  var totalProgress = 0.0.obs;
+  var currentIndex = 0.obs;
 
   @override
   void onInit() {
     super.onInit();
-
-    audioPlayer.durationStream.listen((Duration? d) {
-      if (d != null) {
-        duration.value = d;
-        loading.value = false;
-      }
-    });
-
-    audioPlayer.positionStream.listen((Duration p) {
-      position.value = p;
-    });
-    _initializePlaylist();
-    _setupListeners();
-    audioPlayer.setShuffleModeEnabled(false);
-    audioPlayer.setLoopMode(LoopMode.off);
-
-    ever(readerController.readerIndex, (_) => _handleReaderChange());
-
-    ever(surahController.surahs, (_) {
-      if (surahController.surahs.isNotEmpty) {
-        _initializePlaylist();
-      }
-    });
-  }
-
-  void _handleReaderChange() async {
-    int currentSurahIndex = surahIndex.value;
-    await audioPlayer.stop();
-    _initializePlaylist();
-    surahIndex.value = currentSurahIndex;
-    surahName.value = surahController.surahs[currentSurahIndex].name ?? 'Unknown Surah';
-    await audioPlayer.seek(Duration.zero, index: currentSurahIndex);
-    await audioPlayer.play();
-    loading.value = true;
-  }
-
-  Future<void> changeSurahAndPlay(int newIndex) async {
-    if (newIndex < 0 || newIndex >= 114) {
-      print("Invalid surah index");
-      return;
-    }
-
-    try {
-      await audioPlayer.stop();
-      surahIndex.value = newIndex - 1;
-      surahName.value =
-          surahController.surahs[newIndex].name ?? 'Unknown Surah';
-      await audioPlayer.seek(Duration.zero, index: newIndex);
-      await audioPlayer.play();
-      loading.value = true;
-    } catch (e) {
-      print("Error changing surah: $e");
-      loading.value = false;
-    }
-  }
-
-  void toggleShuffle() {
-    isShuffle.value = !isShuffle.value;
-    audioPlayer.setShuffleModeEnabled(isShuffle.value);
-  }
-
-  void cycleRepeatMode() {
-    switch (repeatMode.value) {
-      case LoopMode.off:
-        repeatMode.value = LoopMode.all;
-        break;
-      case LoopMode.all:
-        repeatMode.value = LoopMode.one;
-        break;
-      case LoopMode.one:
-        repeatMode.value = LoopMode.off;
-        break;
-    }
-    audioPlayer.setLoopMode(repeatMode.value);
-  }
-
-  String get repeatModeString {
-    switch (repeatMode.value) {
-      case LoopMode.off:
-        return 'التكرار مغلق';
-      case LoopMode.all:
-        return 'تكرار الكل';
-      case LoopMode.one:
-        return 'تكرار مرة واحدة';
-    }
-  }
-
-  void _initializePlaylist() {
-    if (surahController.surahs.isNotEmpty) {
-      _playlist = ConcatenatingAudioSource(
-          useLazyPreparation: true,
-          shuffleOrder: DefaultShuffleOrder(),
-          children: _createAudioSources());
-      audioPlayer.setAudioSource(_playlist);
-    } else {
-      print("Surah list is empty. Cannot initialize playlist.");
-    }
-  }
-
-  List<AudioSource> _createAudioSources() {
-    return List.generate(
-      surahController.surahs.length,
-          (index) {
-        return AudioSource.uri(
-          Uri.parse(
-              '${HelperFunctions().readerUrl(id: readerController.readerIndex.value)}${(index+1).toString().padLeft(3, '0')}.mp3'),
-          tag: MediaItem(
-            id: '${index + 1}',
-            album: readerController.selectedReader.value,
-            title: surahController.surahs[index].name ?? 'Unknown Surah',
-            artUri: Uri.parse(
-              'https://img.freepik.com/premium-photo/islamic-background-with-empty-copy-space-good-special-event-like-ramadan-eid-al-fitr_800563-1650.jpg',
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-
-
-  void _setupListeners() {
-    audioPlayer.playerStateStream.listen((playerState) {
-      isPlay.value = playerState.playing;
-      if (playerState.processingState == ProcessingState.completed) {
-        next();
-      }
-    });
-
-    audioPlayer.currentIndexStream.listen((index) {
-      if (index != null) {
-        surahIndex.value = index;
-        surahName.value = surahController.surahs[index].name ?? 'Unknown Surah';
-      }
-    });
-  }
-
-  Future<void> play() async {
-    try {
-      if (audioPlayer.playing) {
-        await audioPlayer.play();
-      } else {
-        await audioPlayer.play();
-      }
-    } catch (e) {
-      print("Error playing audio: $e");
-    }
-  }
-
-  Future<void> playTrack(int index) async {
-    try {
-      await audioPlayer.seek(Duration.zero, index: index);
-      await audioPlayer.play();
-    } catch (e) {
-      print("Error playing specific track: $e");
-    }
-  }
-
-  void pause() {
-    audioPlayer.pause();
-  }
-
-  void stop() {
-    audioPlayer.stop();
-  }
-
-  void next() {
-    audioPlayer.seekToNext();
-  }
-
-  void previous() {
-    audioPlayer.seekToPrevious();
+    fetchAzkarData();
   }
 
   @override
-  void dispose() {
-    audioPlayer.dispose();
-    super.dispose();
+  void onClose() {
+    super.onClose();
+    resetValues();
+  }
+
+  void resetValues() {
+    selectedCategory.value = null;
+    currentCounts.clear();
+    totalProgress.value = 0.0;
+    currentIndex.value = 0;
+  }
+
+  Future<void> fetchAzkarData() async {
+    try {
+      isLoading(true);
+      final jsonData = await rootBundle.rootBundle
+          .loadString('assets/json/azkar/azkar.json');
+      final Map<String, dynamic> data = json.decode(jsonData);
+
+      data.forEach((key, value) {
+        final categoryData = value as Map<String, dynamic>;
+        final List<dynamic> azkarData = categoryData['data'];
+        final imageUrl = categoryData['imageUrl'] as String;
+
+        final items =
+        azkarData.map((item) => AzkarItem.fromJson(item)).toList();
+        azkarCategories[key] = AzkarCategory(
+          name: key,
+          imageUrl: imageUrl,
+          items: items,
+        );
+
+        items.forEach((item) {
+          final countKey = '${key}_${item.content}';
+          currentCounts[countKey] = 0.obs;
+        });
+      });
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to load data: $e');
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  void selectCategory(String categoryName) {
+    selectedCategory.value = azkarCategories[categoryName];
+    resetCounts(categoryName);
+    updateTotalProgress();
+  }
+
+  void incrementCount(String categoryName, String content, BuildContext context) {
+    final countKey = '${categoryName}_$content';
+    if (currentCounts.containsKey(countKey)) {
+      final currentValue = currentCounts[countKey]!.value;
+      final maxCount = int.parse(azkarCategories[categoryName]!
+          .items
+          .firstWhere((item) => item.content == content)
+          .count);
+
+      if (currentValue < maxCount) {
+        currentCounts[countKey]!.value++;
+        updateTotalProgress();
+
+        if (currentCounts[countKey]!.value == maxCount) {
+          scrollToNextIndex(currentIndex.value + 1, context);
+          currentIndex.value++;
+        }
+
+        if (totalProgress.value == 1.0) {
+          MobenSnackBars().finishZekrSnackBar();
+        }
+      }
+    }
+  }
+
+  void scrollToNextIndex(int index, BuildContext context) {
+    if (index < selectedCategory.value!.items.length) {
+      scrollController.animateTo(
+        index * screenWidth(context) * 0.97,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+  bool isZekrFinished(String categoryName, String content) {
+    final countKey = '${categoryName}_$content';
+    if (currentCounts.containsKey(countKey)) {
+      final currentValue = currentCounts[countKey]!.value;
+      final maxCount = int.parse(azkarCategories[categoryName]!
+          .items
+          .firstWhere((item) => item.content == content)
+          .count);
+      return currentValue >= maxCount;
+    }
+    return false;
+  }
+
+  void resetCounts(String categoryName) {
+    azkarCategories[categoryName]?.items.forEach((item) {
+      final countKey = '${categoryName}_${item.content}';
+      currentCounts[countKey]?.value = 0;
+    });
+    updateTotalProgress();
+  }
+
+  void updateTotalProgress() {
+    if (selectedCategory.value == null) return;
+
+    int totalCount = 0;
+    int completedCount = 0;
+
+    selectedCategory.value!.items.forEach((item) {
+      final itemMaxCount = int.parse(item.count);
+      totalCount += itemMaxCount;
+
+      final countKey = '${selectedCategory.value!.name}_${item.content}';
+      final currentItemCount = currentCounts[countKey]?.value ?? 0;
+      completedCount += currentItemCount;
+    });
+
+    totalProgress.value = totalCount > 0 ? completedCount / totalCount : 0.0;
   }
 }
-
-
 
  */

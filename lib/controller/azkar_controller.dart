@@ -14,8 +14,6 @@ class AzkarController extends GetxController {
   var selectedCategory = Rx<AzkarCategory?>(null);
   var currentCounts = <String, RxInt>{}.obs;
   var totalProgress = 0.0.obs;
-  var currentIndex = 0.obs;
-
 
   @override
   void onInit() {
@@ -36,7 +34,7 @@ class AzkarController extends GetxController {
         final imageUrl = categoryData['imageUrl'] as String;
 
         final items =
-            azkarData.map((item) => AzkarItem.fromJson(item)).toList();
+        azkarData.map((item) => AzkarItem.fromJson(item)).toList();
         azkarCategories[key] = AzkarCategory(
           name: key,
           imageUrl: imageUrl,
@@ -61,7 +59,7 @@ class AzkarController extends GetxController {
     updateTotalProgress();
   }
 
-  void incrementCount(String categoryName, String content, BuildContext context) {
+  void incrementCount(String categoryName, String content) {
     final countKey = '${categoryName}_$content';
     if (currentCounts.containsKey(countKey)) {
       final currentValue = currentCounts[countKey]!.value;
@@ -74,25 +72,10 @@ class AzkarController extends GetxController {
         currentCounts[countKey]!.value++;
         updateTotalProgress();
 
-        if (currentCounts[countKey]!.value == maxCount) {
-          scrollToNextIndex(currentIndex.value + 1, context);
-          currentIndex.value++;
-        }
-
         if (totalProgress.value == 1.0) {
           MobenSnackBars().finishZekrSnackBar();
         }
       }
-    }
-  }
-
-  void scrollToNextIndex(int index, BuildContext context) {
-    if (index < selectedCategory.value!.items.length) {
-      scrollController.animateTo(
-        index * screenWidth(context) * 0.97,
-        duration: const Duration(milliseconds: 500),
-        curve: Curves.easeInOut,
-      );
     }
   }
 
@@ -109,6 +92,13 @@ class AzkarController extends GetxController {
     return false;
   }
 
+  void scrollToNextIndex(int index, BuildContext context) {
+    scrollController.animateTo(
+      index * screenWidth(context) * 0.97,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
+  }
 
   void resetCounts(String categoryName) {
     azkarCategories[categoryName]?.items.forEach((item) {
