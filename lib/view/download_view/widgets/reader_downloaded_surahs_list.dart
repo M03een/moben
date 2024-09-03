@@ -1,10 +1,6 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
-import 'package:moben/core/utils/app_router.dart';
-
 import '../../../controller/donloaded_shurahs_controller.dart';
 import '../../../core/utils/colors.dart';
 import '../../../core/utils/size_config.dart';
@@ -16,8 +12,7 @@ import '../../../core/utils/widgets/glow_background.dart';
 class ReaderDownloadedSurahsList extends StatelessWidget {
   ReaderDownloadedSurahsList({super.key});
 
-  final DownloadedSurahsController controller =
-  Get.put(DownloadedSurahsController());
+  final DownloadedSurahsController controller = Get.put(DownloadedSurahsController());
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +28,7 @@ class ReaderDownloadedSurahsList extends StatelessWidget {
           children: [
             (screenHeight(context) * 0.04).sh,
             Padding(
-              padding:
-              EdgeInsets.symmetric(horizontal: screenWidth(context) * 0.04),
+              padding: EdgeInsets.symmetric(horizontal: screenWidth(context) * 0.04),
               child: Row(
                 children: [
                   Text(
@@ -82,7 +76,11 @@ class ReaderDownloadedSurahsList extends StatelessWidget {
                           ),
                           IconButton(
                             onPressed: () {
-                              Get.toNamed(AppRouter.downloadedSurahPlayerViewPath);
+                              controller.play(index);
+                              Get.to(() => AudioPlayingView(
+                                surahIndex: index,
+                                surahName: surahName,
+                              ));
                             },
                             icon: const Icon(
                               HugeIcons.strokeRoundedPlay,
@@ -97,6 +95,90 @@ class ReaderDownloadedSurahsList extends StatelessWidget {
               );
             }),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class AudioPlayingView extends StatelessWidget {
+  final int surahIndex;
+  final String surahName;
+
+  AudioPlayingView({Key? key, required this.surahIndex, required this.surahName}) : super(key: key);
+
+  final DownloadedSurahsController controller = Get.find<DownloadedSurahsController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Now Playing'),
+        backgroundColor: AppColors.secAccentColor,
+      ),
+      body: GlowBackground(
+        rightPosition: screenWidth(context) * -0.5,
+        bottomPosition: screenHeight(context) * 0.6,
+        firstColor: AppColors.secAccentColor.withOpacity(0.35),
+        secColor: AppColors.secAccentColor.withOpacity(0.35),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                surahName,
+                style: AppStyles.textStyle24.copyWith(color: AppColors.secAccentColor),
+              ),
+              SizedBox(height: 30),
+              Obx(() => Text(
+                controller.isPlaying.value ? 'Playing' : 'Paused',
+                style: AppStyles.textStyle19,
+              )),
+              SizedBox(height: 30),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.skip_previous, size: 40),
+                    onPressed: () {
+                      if (surahIndex > 0) {
+                        controller.play(surahIndex - 1);
+                        Get.off(() => AudioPlayingView(
+                          surahIndex: surahIndex - 1,
+                          surahName: controller.downloadedSurahs[surahIndex - 1].path.split('/').last.replaceAll('.mp3', ''),
+                        ));
+                      }
+                    },
+                  ),
+                  Obx(() => IconButton(
+                    icon: Icon(
+                      controller.isPlaying.value ? Icons.pause : Icons.play_arrow,
+                      size: 60,
+                    ),
+                    onPressed: () {
+                      if (controller.isPlaying.value) {
+                        controller.pause();
+                      } else {
+                        controller.resume();
+                      }
+                    },
+                  )),
+                  IconButton(
+                    icon: Icon(Icons.skip_next, size: 40),
+                    onPressed: () {
+                      if (surahIndex < controller.downloadedSurahs.length - 1) {
+                        controller.play(surahIndex + 1);
+                        Get.off(() => AudioPlayingView(
+                          surahIndex: surahIndex + 1,
+                          surahName: controller.downloadedSurahs[surahIndex + 1].path.split('/').last.replaceAll('.mp3', ''),
+                        ));
+                      }
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

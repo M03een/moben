@@ -1,13 +1,15 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:just_audio_background/just_audio_background.dart';
 import 'package:moben/core/utils/widgets/snack_bars.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:just_audio_background/just_audio_background.dart';
 import 'package:moben/controller/reader_controller.dart';
 import 'package:moben/controller/surah_controller.dart';
 import 'package:moben/core/utils/helper.dart';
+
+import '../core/global_audio_player.dart';
 
 class AudioPlaylistController extends GetxController {
   var isPlay = false.obs;
@@ -26,7 +28,7 @@ class AudioPlaylistController extends GetxController {
   var downloadStatus =
       'download'.obs;
 
-  AudioPlayer audioPlayer = AudioPlayer();
+  final AudioPlayer audioPlayer = GlobalAudioPlayer.instance;
   final ReaderController readerController = Get.put(ReaderController());
   final SurahController surahController = Get.put(SurahController());
   final Dio dio = Dio();
@@ -254,6 +256,12 @@ class AudioPlaylistController extends GetxController {
 
   void previous() {
     audioPlayer.seekToPrevious();
+  }
+
+  @override
+  void onClose() {
+    audioPlayer.dispose();
+    super.onClose();
   }
 
   @override

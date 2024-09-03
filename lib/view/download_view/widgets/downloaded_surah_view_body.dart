@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moben/core/utils/app_router.dart';
 import 'package:moben/core/utils/widgets/glass_container.dart';
-import 'package:moben/view/download_view/widgets/reader_downloaded_surahs_list.dart';
 
 import '../../../controller/reader_controller.dart';
 import '../../../core/utils/colors.dart';
