@@ -85,7 +85,6 @@ flutter:
     - assets/images/azkar_avatars/
     - assets/json/azkar/azkar.json
     - assets/json/surahs/surahs.json
-    - assets/.env
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
