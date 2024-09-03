@@ -2,7 +2,8 @@ import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:moben/core/shared_prefrences/auth_shared_pref.dart';
 import 'package:moben/view/azkar_view/azkar_view.dart';
 import 'package:moben/view/azkar_view/zekr_view.dart';
-import 'package:moben/view/download_view/download_view.dart';
+import 'package:moben/view/download_view/downloaded_surah_view.dart';
+import 'package:moben/view/download_view/widgets/reader_downloaded_surahs_list.dart';
 import 'package:moben/view/login_and_register_view/login_view.dart';
 import 'package:moben/view/login_and_register_view/register_view.dart';
 import 'package:moben/view/play_view/play_view.dart';
@@ -23,13 +24,17 @@ class AppRouter {
   static String playViewPath = '/play';
   static String azkarViewPath = '/azkar';
   static String zekrViewPath = '/zekr';
+  static String readerDownloadedListPath = '/readerDownloadedList';
+  static String downloadedSurahPlayerViewPath = '/downloadedPlayer';
   static List<GetPage<dynamic>> routes = [
     GetPage(name: loginViewPath, page: () => const LoginView()),
     GetPage(name: registerViewPath, page: () => const RegisterView()),
     GetPage(name: bottomNavigationPath, page: () => BottomNavBar()),
-    GetPage(name: downloadViewPath, page: () =>  DownloadedSurahView()),
+    GetPage(name: downloadViewPath, page: () =>  const DownloadedSurahView()),
     GetPage(name: playViewPath, page: () => const PlayView()),
     GetPage(name: azkarViewPath, page: () => const AzkarView()),
     GetPage(name: zekrViewPath, page: () => const ZekrView()),
+    GetPage(name: readerDownloadedListPath, page: () =>   ReaderDownloadedSurahsList()),
+    GetPage(name: downloadedSurahPlayerViewPath, page: () =>   ReaderDownloadedSurahsList()),
   ];
 }

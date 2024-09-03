@@ -21,8 +21,6 @@ Future<void> main() async {
     anonKey: Env.supabaseAnonKey,
   );
 
-  print('=======================');
-  print('${Supabase.instance.client.auth.getUser()}');
 
   await JustAudioBackground.init(
     androidNotificationChannelId: 'com.example.moben',
