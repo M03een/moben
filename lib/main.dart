@@ -11,7 +11,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'core/env/env.dart';
 import 'core/service/permission_handler.dart';
 import 'core/shared_prefrences/auth_shared_pref.dart';
-// test **
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final AuthSharedPref authSharedPref = AuthSharedPref();
