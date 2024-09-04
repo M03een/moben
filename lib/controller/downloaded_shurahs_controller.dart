@@ -5,20 +5,16 @@ import 'package:just_audio_background/just_audio_background.dart';
 import 'package:moben/controller/reader_controller.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../core/global_audio_player.dart';
-
 class DownloadedSurahsController extends GetxController {
   final ReaderController readerController = Get.put(ReaderController());
   var downloadedSurahs = <File>[].obs;
   var readerName = ''.obs;
 
-  // Audio player instance
-  final AudioPlayer audioPlayer = GlobalAudioPlayer.instance;
+  // Create a separate AudioPlayer instance
+  final AudioPlayer audioPlayer = AudioPlayer();
 
-  // Observable variables for audio state
   var isPlaying = false.obs;
   var currentPlayingIndex = (-1).obs;
-
   late ConcatenatingAudioSource _playlist; // Playlist to manage multiple audio sources
 
   @override
@@ -43,9 +39,7 @@ class DownloadedSurahsController extends GetxController {
       });
 
       downloadedSurahs.value = files;
-
-      // Initialize the playlist with the downloaded Surahs
-      _initializePlaylist();
+      _initializePlaylist(); // Initialize the playlist with the downloaded Surahs
     }
   }
 
@@ -55,30 +49,32 @@ class DownloadedSurahsController extends GetxController {
     return int.tryParse(numberPart) ?? 0;
   }
 
-  // Initialize the playlist with downloaded Surahs for background playback
-  void _initializePlaylist() {
+  void _initializePlaylist() async {
     if (downloadedSurahs.isNotEmpty) {
       _playlist = ConcatenatingAudioSource(
-        useLazyPreparation: true, // Prepare each source lazily
+        useLazyPreparation: true,
         shuffleOrder: DefaultShuffleOrder(),
-        children: _createAudioSources(), // Create audio sources for each downloaded Surah
+        children: _createAudioSources(),
       );
 
-      audioPlayer.setAudioSource(_playlist);
+      try {
+        await audioPlayer.setAudioSource(_playlist);
+      } catch (e) {
+        print("Error setting audio source: $e");
+        Get.snackbar('Error', 'Could not load audio sources', snackPosition: SnackPosition.BOTTOM);
+      }
     } else {
       print("No downloaded Surahs found. Cannot initialize playlist.");
     }
   }
-
-  // Create audio sources for each downloaded Surah
   List<AudioSource> _createAudioSources() {
     return downloadedSurahs.map((file) {
       return AudioSource.uri(
-        Uri.file(file.path), // Use the file URI for the audio source
+        Uri.file(file.path),
         tag: MediaItem(
-          id: file.path.split('/').last, // Use the file name as ID
+          id: file.path.split('/').last,
           album: readerController.downloadSelectedReader.value,
-          title: _getSurahName(file.path), // Extract surah name from the file
+          title: _getSurahName(file.path),
           artUri: Uri.parse(
             'https://img.freepik.com/premium-photo/islamic-background-with-empty-copy-space-good-special-event-like-ramadan-eid-al-fitr_800563-1650.jpg',
           ),
@@ -89,16 +85,13 @@ class DownloadedSurahsController extends GetxController {
 
   String _getSurahName(String filePath) {
     String fileName = filePath.split('/').last;
-    // Assuming the Surah name is the part before ".mp3"
     return fileName.replaceAll('.mp3', '').split('_').last;
   }
 
-  // Play audio function
   Future<void> play(int index) async {
     if (index < 0 || index >= downloadedSurahs.length) return;
 
     if (currentPlayingIndex.value != index) {
-      // Load and play new audio file from the playlist
       await audioPlayer.seek(Duration.zero, index: index);
       currentPlayingIndex.value = index;
     }
@@ -107,34 +100,24 @@ class DownloadedSurahsController extends GetxController {
     isPlaying.value = true;
   }
 
-  // Pause audio function
   Future<void> pause() async {
     await audioPlayer.pause();
     isPlaying.value = false;
   }
 
-  // Resume audio function
   Future<void> resume() async {
     await audioPlayer.play();
     isPlaying.value = true;
   }
 
-  // Stop audio function
   Future<void> stop() async {
     await audioPlayer.stop();
     isPlaying.value = false;
     currentPlayingIndex.value = -1;
   }
 
-  // Seek to a specific position
   Future<void> seekTo(Duration position) async {
     await audioPlayer.seek(position);
-  }
-
-  @override
-  void onClose() {
-    audioPlayer.dispose();
-    super.onClose();
   }
 
   @override

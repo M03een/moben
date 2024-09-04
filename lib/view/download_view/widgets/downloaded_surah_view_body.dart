@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:moben/controller/audio_palylist_controller.dart';
 import 'package:moben/core/utils/app_router.dart';
 import 'package:moben/core/utils/widgets/glass_container.dart';
 
@@ -14,6 +15,7 @@ class DownloadedSurahViewBody extends StatelessWidget {
     super.key,
   });
   final ReaderController readerController = Get.put(ReaderController());
+  final AudioPlaylistController audioPlaylistController = Get.put(AudioPlaylistController());
 
 
   @override
@@ -51,6 +53,7 @@ class DownloadedSurahViewBody extends StatelessWidget {
                 onTap: () {
                   readerController.setDownloadSelectedReader(
                       newIndex: index);
+                  audioPlaylistController.stop();
                   Get.toNamed(AppRouter.readerDownloadedListPath);
                 },
                 height: screenHeight(context) * 0.12,

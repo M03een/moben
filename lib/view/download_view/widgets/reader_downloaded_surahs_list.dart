@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
-import '../../../controller/donloaded_shurahs_controller.dart';
+import '../../../controller/downloaded_shurahs_controller.dart';
 import '../../../core/utils/colors.dart';
 import '../../../core/utils/size_config.dart';
 import '../../../core/utils/styles.dart';
