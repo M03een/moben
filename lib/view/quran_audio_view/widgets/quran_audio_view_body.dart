@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moben/core/utils/styles.dart';
 import '../../../controller/audio_palylist_controller.dart';
-import '../../../controller/downloaded_shurahs_controller.dart';
 import '../../../controller/surah_controller.dart';
 import '../../../model/surah_model.dart';
 import '../../../core/utils/widgets/custom_text_field.dart';
@@ -18,7 +17,7 @@ class QuranAudioViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final SurahController surahController = Get.put(SurahController());
     final AudioPlaylistController audioPlaylistController = Get.put(AudioPlaylistController());
-    final DownloadedSurahsController downloadedSurahsController = Get.put(DownloadedSurahsController());
+    final AudioPlaylistController downloadedSurahsController = Get.put(AudioPlaylistController());
     return Scrollbar(
       interactive: true,
       thumbVisibility: true,
@@ -60,8 +59,9 @@ class QuranAudioViewBody extends StatelessWidget {
                         isMakkia: surah.makkia == 1,
                         surahId: surah.id ?? 404,
                         onTap: () {
+                          print('before navigation ======= ${surah.id! -1}');
                           audioPlaylistController.playTrack(surah.id! - 1);
-                          downloadedSurahsController.stop();
+                          downloadedSurahsController.stopDownloaded();
                           Get.toNamed(AppRouter.playViewPath, arguments: surah);
                         },
                       );

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
-import '../../../controller/downloaded_shurahs_controller.dart';
+import '../../../controller/audio_palylist_controller.dart';
 import '../../../core/utils/colors.dart';
 import '../../../core/utils/size_config.dart';
 import '../../../core/utils/styles.dart';
@@ -12,7 +12,7 @@ import '../../../core/utils/widgets/glow_background.dart';
 class ReaderDownloadedSurahsList extends StatelessWidget {
   ReaderDownloadedSurahsList({super.key});
 
-  final DownloadedSurahsController controller = Get.put(DownloadedSurahsController());
+  final AudioPlaylistController controller = Get.put(AudioPlaylistController());
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class ReaderDownloadedSurahsList extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    '${controller.readerName}',
+                    '${controller.downloadedReaderName}',
                     style: AppStyles.textStyle24.copyWith(
                       color: AppColors.secAccentColor,
                     ),
@@ -76,7 +76,7 @@ class ReaderDownloadedSurahsList extends StatelessWidget {
                           ),
                           IconButton(
                             onPressed: () {
-                              controller.play(index);
+                              controller.playDownloaded(index);
                               Get.to(() => AudioPlayingView(
                                 surahIndex: index,
                                 surahName: surahName,
@@ -107,7 +107,7 @@ class AudioPlayingView extends StatelessWidget {
 
   AudioPlayingView({Key? key, required this.surahIndex, required this.surahName}) : super(key: key);
 
-  final DownloadedSurahsController controller = Get.find<DownloadedSurahsController>();
+  final AudioPlaylistController controller = Get.find<AudioPlaylistController>();
 
   @override
   Widget build(BuildContext context) {
@@ -131,7 +131,7 @@ class AudioPlayingView extends StatelessWidget {
               ),
               SizedBox(height: 30),
               Obx(() => Text(
-                controller.isPlaying.value ? 'Playing' : 'Paused',
+                controller.isDownloadedAudioPlaying.value ? 'Playing' : 'Paused',
                 style: AppStyles.textStyle19,
               )),
               SizedBox(height: 30),
@@ -142,7 +142,7 @@ class AudioPlayingView extends StatelessWidget {
                     icon: Icon(Icons.skip_previous, size: 40),
                     onPressed: () {
                       if (surahIndex > 0) {
-                        controller.play(surahIndex - 1);
+                        controller.playDownloaded(surahIndex - 1);
                         Get.off(() => AudioPlayingView(
                           surahIndex: surahIndex - 1,
                           surahName: controller.downloadedSurahs[surahIndex - 1].path.split('/').last.replaceAll('.mp3', ''),
@@ -152,14 +152,14 @@ class AudioPlayingView extends StatelessWidget {
                   ),
                   Obx(() => IconButton(
                     icon: Icon(
-                      controller.isPlaying.value ? Icons.pause : Icons.play_arrow,
+                      controller.isDownloadedAudioPlaying.value ? Icons.pause : Icons.play_arrow,
                       size: 60,
                     ),
                     onPressed: () {
-                      if (controller.isPlaying.value) {
-                        controller.pause();
+                      if (controller.isDownloadedAudioPlaying.value) {
+                        controller.pauseDownloaded();
                       } else {
-                        controller.resume();
+                        controller.resumeDownloaded();
                       }
                     },
                   )),
@@ -167,7 +167,7 @@ class AudioPlayingView extends StatelessWidget {
                     icon: Icon(Icons.skip_next, size: 40),
                     onPressed: () {
                       if (surahIndex < controller.downloadedSurahs.length - 1) {
-                        controller.play(surahIndex + 1);
+                        controller.playDownloaded(surahIndex + 1);
                         Get.off(() => AudioPlayingView(
                           surahIndex: surahIndex + 1,
                           surahName: controller.downloadedSurahs[surahIndex + 1].path.split('/').last.replaceAll('.mp3', ''),
