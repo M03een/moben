@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:moben/controller/reader_controller.dart';
 import '../../../controller/audio_palylist_controller.dart';
 import '../../../core/utils/colors.dart';
 import '../../../core/utils/size_config.dart';
@@ -8,14 +9,17 @@ import '../../../core/utils/styles.dart';
 import '../../../core/utils/widgets/custom_icon.dart';
 import '../../../core/utils/widgets/glass_container.dart';
 import '../../../core/utils/widgets/glow_background.dart';
+import 'downloaded_surah_player_view.dart';
 
 class ReaderDownloadedSurahsList extends StatelessWidget {
   ReaderDownloadedSurahsList({super.key});
 
   final AudioPlaylistController controller = Get.put(AudioPlaylistController());
+  final ReaderController readerController = Get.put(ReaderController());
 
   @override
   Widget build(BuildContext context) {
+    controller.refreshDownloadedSurahs(readerName: readerController.selectedReader.value);
     return Scaffold(
       body: GlowBackground(
         firstColor: AppColors.secAccentColor.withOpacity(0.35),
@@ -56,11 +60,7 @@ class ReaderDownloadedSurahsList extends StatelessWidget {
                   itemCount: controller.downloadedSurahs.length,
                   itemBuilder: (context, index) {
                     final surahFile = controller.downloadedSurahs[index];
-                    final surahName = surahFile.path
-                        .split('/')
-                        .last
-                        .replaceAll('.mp3', '');
-
+                    final surahName = controller.getSurahName(surahFile.path);
                     return GlassContainer(
                       height: screenHeight(context) * 0.08,
                       width: screenWidth(context) * 0.8,
@@ -78,8 +78,7 @@ class ReaderDownloadedSurahsList extends StatelessWidget {
                             onPressed: () {
                               controller.playDownloaded(index);
                               Get.to(() => AudioPlayingView(
-                                surahIndex: index,
-                                surahName: surahName,
+                                surahName: controller.getSurahName(surahFile.path),
                               ));
                             },
                             icon: const Icon(
@@ -95,90 +94,6 @@ class ReaderDownloadedSurahsList extends StatelessWidget {
               );
             }),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class AudioPlayingView extends StatelessWidget {
-  final int surahIndex;
-  final String surahName;
-
-  AudioPlayingView({Key? key, required this.surahIndex, required this.surahName}) : super(key: key);
-
-  final AudioPlaylistController controller = Get.find<AudioPlaylistController>();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Now Playing'),
-        backgroundColor: AppColors.secAccentColor,
-      ),
-      body: GlowBackground(
-        rightPosition: screenWidth(context) * -0.5,
-        bottomPosition: screenHeight(context) * 0.6,
-        firstColor: AppColors.secAccentColor.withOpacity(0.35),
-        secColor: AppColors.secAccentColor.withOpacity(0.35),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                surahName,
-                style: AppStyles.textStyle24.copyWith(color: AppColors.secAccentColor),
-              ),
-              SizedBox(height: 30),
-              Obx(() => Text(
-                controller.isDownloadedAudioPlaying.value ? 'Playing' : 'Paused',
-                style: AppStyles.textStyle19,
-              )),
-              SizedBox(height: 30),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.skip_previous, size: 40),
-                    onPressed: () {
-                      if (surahIndex > 0) {
-                        controller.playDownloaded(surahIndex - 1);
-                        Get.off(() => AudioPlayingView(
-                          surahIndex: surahIndex - 1,
-                          surahName: controller.downloadedSurahs[surahIndex - 1].path.split('/').last.replaceAll('.mp3', ''),
-                        ));
-                      }
-                    },
-                  ),
-                  Obx(() => IconButton(
-                    icon: Icon(
-                      controller.isDownloadedAudioPlaying.value ? Icons.pause : Icons.play_arrow,
-                      size: 60,
-                    ),
-                    onPressed: () {
-                      if (controller.isDownloadedAudioPlaying.value) {
-                        controller.pauseDownloaded();
-                      } else {
-                        controller.resumeDownloaded();
-                      }
-                    },
-                  )),
-                  IconButton(
-                    icon: Icon(Icons.skip_next, size: 40),
-                    onPressed: () {
-                      if (surahIndex < controller.downloadedSurahs.length - 1) {
-                        controller.playDownloaded(surahIndex + 1);
-                        Get.off(() => AudioPlayingView(
-                          surahIndex: surahIndex + 1,
-                          surahName: controller.downloadedSurahs[surahIndex + 1].path.split('/').last.replaceAll('.mp3', ''),
-                        ));
-                      }
-                    },
-                  ),
-                ],
-              ),
-            ],
-          ),
         ),
       ),
     );

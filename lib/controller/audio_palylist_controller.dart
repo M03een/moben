@@ -66,6 +66,7 @@ class AudioPlaylistController extends GetxController {
     });
     downloadedReaderName = readerController.downloadSelectedReader;
     _fetchDownloadedSurahs(readerName: downloadedReaderName.value);
+    _initializeDownloadedPlaylist();
     super.onInit();
   }
 
@@ -86,8 +87,34 @@ class AudioPlaylistController extends GetxController {
       });
 
       downloadedSurahs.value = files;
-      _initializePlaylist(); // Initialize the playlist with the downloaded Surahs
+    } else {
+      downloadedSurahs.value = [];
     }
+  }
+
+  // Future<void> _fetchDownloadedSurahs({required String readerName}) async {
+  //   Directory appDocDir = await getApplicationDocumentsDirectory();
+  //   String readerFolderPath = '${appDocDir.path}/$readerName';
+  //   Directory readerFolder = Directory(readerFolderPath);
+  //
+  //   if (await readerFolder.exists()) {
+  //     List<File> files = readerFolder.listSync().whereType<File>().toList();
+  //
+  //     files.sort((a, b) {
+  //       int aNumber = _extractSurahNumber(a.path);
+  //       int bNumber = _extractSurahNumber(b.path);
+  //       return aNumber.compareTo(bNumber);
+  //     });
+  //
+  //     downloadedSurahs.value = files;
+  //     _initializePlaylist();
+  //   }
+  // }
+
+  Future<void> refreshDownloadedSurahs({required String readerName}) async {
+    await _fetchDownloadedSurahs(readerName: readerName);
+    _initializeDownloadedPlaylist();
+    update(); // Trigger UI update
   }
 
   int _extractSurahNumber(String filePath) {
@@ -96,23 +123,22 @@ class AudioPlaylistController extends GetxController {
     return int.tryParse(numberPart) ?? 0;
   }
 
-  void _initializeDownloadedPlaylist() async {
+  Future<void> _initializeDownloadedPlaylist() async {
+    await _fetchDownloadedSurahs(readerName: downloadedReaderName.value);
     if (downloadedSurahs.isNotEmpty) {
       _downloadedPlaylist = ConcatenatingAudioSource(
         useLazyPreparation: true,
         shuffleOrder: DefaultShuffleOrder(),
-        children: _createAudioSources(),
+        children: _createDownloadedAudioSources(),
       );
 
       try {
         await audioPlayer.setAudioSource(_downloadedPlaylist);
       } catch (e) {
-        print("Error setting audio source: $e");
-        Get.snackbar('Error', 'Could not load audio sources',
+        print("Error setting downloaded audio source: $e");
+        Get.snackbar('Error', 'Could not load downloaded audio sources',
             snackPosition: SnackPosition.BOTTOM);
       }
-    } else {
-      print("No downloaded Surahs found. Cannot initialize playlist.");
     }
   }
 
@@ -123,7 +149,7 @@ class AudioPlaylistController extends GetxController {
         Uri.file(file.path),
         tag: MediaItem(
           id: file.path.split('/').last,
-          album: readerController.downloadSelectedReader.value,
+          album: downloadedReaderName.value,
           title: _getSurahName(file.path),
           artUri: Uri.parse(
             'https://img.freepik.com/premium-photo/islamic-background-with-empty-copy-space-good-special-event-like-ramadan-eid-al-fitr_800563-1650.jpg',
@@ -174,6 +200,7 @@ class AudioPlaylistController extends GetxController {
       downloadStatus.value = 'downloaded';
       Get.snackbar('Success', 'Surah downloaded successfully',
           snackPosition: SnackPosition.BOTTOM);
+     // refreshDownloadedSurahs(readerName: readerController.selectedReader.value);
     } catch (e) {
       print("Download failed: $e");
       Get.snackbar('Error', 'Download failed: $e',
@@ -300,11 +327,14 @@ class AudioPlaylistController extends GetxController {
     print(
         '================================= Online play ================================= download index: $currentDownloadedPlayingIndex =main index= $surahIndex =surah name=$surahName');
     try {
-      if (audioPlayer.playing) {
-        await audioPlayer.play();
-      } else {
-        await audioPlayer.play();
-      }
+      // Stop any currently playing audio
+      await audioPlayer.stop();
+
+      // Set the correct playlist (online)
+      await audioPlayer.setAudioSource(_playlist);
+
+      // Play the audio
+      await audioPlayer.play();
     } catch (e) {
       print("Error playing audio: $e");
     }
@@ -324,11 +354,13 @@ class AudioPlaylistController extends GetxController {
       await audioPlayer.stop();
 
       // Update the index
-      surahIndex.value = index; // Correctly update surah index
+      surahIndex.value = index;
       surahName.value = surahController.surahs[index].name ?? 'Unknown Surah';
 
-      // Set audio player to the new index and play
-      await audioPlayer.seek(Duration.zero, index: index);
+      // Set the audio source to the online playlist
+      await audioPlayer.setAudioSource(_playlist, initialIndex: index);
+
+      // Play the audio
       await audioPlayer.play();
       loading.value = true;
     } catch (e) {
@@ -336,6 +368,8 @@ class AudioPlaylistController extends GetxController {
       loading.value = false;
     }
   }
+
+
 
   void pause() {
     print(
@@ -363,52 +397,69 @@ class AudioPlaylistController extends GetxController {
 
     audioPlayer.seekToPrevious();
   }
-
   Future<void> playDownloaded(int index) async {
-    print(
-        '================================= Downloaded play =================================  download index: $currentDownloadedPlayingIndex =main index= $surahIndex =surah name=$surahName');
-
+    print('Playing downloaded audio: index=$index');
     if (index < 0 || index >= downloadedSurahs.length) return;
 
-    if (currentDownloadedPlayingIndex.value != index) {
-      await audioPlayer.seek(Duration.zero, index: index);
+    try {
+      await audioPlayer.setAudioSource(_downloadedPlaylist, initialIndex: index);
+      await audioPlayer.play();
       currentDownloadedPlayingIndex.value = index;
+      isDownloadedAudioPlaying.value = true;
+    } catch (e) {
+      print("Error playing downloaded audio: $e");
+      Get.snackbar('Error', 'Failed to play downloaded audio',
+          snackPosition: SnackPosition.BOTTOM);
     }
-
-    await audioPlayer.play();
-    isDownloadedAudioPlaying.value = true;
   }
 
   Future<void> pauseDownloaded() async {
-    print(
-        '================================= Downloaded pause =================================  download index: $currentDownloadedPlayingIndex =main index= $surahIndex =surah name=$surahName');
-
+    print('Pausing downloaded audio');
     await audioPlayer.pause();
     isDownloadedAudioPlaying.value = false;
   }
 
   Future<void> resumeDownloaded() async {
-    print(
-        '================================= Downloaded rersume ================================= download index: $currentDownloadedPlayingIndex =main index= $surahIndex =surah name=$surahName');
-
+    print('Resuming downloaded audio');
     await audioPlayer.play();
     isDownloadedAudioPlaying.value = true;
   }
 
   Future<void> stopDownloaded() async {
-    print(
-        '================================= Downloaded stop ================================= download index: $currentDownloadedPlayingIndex =main index= $surahIndex =surah name=$surahName');
-
+    print('Stopping downloaded audio');
     await audioPlayer.stop();
     isDownloadedAudioPlaying.value = false;
     currentDownloadedPlayingIndex.value = -1;
   }
 
   Future<void> seekToDownloaded(Duration position) async {
-    print(
-        '================================= Downloaded seek ================================= download index: $currentDownloadedPlayingIndex =main index= $surahIndex =surah name=$surahName');
-
+    print('Seeking downloaded audio to: $position');
     await audioPlayer.seek(position);
+  }
+
+  Future<void> nextDownloaded() async {
+    print('Playing next downloaded audio');
+    if (currentDownloadedPlayingIndex.value < downloadedSurahs.length - 1) {
+      await playDownloaded(currentDownloadedPlayingIndex.value + 1);
+    }
+  }
+
+  Future<void> previousDownloaded() async {
+    print('Playing previous downloaded audio');
+    if (currentDownloadedPlayingIndex.value > 0) {
+      await playDownloaded(currentDownloadedPlayingIndex.value - 1);
+    }
+  }
+
+  String getSurahName(String filePath) {
+    String fileName = filePath.split('/').last;
+    String numberPart = fileName.split('.').first;
+    int surahNumber = int.tryParse(numberPart) ?? 0;
+
+    if (surahNumber > 0 && surahNumber <= surahController.surahs.length) {
+      return surahController.surahs[surahNumber - 1].name ?? 'Unknown Surah';
+    }
+    return 'Unknown Surah';
   }
 
   @override

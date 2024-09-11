@@ -10,7 +10,6 @@ import '../../../core/utils/size_config.dart';
 import '../../../core/utils/styles.dart';
 import '../../../core/utils/widgets/custom_bottom_sheet.dart';
 import '../../../core/utils/widgets/glass_container.dart';
-import '../../../core/utils/widgets/snack_bars.dart';
 
 class ReaderAndDownloadWidget extends StatelessWidget {
   ReaderAndDownloadWidget({

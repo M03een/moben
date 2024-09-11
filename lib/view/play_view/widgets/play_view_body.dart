@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moben/core/utils/helper.dart';
-import 'package:moben/core/utils/widgets/snack_bars.dart';
 
 import 'package:moben/view/play_view/widgets/play_view_appbar.dart';
 import 'package:moben/view/play_view/widgets/reader_and_download_widget.dart';

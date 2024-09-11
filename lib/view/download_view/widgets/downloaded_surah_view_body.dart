@@ -11,20 +11,19 @@ import '../../../core/utils/styles.dart';
 import '../../../core/utils/widgets/custom_icon.dart';
 
 class DownloadedSurahViewBody extends StatelessWidget {
-    DownloadedSurahViewBody({
+  DownloadedSurahViewBody({
     super.key,
   });
+
   final ReaderController readerController = Get.put(ReaderController());
   final AudioPlaylistController audioPlaylistController = Get.put(AudioPlaylistController());
-
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Padding(
-          padding:
-          EdgeInsets.symmetric(horizontal: screenWidth(context) * 0.04),
+          padding: EdgeInsets.symmetric(horizontal: screenWidth(context) * 0.04),
           child: Row(
             children: [
               Text(
@@ -51,9 +50,12 @@ class DownloadedSurahViewBody extends StatelessWidget {
             itemBuilder: (context, index) {
               return GlassContainer(
                 onTap: () {
-                  readerController.setDownloadSelectedReader(
-                      newIndex: index);
+                  readerController.setDownloadSelectedReader(newIndex: index);
+                  audioPlaylistController.refreshDownloadedSurahs(
+                    readerName: readerController.downloadReaderNames[index],
+                  );
                   audioPlaylistController.stop();
+                  readerController.downloadReaderIndex = index.obs;
                   Get.toNamed(AppRouter.readerDownloadedListPath);
                 },
                 height: screenHeight(context) * 0.12,
@@ -84,5 +86,3 @@ class DownloadedSurahViewBody extends StatelessWidget {
     );
   }
 }
-
-
