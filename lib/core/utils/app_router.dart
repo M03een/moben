@@ -1,5 +1,6 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:moben/core/shared_prefrences/auth_shared_pref.dart';
+import 'package:moben/view/account_and_rank_view/account_and_rank_view.dart';
 import 'package:moben/view/azkar_view/azkar_view.dart';
 import 'package:moben/view/azkar_view/zekr_view.dart';
 import 'package:moben/view/download_view/downloaded_surah_view.dart';
@@ -26,6 +27,7 @@ class AppRouter {
   static String zekrViewPath = '/zekr';
   static String readerDownloadedListPath = '/readerDownloadedList';
   static String downloadedSurahPlayerViewPath = '/downloadedPlayer';
+  static String accountAndRankViewPath = '/accountAndRank';
   static List<GetPage<dynamic>> routes = [
     GetPage(name: loginViewPath, page: () => const LoginView()),
     GetPage(name: registerViewPath, page: () => const RegisterView()),
@@ -36,5 +38,6 @@ class AppRouter {
     GetPage(name: zekrViewPath, page: () => const ZekrView()),
     GetPage(name: readerDownloadedListPath, page: () =>   ReaderDownloadedSurahsList()),
     GetPage(name: downloadedSurahPlayerViewPath, page: () =>   ReaderDownloadedSurahsList()),
+    GetPage(name: accountAndRankViewPath, page: () =>   const AccountAndRankView()),
   ];
 }

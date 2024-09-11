@@ -107,7 +107,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
           ),
           DrawerButton(
             onTap: () {
-              MobenSnackBars().nextUpdateSnackBar();
+             Get.toNamed(AppRouter.accountAndRankViewPath);
             },
             icon: HugeIcons.strokeRoundedUserAccount,
             label: 'حسابي',
@@ -137,7 +137,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         child:   Text(
                           'إلغاء',
                           style: AppStyles.textStyle15
-                              .copyWith(color: AppColors.secAccentColor),
+                              .copyWith(color: AppColors.accentColor),
                         ),
                       ),
                       TextButton(
