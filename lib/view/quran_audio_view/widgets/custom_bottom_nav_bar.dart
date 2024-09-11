@@ -118,7 +118,7 @@ class CustomBottomNavBar extends StatelessWidget {
                       : AppColors.whiteColor.withOpacity(0.2),
                 ),
                 CustomIcon(
-                  icon: 'prayer-rug-02-stroke-rounded.svg',
+                  icon: 'kaaba.svg',
                   onTap: () {
                     controller.updateCurrentIndex(3);
                   },

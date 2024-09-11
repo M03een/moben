@@ -63,12 +63,14 @@ class RegisterViewBody extends StatelessWidget {
                 controller: authController.nameTextController.value,
                 onChanged: (val) {},
                 obscureText: false,
-                hint: 'الاسم',
+                hint: '(عربي) الاسم',
                 color: AppColors.whiteColor,
                 icon: CupertinoIcons.person_alt_circle_fill,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'الرجاء إدخال اسمك';
+                  }if(RegExp(r'^[a-zA-Z]+$').hasMatch(value)){
+                    return 'الرجاء إدخال الاسم باللغة العربية';
                   }
                   return null;
                 },

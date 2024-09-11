@@ -42,23 +42,34 @@ class _CustomDrawerState extends State<CustomDrawer> {
       backgroundColor: AppColors.primaryColor,
       child: Column(
         children: [
-          DrawerHeader(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/drawer_bg.png'),
-                fit: BoxFit.cover,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              (screenHeight(context) * 0.06).sh,
+
+              const CircleAvatar(
+                radius: 35,
+                backgroundColor: AppColors.secAccentColor,
               ),
-            ),
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: GradientText(
+              (screenHeight(context) * 0.01).sh,
+              GradientText(
                 text: userName,
-                gradient: const LinearGradient(colors: [AppColors.accentColor,AppColors.secAccentColor]),
-                style: AppStyles.textStyle19.copyWith(
+                gradient: const LinearGradient(
+                    colors: [AppColors.accentColor, AppColors.secAccentColor]),
+                style: AppStyles.textStyle24.copyWith(
                   color: AppColors.primaryColor,
                 ),
               ),
-            ),
+              Text(
+                'mmm@gmail.com',
+                style: AppStyles.textStyle19.copyWith(
+                  color: AppColors.whiteColor.withOpacity(
+                    0.3,
+                  ),
+                ),
+              ),
+              (screenHeight(context) * 0.01).sh,
+            ],
           ),
           DrawerButton(
             surahController: surahController,
@@ -84,7 +95,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
             },
             icon: HugeIcons.strokeRoundedInboxDownload,
             label: 'التحميلات',
-          ), DrawerButton(
+          ),
+          DrawerButton(
             surahController: surahController,
             onTap: () {
               MobenSnackBars().nextUpdateSnackBar();
