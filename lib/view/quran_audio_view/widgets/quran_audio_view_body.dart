@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hugeicons/hugeicons.dart';
+import 'package:moben/core/utils/colors.dart';
 import 'package:moben/core/utils/styles.dart';
+import 'package:moben/core/utils/widgets/glass_container.dart';
 import '../../../controller/audio_palylist_controller.dart';
 import '../../../controller/surah_controller.dart';
 import '../../../model/surah_model.dart';
@@ -16,18 +19,23 @@ class QuranAudioViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final SurahController surahController = Get.put(SurahController());
-    final AudioPlaylistController audioPlaylistController = Get.put(AudioPlaylistController());
-    final AudioPlaylistController downloadedSurahsController = Get.put(AudioPlaylistController());
+    final AudioPlaylistController audioPlaylistController =
+        Get.put(AudioPlaylistController());
+    final AudioPlaylistController downloadedSurahsController =
+        Get.put(AudioPlaylistController());
 
     return Stack(
       children: [
         Scrollbar(
-          controller: surahController.scrollController, // Attach ScrollController here
+          controller: surahController.scrollController,
+          // Attach ScrollController here
           interactive: true,
           thumbVisibility: true,
           child: SingleChildScrollView(
-            controller: surahController.scrollController, // Attach the ScrollController here as well
-            primary: false, // Ensure primary is set to false to avoid conflict with PrimaryScrollController
+            controller: surahController.scrollController,
+            // Attach the ScrollController here as well
+            primary: false,
+            // Ensure primary is set to false to avoid conflict with PrimaryScrollController
             child: Column(
               children: [
                 CustomAppbar(),
@@ -46,11 +54,13 @@ class QuranAudioViewBody extends StatelessWidget {
                       return const CircularProgressIndicator();
                     } else if (snapshot.hasError) {
                       return const Center(
-                        child: Text('Error fetching Surahs', style: AppStyles.textStyle35),
+                        child: Text('Error fetching Surahs',
+                            style: AppStyles.textStyle35),
                       );
                     } else if (surahController.surahs.isEmpty) {
                       return const Center(
-                        child: Text('لا توجد سورة بهذا الأسم', style: AppStyles.textStyle35),
+                        child: Text('لا توجد سورة بهذا الأسم',
+                            style: AppStyles.textStyle35),
                       );
                     } else {
                       final surahs = surahController.surahs;
@@ -67,7 +77,8 @@ class QuranAudioViewBody extends StatelessWidget {
                             onTap: () {
                               audioPlaylistController.playTrack(surah.id! - 1);
                               downloadedSurahsController.stopDownloaded();
-                              Get.toNamed(AppRouter.playViewPath, arguments: surah);
+                              Get.toNamed(AppRouter.playViewPath,
+                                  arguments: surah);
                             },
                           );
                         },
@@ -84,15 +95,33 @@ class QuranAudioViewBody extends StatelessWidget {
         Obx(() {
           return surahController.showJumpToTopButton.value
               ? Positioned(
-            bottom: 20,
-            right: 20,
-            child: FloatingActionButton(
-              onPressed: () {
-                surahController.scrollToTop();
-              },
-              child: const Icon(Icons.arrow_upward),
-            ),
-          )
+                  bottom: screenHeight(context) * 0.03,
+                  right: screenWidth(context) * 0.05,
+                  child: InkWell(
+                    onTap: () {
+                      surahController.scrollToTop();
+                    },
+                    child: Container(
+                      height: screenHeight(context) * 0.06,
+                      width: screenWidth(context) * 0.1,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: AppColors.primaryColor,
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.secAccentColor.withOpacity(0.2),
+                              blurRadius: 15,
+                              spreadRadius: 10,
+                              offset: const Offset(0, 5),
+                            ),
+                          ]),
+                      child: const HugeIcon(
+                        icon: HugeIcons.strokeRoundedArrowUp01,
+                        color: AppColors.secAccentColor,
+                      ),
+                    ),
+                  ),
+                )
               : const SizedBox.shrink();
         }),
       ],

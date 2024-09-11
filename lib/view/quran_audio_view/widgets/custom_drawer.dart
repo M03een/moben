@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:moben/controller/surah_controller.dart';
+import 'package:moben/controller/user_auth_controller.dart';
 import 'package:moben/core/utils/app_router.dart';
 import 'package:moben/core/utils/size_config.dart';
 import 'package:moben/core/utils/styles.dart';
@@ -13,7 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/utils/colors.dart';
 
 class CustomDrawer extends StatefulWidget {
-  CustomDrawer({super.key});
+  const CustomDrawer({super.key});
 
   @override
   _CustomDrawerState createState() => _CustomDrawerState();
@@ -21,18 +22,21 @@ class CustomDrawer extends StatefulWidget {
 
 class _CustomDrawerState extends State<CustomDrawer> {
   final SurahController surahController = Get.put(SurahController());
+  final UserAuthController authController = Get.put(UserAuthController());
   String userName = 'User Name';
+  String email = 'empty email';
 
   @override
   void initState() {
     super.initState();
-    _loadUserName();
+    _loadUserNameAndEmail();
   }
 
-  Future<void> _loadUserName() async {
+  Future<void> _loadUserNameAndEmail() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       userName = prefs.getString('userName') ?? 'ضيف';
+      email = prefs.getString('email') ?? 'مفيش';
     });
   }
 
@@ -46,10 +50,18 @@ class _CustomDrawerState extends State<CustomDrawer> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               (screenHeight(context) * 0.06).sh,
-
-              const CircleAvatar(
-                radius: 35,
-                backgroundColor: AppColors.secAccentColor,
+              Container(
+                width: screenWidth(context) * 0.2,
+                height: screenHeight(context) * 0.1,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: LinearGradient(
+                    colors: [AppColors.secAccentColor, AppColors.accentColor],
+                  ),
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/profile_avatar.png'),
+                  ),
+                ),
               ),
               (screenHeight(context) * 0.01).sh,
               GradientText(
@@ -61,7 +73,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 ),
               ),
               Text(
-                'mmm@gmail.com',
+                email,
                 style: AppStyles.textStyle19.copyWith(
                   color: AppColors.whiteColor.withOpacity(
                     0.3,
@@ -72,7 +84,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
             ],
           ),
           DrawerButton(
-            surahController: surahController,
             onTap: () {
               surahController.key.currentState!.closeEndDrawer();
               Get.toNamed(AppRouter.azkarViewPath);
@@ -81,7 +92,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
             label: 'الأذكار',
           ),
           DrawerButton(
-            surahController: surahController,
             onTap: () {
               MobenSnackBars().nextUpdateSnackBar();
             },
@@ -89,7 +99,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
             label: 'القرأن الكريم',
           ),
           DrawerButton(
-            surahController: surahController,
             onTap: () {
               Get.toNamed(AppRouter.downloadViewPath);
             },
@@ -97,12 +106,60 @@ class _CustomDrawerState extends State<CustomDrawer> {
             label: 'التحميلات',
           ),
           DrawerButton(
-            surahController: surahController,
             onTap: () {
               MobenSnackBars().nextUpdateSnackBar();
             },
             icon: HugeIcons.strokeRoundedUserAccount,
             label: 'حسابي',
+          ),
+          DrawerButton(
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    backgroundColor: AppColors.primaryColor,
+                    title: Text(
+                      'تسجيل الخروج',
+                      style: AppStyles.textStyle19
+                          .copyWith(color: AppColors.accentColor),
+                    ),
+                    content: Text(
+                      'هل أنت متأكد أنك تريد تسجيل الخروج؟',
+                      style: AppStyles.textStyle15
+                          .copyWith(color: AppColors.accentColor),
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(); // Close the dialog
+                        },
+                        child:   Text(
+                          'إلغاء',
+                          style: AppStyles.textStyle15
+                              .copyWith(color: AppColors.secAccentColor),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          authController.accountLogout(context);
+                          Navigator.of(context)
+                              .pop();
+                          Get.offNamed(AppRouter.loginViewPath);
+                        },
+                        child:   Text(
+                          'تسجيل الخروج',
+                          style: AppStyles.textStyle15
+                              .copyWith(color: AppColors.errorColor),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+            icon: HugeIcons.strokeRoundedDoor01,
+            label: 'تسجيل الخروج',
           ),
         ],
       ),
@@ -113,13 +170,10 @@ class _CustomDrawerState extends State<CustomDrawer> {
 class DrawerButton extends StatelessWidget {
   const DrawerButton({
     super.key,
-    required this.surahController,
     required this.label,
     required this.icon,
     required this.onTap,
   });
-
-  final SurahController surahController;
 
   final String label;
   final IconData icon;

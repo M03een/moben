@@ -27,9 +27,10 @@ class UserAuthController extends GetxController {
     isRegisterPasswordVisible.value = !isRegisterPasswordVisible.value;
   }
 
-  Future<void> _saveUserName(String name) async {
+  Future<void> _saveUserNameAndEmail({required String name,required String email}) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('userName', name);
+    await prefs.setString('email', email);
   }
 
   Future<void> accountLogin(BuildContext context) async {
@@ -50,7 +51,7 @@ class UserAuthController extends GetxController {
       final user = response.user;
       final userName = user?.userMetadata?['name'] ?? 'No Name Found';
 
-      await _saveUserName(userName);
+      await _saveUserNameAndEmail(name: userName,email: user?.email ?? 'no email signed');
 
       if (!context.mounted) return;
       isLoading.value = false;
@@ -85,8 +86,7 @@ class UserAuthController extends GetxController {
 
       final user = response.user;
       final userName = user?.userMetadata?['name'] ?? 'No Name Found';
-
-      await _saveUserName(userName);
+      await _saveUserNameAndEmail(name: userName,email: user?.email ?? 'no email signed');
 
       MobenSnackBars().registerSnackBar();
 
