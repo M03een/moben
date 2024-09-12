@@ -42,6 +42,8 @@ class AudioPlaylistController extends GetxController {
 
   @override
   void onInit() {
+
+
     audioPlayer.durationStream.listen((Duration? d) {
       if (d != null) {
         duration.value = d;
@@ -70,6 +72,13 @@ class AudioPlaylistController extends GetxController {
     super.onInit();
   }
 
+  downloadedList(){
+    for(var x in downloadedSurahs){
+      print('looooooooooooooop');
+      print(x);
+    }
+
+  }
 // check uses after debug
 
   Future<void> _fetchDownloadedSurahs({required String readerName}) async {

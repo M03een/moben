@@ -46,6 +46,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: [SystemUiOverlay.top]);
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      systemNavigationBarColor: AppColors.primaryColor,
+
+
+    ),);
 
     _mobenPermissionHandler.checkLocationPermission();
     return AnnotatedRegion(
