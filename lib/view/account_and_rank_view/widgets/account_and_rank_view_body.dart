@@ -11,7 +11,7 @@ import 'custom_tab_bar.dart';
 class AccountAndRankViewBody extends StatelessWidget {
   AccountAndRankViewBody({super.key});
 
-  AccountViewController controller = Get.put(AccountViewController());
+ final AccountViewController controller = Get.put(AccountViewController());
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class AccountAndRankViewBody extends StatelessWidget {
           ],
         ),
         (screenHeight(context) * 0.02).sh,
-        CustomTabBar(),
+         CustomTabBar(),
         (screenHeight(context) * 0.02).sh,
         Obx(() {
           return Expanded(

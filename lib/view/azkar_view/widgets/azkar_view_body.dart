@@ -15,6 +15,10 @@ class AzkarViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isTablet = MediaQuery
+        .of(context)
+        .size
+        .width >= 600;
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: screenWidth(context) * 0.06),
@@ -29,12 +33,15 @@ class AzkarViewBody extends StatelessWidget {
                     color: AppColors.secAccentColor,
                   ),
                 ),
-                SvgIconButton(
-                  onTap: () {
-                    Get.back();
-                  },
-                  icon: 'left_arrow.svg',
-                  color: AppColors.secAccentColor,
+                Visibility(
+                  visible: !isTablet,
+                  child: SvgIconButton(
+                    onTap: () {
+                      Get.back();
+                    },
+                    icon: 'left_arrow.svg',
+                    color: AppColors.secAccentColor,
+                  ),
                 ),
               ],
             ),

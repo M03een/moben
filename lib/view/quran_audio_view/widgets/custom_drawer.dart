@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -46,42 +47,47 @@ class _CustomDrawerState extends State<CustomDrawer> {
       backgroundColor: AppColors.primaryColor,
       child: Column(
         children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              (screenHeight(context) * 0.06).sh,
-              Container(
-                width: screenWidth(context) * 0.2,
-                height: screenHeight(context) * 0.1,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: LinearGradient(
-                    colors: [AppColors.secAccentColor, AppColors.accentColor],
-                  ),
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/profile_avatar.png'),
-                  ),
-                ),
-              ),
-              (screenHeight(context) * 0.01).sh,
-              GradientText(
-                text: userName,
-                gradient: const LinearGradient(
-                    colors: [AppColors.accentColor, AppColors.secAccentColor]),
-                style: AppStyles.textStyle24.copyWith(
-                  color: AppColors.primaryColor,
-                ),
-              ),
-              Text(
-                email,
-                style: AppStyles.textStyle19.copyWith(
-                  color: AppColors.whiteColor.withOpacity(
-                    0.3,
+          InkWell(
+            onTap: (){
+              Get.toNamed(AppRouter.accountAndRankViewPath);
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                (screenHeight(context) * 0.06).sh,
+                Container(
+                  width: screenWidth(context) * 0.2,
+                  height: screenHeight(context) * 0.1,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: LinearGradient(
+                      colors: [AppColors.secAccentColor, AppColors.accentColor],
+                    ),
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/profile_avatar.png'),
+                    ),
                   ),
                 ),
-              ),
-              (screenHeight(context) * 0.01).sh,
-            ],
+                (screenHeight(context) * 0.01).sh,
+                GradientText(
+                  text: userName,
+                  gradient: const LinearGradient(
+                      colors: [AppColors.accentColor, AppColors.secAccentColor]),
+                  style: AppStyles.textStyle24.copyWith(
+                    color: AppColors.primaryColor,
+                  ),
+                ),
+                Text(
+                  email,
+                  style: AppStyles.textStyle19.copyWith(
+                    color: AppColors.whiteColor.withOpacity(
+                      0.3,
+                    ),
+                  ),
+                ),
+                (screenHeight(context) * 0.01).sh,
+              ],
+            ),
           ),
           DrawerButton(
             onTap: () {
@@ -107,10 +113,10 @@ class _CustomDrawerState extends State<CustomDrawer> {
           ),
           DrawerButton(
             onTap: () {
-             Get.toNamed(AppRouter.accountAndRankViewPath);
+              Get.toNamed(AppRouter.notificationsManagerViewPath);
             },
-            icon: HugeIcons.strokeRoundedUserAccount,
-            label: 'حسابي',
+            icon: HugeIcons.strokeRoundedAlarmClock,
+            label: 'مذكر العبادات',
           ),
           DrawerButton(
             onTap: () {

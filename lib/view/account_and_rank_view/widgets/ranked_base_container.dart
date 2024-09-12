@@ -15,7 +15,7 @@ class RankedBaseContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: screenWidth(context) * 0.8,
-      height: screenHeight(context) * 0.25,
+      height: screenHeight(context) * 0.3,
       decoration: ShapeDecoration(
         shape: SmoothRectangleBorder(
           borderRadius: BorderRadius.circular(18),

@@ -90,7 +90,6 @@ class DownloadManager extends GetxController {
         onReceiveProgress: (received, total) {
           if (total != -1) {
             double progress = received / total;
-            // You can use this progress to update a more detailed notification if needed
           }
         },
       );

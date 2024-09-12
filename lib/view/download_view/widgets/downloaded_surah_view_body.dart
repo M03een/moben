@@ -20,6 +20,10 @@ class DownloadedSurahViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isTablet = MediaQuery
+        .of(context)
+        .size
+        .width >= 600;
     return Column(
       children: [
         Padding(
@@ -33,12 +37,15 @@ class DownloadedSurahViewBody extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              SvgIconButton(
-                onTap: () {
-                  Get.back();
-                },
-                icon: 'left_arrow.svg',
-                color: AppColors.accentColor,
+              Visibility(
+                visible: !isTablet,
+                child: SvgIconButton(
+                  onTap: () {
+                    Get.back();
+                  },
+                  icon: 'left_arrow.svg',
+                  color: AppColors.accentColor,
+                ),
               ),
             ],
           ),
@@ -65,11 +72,14 @@ class DownloadedSurahViewBody extends StatelessWidget {
                 horizontalPadding: screenWidth(context) * 0.03,
                 child: Row(
                   children: [
-                    CircleAvatar(
-                      backgroundImage: AssetImage(
-                        readerController.downloadReaderPics[index],
+
+                    Container(
+                      width: screenWidth(context) * 0.1,
+                      height: screenWidth(context) * 0.1,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(image: AssetImage(readerController.downloadReaderPics[index]))
                       ),
-                      radius: screenWidth(context) * 0.1,
                     ),
                     (screenWidth(context)*0.1).sw,
                     Text(

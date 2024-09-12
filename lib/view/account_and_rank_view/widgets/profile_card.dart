@@ -15,7 +15,7 @@ class ProfileCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: screenWidth(context) * 0.8,
-      height: screenHeight(context) * 0.23,
+      height: screenHeight(context) * 0.25,
       padding: const EdgeInsets.symmetric(horizontal: 20),
       decoration: ShapeDecoration(
         shape: SmoothRectangleBorder(

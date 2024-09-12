@@ -12,7 +12,7 @@ class CustomTabBar extends StatelessWidget {
     super.key,
   });
 
-  AccountViewController controller = Get.put(AccountViewController());
+  final AccountViewController controller = Get.put(AccountViewController());
 
   @override
   Widget build(BuildContext context) {
