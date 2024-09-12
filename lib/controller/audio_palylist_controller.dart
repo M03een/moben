@@ -69,7 +69,11 @@ class AudioPlaylistController extends GetxController {
     downloadedReaderName = readerController.downloadSelectedReader;
     _fetchDownloadedSurahs(readerName: downloadedReaderName.value);
     _initializeDownloadedPlaylist();
-
+    audioPlayer.currentIndexStream.listen((index) {
+      if (index != null && isDownloadedAudioPlaying.value) {
+        _updateDownloadedSurahName(index);
+      }
+    });
     super.onInit();
   }
 
@@ -112,7 +116,6 @@ class AudioPlaylistController extends GetxController {
   }
 
   Future<void> _initializeDownloadedPlaylist() async {
-    print('controller--------------------${downloadedSurahName.value}');
     await _fetchDownloadedSurahs(readerName: downloadedReaderName.value);
     if (downloadedSurahs.isNotEmpty) {
       _downloadedPlaylist = ConcatenatingAudioSource(
@@ -123,6 +126,8 @@ class AudioPlaylistController extends GetxController {
 
       try {
         await audioPlayer.setAudioSource(_downloadedPlaylist);
+        // Set the initial surah name
+        _updateDownloadedSurahName(0);
       } catch (e) {
         print("Error setting downloaded audio source: $e");
         Get.snackbar('Error', 'Could not load downloaded audio sources',
@@ -401,21 +406,23 @@ class AudioPlaylistController extends GetxController {
     audioPlayer.seekToPrevious();
   }
 
+  void _updateDownloadedSurahName(int index) {
+    if (index >= 0 && index < downloadedSurahs.length) {
+      final surahNumber = _extractSurahNumber(downloadedSurahs[index].path);
+      downloadedSurahName.value = surahController.surahs[surahNumber - 1].name ?? 'Unknown Surah';
+    }
+  }
+
   Future<void> playDownloaded(int index) async {
     print('Playing downloaded audio: index=$index');
     if (index < 0 || index >= downloadedSurahs.length) return;
 
     try {
-      await audioPlayer.setAudioSource(_downloadedPlaylist,
-          initialIndex: index);
+      await audioPlayer.setAudioSource(_downloadedPlaylist, initialIndex: index);
       await audioPlayer.play();
       currentDownloadedPlayingIndex.value = index;
       isDownloadedAudioPlaying.value = true;
-
-      // Update the downloadedSurahName
-      final surahNumber = _extractSurahNumber(downloadedSurahs[index].path);
-      downloadedSurahName.value =
-          surahController.surahs[surahNumber - 1].name ?? 'Unknown Surah';
+      _updateDownloadedSurahName(index);
     } catch (e) {
       print("Error playing downloaded audio: $e");
       Get.snackbar('Error', 'Failed to play downloaded audio',
@@ -423,6 +430,24 @@ class AudioPlaylistController extends GetxController {
     }
   }
 
+  // Update these methods to use _updateDownloadedSurahName
+  Future<void> nextDownloaded() async {
+    print('Playing next downloaded audio');
+    if (currentDownloadedPlayingIndex.value < downloadedSurahs.length - 1) {
+      await playDownloaded(currentDownloadedPlayingIndex.value + 1);
+    } else if (repeatMode.value == LoopMode.all) {
+      await playDownloaded(0);
+    }
+  }
+
+  Future<void> previousDownloaded() async {
+    print('Playing previous downloaded audio');
+    if (currentDownloadedPlayingIndex.value > 0) {
+      await playDownloaded(currentDownloadedPlayingIndex.value - 1);
+    } else if (repeatMode.value == LoopMode.all) {
+      await playDownloaded(downloadedSurahs.length - 1);
+    }
+  }
   // Future<void> playDownloaded(int index) async {
   //   print('Playing downloaded audio: index=$index');
   //   if (index < 0 || index >= downloadedSurahs.length) return;
@@ -463,19 +488,19 @@ class AudioPlaylistController extends GetxController {
     await audioPlayer.seek(position);
   }
 
-  Future<void> nextDownloaded() async {
-    print('Playing next downloaded audio');
-    if (currentDownloadedPlayingIndex.value < downloadedSurahs.length - 1) {
-      await playDownloaded(currentDownloadedPlayingIndex.value + 1);
-    }
-  }
-
-  Future<void> previousDownloaded() async {
-    print('Playing previous downloaded audio');
-    if (currentDownloadedPlayingIndex.value > 0) {
-      await playDownloaded(currentDownloadedPlayingIndex.value - 1);
-    }
-  }
+  // Future<void> nextDownloaded() async {
+  //   print('Playing next downloaded audio');
+  //   if (currentDownloadedPlayingIndex.value < downloadedSurahs.length - 1) {
+  //     await playDownloaded(currentDownloadedPlayingIndex.value + 1);
+  //   }
+  // }
+  //
+  // Future<void> previousDownloaded() async {
+  //   print('Playing previous downloaded audio');
+  //   if (currentDownloadedPlayingIndex.value > 0) {
+  //     await playDownloaded(currentDownloadedPlayingIndex.value - 1);
+  //   }
+  // }
 
   String getSurahName(String filePath) {
     String fileName = filePath.split('/').last;
