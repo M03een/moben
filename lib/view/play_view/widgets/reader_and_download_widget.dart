@@ -76,7 +76,7 @@ class ReaderAndDownloadWidget extends StatelessWidget {
         Expanded(
           child: InkWell(
             onTap: () {
-              if (audioPlaylistController.downloadStatus.value == 'download') {
+              if (audioPlaylistController.audioDownloadStatus.value == 'download') {
                 audioPlaylistController.downloadSurah(
                     audioPlaylistController.surahIndex.value);
               }
@@ -91,9 +91,9 @@ class ReaderAndDownloadWidget extends StatelessWidget {
                       alignment: Alignment.bottomCenter,
                       child: Container(
                         width: double.infinity,
-                        height: audioPlaylistController.isDownloading.value
+                        height: audioPlaylistController.isAudioDownloading.value
                             ? (screenHeight(context) * 0.15) *
-                            audioPlaylistController.downloadProgress.value
+                            audioPlaylistController.audioDownloadProgress.value
                             : screenHeight(context) * 0.15,
                         decoration: BoxDecoration(
                           color: AppColors.accentColor,
@@ -110,16 +110,16 @@ class ReaderAndDownloadWidget extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            if (audioPlaylistController.isDownloading.value)
+                            if (audioPlaylistController.isAudioDownloading.value)
                               Flexible(
                                 child: Text(
-                                  'تحميل... ${((audioPlaylistController.downloadProgress.value) * 100).toStringAsFixed(0)}%',
+                                  'تحميل... ${((audioPlaylistController.audioDownloadProgress.value) * 100).toStringAsFixed(0)}%',
                                   style: AppStyles.textStyle15.copyWith(color: AppColors.primaryColor),
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
                                 ),
                               )
-                            else if (audioPlaylistController.downloadStatus.value == 'downloaded')
+                            else if (audioPlaylistController.audioDownloadStatus.value == 'downloaded')
                               Flexible(
                                 child: Text(
                                   'تم التحميل',

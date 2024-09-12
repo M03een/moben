@@ -1,6 +1,12 @@
 import 'package:permission_handler/permission_handler.dart';
 
-class MobenPermissionHandler{
+class MobenPermissionHandler {
+  Future<void> checkNotificationPermission() async {
+    var status = await Permission.notification.status;
+    if (status.isDenied) {
+      await Permission.notification.request();
+    }
+  }
 
   Future<void> checkLocationPermission() async {
     var status = await Permission.location.status;
@@ -8,5 +14,4 @@ class MobenPermissionHandler{
       await Permission.location.request();
     }
   }
-
 }

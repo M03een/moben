@@ -23,9 +23,9 @@ class AudioPlaylistController extends GetxController {
   var isShuffle = false.obs;
   var repeatMode = LoopMode.off.obs;
 
-  var isDownloading = false.obs;
-  var downloadProgress = 0.0.obs;
-  var downloadStatus = 'download'.obs;
+  var isAudioDownloading = false.obs;
+  var audioDownloadProgress = 0.0.obs;
+  var audioDownloadStatus = 'download'.obs;
 
   var downloadedSurahsMap = <String, List<int>>{}.obs;
   var downloadedSurahs = <File>[].obs;
@@ -135,12 +135,15 @@ class AudioPlaylistController extends GetxController {
 // check uses after debug
   List<AudioSource> _createDownloadedAudioSources() {
     return downloadedSurahs.map((file) {
+      final surahNumber = _extractSurahNumber(file.path); // Extract Surah number
+      final surahName = surahController.surahs[surahNumber - 1].name ?? 'Unknown Surah'; // Fetch Surah name from controller
+
       return AudioSource.uri(
         Uri.file(file.path),
         tag: MediaItem(
           id: file.path.split('/').last,
           album: downloadedReaderName.value,
-          title: _getSurahName(file.path),
+          title: surahName, // Use the extracted Surah name here
           artUri: Uri.parse(
             'https://img.freepik.com/premium-photo/islamic-background-with-empty-copy-space-good-special-event-like-ramadan-eid-al-fitr_800563-1650.jpg',
           ),
@@ -149,14 +152,11 @@ class AudioPlaylistController extends GetxController {
     }).toList();
   }
 
-  String _getSurahName(String filePath) {
-    String fileName = filePath.split('/').last;
-    return fileName.replaceAll('.mp3', '').split('_').last;
-  }
+
 
   Future<void> downloadSurah(int surahIndex) async {
-    isDownloading.value = true;
-    downloadStatus.value = 'downloading';
+    isAudioDownloading.value = true;
+    audioDownloadStatus.value = 'downloading';
 
     try {
       Directory appDocDir = await getApplicationDocumentsDirectory();
@@ -172,8 +172,8 @@ class AudioPlaylistController extends GetxController {
       File file = File(savePath);
       if (await file.exists()) {
         MobenSnackBars().existSurahSnackBar();
-        isDownloading.value = false;
-        downloadStatus.value = 'downloaded';
+        isAudioDownloading.value = false;
+        audioDownloadStatus.value = 'downloaded';
         return;
       }
 
@@ -182,12 +182,12 @@ class AudioPlaylistController extends GetxController {
         savePath,
         onReceiveProgress: (received, total) {
           if (total != -1) {
-            downloadProgress.value = received / total;
+            audioDownloadProgress.value = received / total;
           }
         },
       );
 
-      downloadStatus.value = 'downloaded';
+      audioDownloadStatus.value = 'downloaded';
       Get.snackbar('Success', 'Surah downloaded successfully',
           snackPosition: SnackPosition.BOTTOM);
      // refreshDownloadedSurahs(readerName: readerController.selectedReader.value);
@@ -195,10 +195,10 @@ class AudioPlaylistController extends GetxController {
       print("Download failed: $e");
       Get.snackbar('Error', 'Download failed: $e',
           snackPosition: SnackPosition.BOTTOM);
-      downloadStatus.value = 'download';
+      audioDownloadStatus.value = 'download';
     } finally {
-      isDownloading.value = false;
-      downloadStatus.value = 'download';
+      isAudioDownloading.value = false;
+      audioDownloadStatus.value = 'download';
     }
   }
 

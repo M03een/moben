@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:moben/controller/reader_controller.dart';
-import 'package:moben/view/play_view/widgets/auto_play.dart';
+import 'package:moben/view/download_view/widgets/repeate_shuffle_controller.dart';
 
 import '../../../controller/audio_palylist_controller.dart';
 import '../../../controller/surah_controller.dart';
