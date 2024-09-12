@@ -79,8 +79,8 @@ class ReaderDownloadedSurahsList extends StatelessWidget {
                               print('================surahFile.path');
                               print(surahFile.path);
                               controller.playDownloaded(index);
-                              Get.to(() => AudioPlayingView(
-                                surahName: controller.getSurahName(surahFile.path),
+                              Get.to(() => DownloadedAudioPlayingView(
+
                               ));
                             },
                             icon: const Icon(

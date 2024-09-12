@@ -27,6 +27,7 @@ class AudioPlaylistController extends GetxController {
   var downloadProgress = 0.0.obs;
   var downloadStatus = 'download'.obs;
 
+  var downloadedSurahsMap = <String, List<int>>{}.obs;
   var downloadedSurahs = <File>[].obs;
   var downloadedReaderName = ''.obs;
   var isDownloadedAudioPlaying = false.obs;
@@ -72,14 +73,7 @@ class AudioPlaylistController extends GetxController {
     super.onInit();
   }
 
-  downloadedList(){
-    for(var x in downloadedSurahs){
-      print('looooooooooooooop');
-      print(x);
-    }
 
-  }
-// check uses after debug
 
   Future<void> _fetchDownloadedSurahs({required String readerName}) async {
     Directory appDocDir = await getApplicationDocumentsDirectory();
@@ -95,30 +89,17 @@ class AudioPlaylistController extends GetxController {
         return aNumber.compareTo(bNumber);
       });
 
+      List<int> surahNumbers = files.map((file) {
+        return _extractSurahNumber(file.path);
+      }).toList();
+
       downloadedSurahs.value = files;
+      downloadedSurahsMap[readerName] = surahNumbers;
     } else {
       downloadedSurahs.value = [];
+      downloadedSurahsMap[readerName] = [];
     }
   }
-
-  // Future<void> _fetchDownloadedSurahs({required String readerName}) async {
-  //   Directory appDocDir = await getApplicationDocumentsDirectory();
-  //   String readerFolderPath = '${appDocDir.path}/$readerName';
-  //   Directory readerFolder = Directory(readerFolderPath);
-  //
-  //   if (await readerFolder.exists()) {
-  //     List<File> files = readerFolder.listSync().whereType<File>().toList();
-  //
-  //     files.sort((a, b) {
-  //       int aNumber = _extractSurahNumber(a.path);
-  //       int bNumber = _extractSurahNumber(b.path);
-  //       return aNumber.compareTo(bNumber);
-  //     });
-  //
-  //     downloadedSurahs.value = files;
-  //     _initializePlaylist();
-  //   }
-  // }
 
   Future<void> refreshDownloadedSurahs({required String readerName}) async {
     await _fetchDownloadedSurahs(readerName: readerName);

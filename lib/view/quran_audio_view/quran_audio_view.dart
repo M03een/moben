@@ -8,12 +8,10 @@ import 'widgets/quran_audio_view_body.dart';
 
 class QuranAudioView extends StatelessWidget {
     QuranAudioView({super.key});
-  AudioPlaylistController controller = Get.put(AudioPlaylistController());
 
 
   @override
   Widget build(BuildContext context) {
-    controller.downloadedList();
     return Scaffold(
       body: Stack(
         children: [

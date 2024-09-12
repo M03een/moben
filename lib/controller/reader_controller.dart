@@ -20,7 +20,7 @@ class ReaderController extends GetxController {
     'assets/images/readers/reader_4.png'
   ];
   var selectedReader = 'ياسر الدوسري'.obs;
-  var downloadSelectedReader = 'ياسر الدوسري'.obs;
+  var downloadSelectedReader = 'المنشاوي'.obs;
   var readerIndex = 0.obs;
   var downloadReaderIndex = 0.obs;
 
