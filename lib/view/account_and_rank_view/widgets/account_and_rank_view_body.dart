@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:moben/controller/account_view_controller.dart';
 import 'package:moben/core/utils/colors.dart';
 import 'package:moben/core/utils/size_config.dart';
-import 'account_content.dart';
+import 'package:moben/view/account_and_rank_view/widgets/account_content.dart';
+import 'package:moben/view/account_and_rank_view/widgets/ranked_content.dart';
 import 'custom_tab_bar.dart';
 
 class AccountAndRankViewBody extends StatelessWidget {
-  const AccountAndRankViewBody({super.key});
+  AccountAndRankViewBody({super.key});
+
+  AccountViewController controller = Get.put(AccountViewController());
 
   @override
   Widget build(BuildContext context) {
@@ -30,15 +34,16 @@ class AccountAndRankViewBody extends StatelessWidget {
           ],
         ),
         (screenHeight(context) * 0.02).sh,
-        const CustomTabBar(),
+        CustomTabBar(),
         (screenHeight(context) * 0.02).sh,
-        const Expanded(child: AccountContent()),
+        Obx(() {
+          return Expanded(
+            child: controller.isAccount.value
+                ? const AccountContent()
+                : const RankContent(),
+          );
+        }),
       ],
     );
   }
 }
-
-
-
-
-

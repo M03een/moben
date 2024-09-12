@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'details__item.dart';
+import 'details_item.dart';
 
 class DetailsList extends StatelessWidget {
   const DetailsList({
