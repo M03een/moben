@@ -28,6 +28,7 @@ class AudioPlaylistController extends GetxController {
   var audioDownloadStatus = 'download'.obs;
 
   var downloadedSurahsMap = <String, List<int>>{}.obs;
+  var downloadedSurahName = 'init'.obs;
   var downloadedSurahs = <File>[].obs;
   var downloadedReaderName = ''.obs;
   var isDownloadedAudioPlaying = false.obs;
@@ -43,8 +44,6 @@ class AudioPlaylistController extends GetxController {
 
   @override
   void onInit() {
-
-
     audioPlayer.durationStream.listen((Duration? d) {
       if (d != null) {
         duration.value = d;
@@ -70,10 +69,9 @@ class AudioPlaylistController extends GetxController {
     downloadedReaderName = readerController.downloadSelectedReader;
     _fetchDownloadedSurahs(readerName: downloadedReaderName.value);
     _initializeDownloadedPlaylist();
+
     super.onInit();
   }
-
-
 
   Future<void> _fetchDownloadedSurahs({required String readerName}) async {
     Directory appDocDir = await getApplicationDocumentsDirectory();
@@ -114,6 +112,7 @@ class AudioPlaylistController extends GetxController {
   }
 
   Future<void> _initializeDownloadedPlaylist() async {
+    print('controller--------------------${downloadedSurahName.value}');
     await _fetchDownloadedSurahs(readerName: downloadedReaderName.value);
     if (downloadedSurahs.isNotEmpty) {
       _downloadedPlaylist = ConcatenatingAudioSource(
@@ -132,18 +131,17 @@ class AudioPlaylistController extends GetxController {
     }
   }
 
-// check uses after debug
   List<AudioSource> _createDownloadedAudioSources() {
     return downloadedSurahs.map((file) {
-      final surahNumber = _extractSurahNumber(file.path); // Extract Surah number
-      final surahName = surahController.surahs[surahNumber - 1].name ?? 'Unknown Surah'; // Fetch Surah name from controller
-
+      final surahNumber = _extractSurahNumber(file.path);
+      final surahName =
+          surahController.surahs[surahNumber - 1].name ?? 'Unknown Surah';
       return AudioSource.uri(
         Uri.file(file.path),
         tag: MediaItem(
           id: file.path.split('/').last,
           album: downloadedReaderName.value,
-          title: surahName, // Use the extracted Surah name here
+          title: surahName,
           artUri: Uri.parse(
             'https://img.freepik.com/premium-photo/islamic-background-with-empty-copy-space-good-special-event-like-ramadan-eid-al-fitr_800563-1650.jpg',
           ),
@@ -152,7 +150,24 @@ class AudioPlaylistController extends GetxController {
     }).toList();
   }
 
-
+// check uses after debug
+//   List<AudioSource> _createDownloadedAudioSources() {
+//     return downloadedSurahs.map((file) {
+//       final surahNumber = _extractSurahNumber(file.path); // Extract Surah number
+//       downloadedSurahName = surahController.surahs[surahNumber - 1].name!.obs; // Fetch Surah name from controller
+//       return AudioSource.uri(
+//         Uri.file(file.path),
+//         tag: MediaItem(
+//           id: file.path.split('/').last,
+//           album: downloadedReaderName.value,
+//           title: downloadedSurahName.value, // Use the extracted Surah name here
+//           artUri: Uri.parse(
+//             'https://img.freepik.com/premium-photo/islamic-background-with-empty-copy-space-good-special-event-like-ramadan-eid-al-fitr_800563-1650.jpg',
+//           ),
+//         ),
+//       );
+//     }).toList();
+//   }
 
   Future<void> downloadSurah(int surahIndex) async {
     isAudioDownloading.value = true;
@@ -190,7 +205,7 @@ class AudioPlaylistController extends GetxController {
       audioDownloadStatus.value = 'downloaded';
       Get.snackbar('Success', 'Surah downloaded successfully',
           snackPosition: SnackPosition.BOTTOM);
-     // refreshDownloadedSurahs(readerName: readerController.selectedReader.value);
+      // refreshDownloadedSurahs(readerName: readerController.selectedReader.value);
     } catch (e) {
       print("Download failed: $e");
       Get.snackbar('Error', 'Download failed: $e',
@@ -359,8 +374,6 @@ class AudioPlaylistController extends GetxController {
     }
   }
 
-
-
   void pause() {
     print(
         '================================= Online pause ================================= download index: $currentDownloadedPlayingIndex =main index= $surahIndex =surah name=$surahName');
@@ -387,21 +400,44 @@ class AudioPlaylistController extends GetxController {
 
     audioPlayer.seekToPrevious();
   }
+
   Future<void> playDownloaded(int index) async {
     print('Playing downloaded audio: index=$index');
     if (index < 0 || index >= downloadedSurahs.length) return;
 
     try {
-      await audioPlayer.setAudioSource(_downloadedPlaylist, initialIndex: index);
+      await audioPlayer.setAudioSource(_downloadedPlaylist,
+          initialIndex: index);
       await audioPlayer.play();
       currentDownloadedPlayingIndex.value = index;
       isDownloadedAudioPlaying.value = true;
+
+      // Update the downloadedSurahName
+      final surahNumber = _extractSurahNumber(downloadedSurahs[index].path);
+      downloadedSurahName.value =
+          surahController.surahs[surahNumber - 1].name ?? 'Unknown Surah';
     } catch (e) {
       print("Error playing downloaded audio: $e");
       Get.snackbar('Error', 'Failed to play downloaded audio',
           snackPosition: SnackPosition.BOTTOM);
     }
   }
+
+  // Future<void> playDownloaded(int index) async {
+  //   print('Playing downloaded audio: index=$index');
+  //   if (index < 0 || index >= downloadedSurahs.length) return;
+  //
+  //   try {
+  //     await audioPlayer.setAudioSource(_downloadedPlaylist, initialIndex: index);
+  //     await audioPlayer.play();
+  //     currentDownloadedPlayingIndex.value = index;
+  //     isDownloadedAudioPlaying.value = true;
+  //   } catch (e) {
+  //     print("Error playing downloaded audio: $e");
+  //     Get.snackbar('Error', 'Failed to play downloaded audio',
+  //         snackPosition: SnackPosition.BOTTOM);
+  //   }
+  // }
 
   Future<void> pauseDownloaded() async {
     print('Pausing downloaded audio');

@@ -76,31 +76,8 @@ class DownloadedAudioPlayingView extends StatelessWidget {
                       AppColors.accentColor
                     ])),
                     child: Obx(() {
-                      final currentIndex =
-                          controller.currentDownloadedPlayingIndex.value;
-                      final readerName = controller.downloadedReaderName.value;
-                      final surahNumbers =
-                          controller.downloadedSurahsMap[readerName] ?? [];
-
-                      String surahName = 'No Surahs Downloaded';
-
-                      if (surahNumbers.isNotEmpty) {
-                        int surahNumber;
-                        if (currentIndex >= 0 &&
-                            currentIndex < surahNumbers.length) {
-                          // Use the current playing surah if valid
-                          surahNumber = surahNumbers[currentIndex];
-                        } else {
-                          // Default to the first downloaded surah if none is playing
-                          surahNumber = surahNumbers.first;
-                        }
-                        surahName =
-                            surahController.surahs[surahNumber - 1].name ??
-                                'Unknown Surah';
-                      }
-
                       return Text(
-                        surahName,
+                        controller.downloadedSurahName.value,
                         style: AppStyles.quranTextStyle30.copyWith(
                           color: AppColors.primaryColor,
                         ),
