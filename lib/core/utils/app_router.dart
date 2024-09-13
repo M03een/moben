@@ -9,17 +9,17 @@ import 'package:moben/view/login_and_register_view/login_view.dart';
 import 'package:moben/view/login_and_register_view/register_view.dart';
 import 'package:moben/view/notifications_manger_view/notification_manager_view.dart';
 import 'package:moben/view/play_view/play_view.dart';
+import 'package:moben/view/pray_view/widgets/camera_view.dart';
 
 import '../../view/quran_audio_view/widgets/bottom_navigation_bar.dart';
+import 'package:camera/camera.dart';
 
 class AppRouter {
   AuthSharedPref authSharedPref = AuthSharedPref();
 
-  Future<bool> _checkLoginStatus() async {
-    return await authSharedPref.isLoggedIn();
-  }
 
-  static String loginViewPath =   '/';
+
+  static String loginViewPath = '/';
   static String registerViewPath = '/register';
   static String bottomNavigationPath = '/navigation';
   static String downloadViewPath = '/download';
@@ -30,17 +30,32 @@ class AppRouter {
   static String downloadedSurahPlayerViewPath = '/downloadedPlayer';
   static String accountAndRankViewPath = '/accountAndRank';
   static String notificationsManagerViewPath = '/notificationsManager';
-  static List<GetPage<dynamic>> routes = [
-    GetPage(name: loginViewPath, page: () => const LoginView()),
-    GetPage(name: registerViewPath, page: () => const RegisterView()),
-    GetPage(name: bottomNavigationPath, page: () => BottomNavBar()),
-    GetPage(name: downloadViewPath, page: () =>  const DownloadedSurahView()),
-    GetPage(name: playViewPath, page: () => const PlayView()),
-    GetPage(name: azkarViewPath, page: () => const AzkarView()),
-    GetPage(name: zekrViewPath, page: () => const ZekrView()),
-    GetPage(name: readerDownloadedListPath, page: () =>   ReaderDownloadedSurahsList()),
-    GetPage(name: downloadedSurahPlayerViewPath, page: () =>   ReaderDownloadedSurahsList()),
-    GetPage(name: accountAndRankViewPath, page: () =>   const AccountAndRankView()),
-    GetPage(name: notificationsManagerViewPath, page: () =>   const NotificationManagerView()),
-  ];
+  static String cameraViewPath = '/camera';
+
+  static List<GetPage<dynamic>> getRoutes(List<CameraDescription> cameras) {
+    return [
+      GetPage(name: loginViewPath, page: () => const LoginView()),
+      GetPage(name: registerViewPath, page: () => const RegisterView()),
+      GetPage(name: bottomNavigationPath, page: () => BottomNavBar()),
+      GetPage(name: downloadViewPath, page: () => const DownloadedSurahView()),
+      GetPage(name: playViewPath, page: () => const PlayView()),
+      GetPage(name: azkarViewPath, page: () => const AzkarView()),
+      GetPage(name: zekrViewPath, page: () => const ZekrView()),
+      GetPage(
+          name: readerDownloadedListPath,
+          page: () => ReaderDownloadedSurahsList()),
+      GetPage(
+          name: downloadedSurahPlayerViewPath,
+          page: () => ReaderDownloadedSurahsList()),
+      GetPage(
+          name: accountAndRankViewPath, page: () => const AccountAndRankView()),
+      GetPage(
+          name: notificationsManagerViewPath,
+          page: () => const NotificationManagerView()),
+      GetPage(
+        name: cameraViewPath,
+        page: () => CameraView(cameras: cameras),  // Pass the cameras to CameraView
+      ),
+    ];
+  }
 }

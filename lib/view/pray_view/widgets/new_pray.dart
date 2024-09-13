@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:moben/core/utils/app_router.dart';
 import 'package:moben/view/pray_view/widgets/pray_counter.dart';
 
 import '../../../controller/pray_counter_controller.dart';
@@ -13,7 +14,7 @@ class NewPray extends StatelessWidget {
     super.key,
   });
 
-  PrayCounterController prayCounterController = PrayCounterController();
+  final PrayCounterController prayCounterController = PrayCounterController();
 
 
   @override
@@ -75,7 +76,7 @@ class NewPray extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CustomTextField(
-                    height:  screenHeight(context) * 0.09,
+                    height:  screenHeight(context) * 0.06,
                     width: screenWidth(context) * 0.6,
                     onChanged: (val) {},
                     obscureText: true,
@@ -102,7 +103,9 @@ class NewPray extends StatelessWidget {
                             )
                           ]),
                       child: IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.toNamed(AppRouter.cameraViewPath,);
+                        },
                         icon: const Icon(
                           Icons.play_arrow_outlined,
                           color: AppColors.secAccentColor,

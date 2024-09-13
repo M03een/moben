@@ -14,4 +14,13 @@ class MobenPermissionHandler {
       await Permission.location.request();
     }
   }
+
+  Future<bool> checkCameraPermission() async {
+    var status = await Permission.camera.status;
+    if (status.isDenied || status.isPermanentlyDenied) {
+      var result = await Permission.camera.request();
+      return result.isGranted;
+    }
+    return status.isGranted;
+  }
 }

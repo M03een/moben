@@ -37,30 +37,32 @@ class GlassContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.all(Radius.circular(borderRadius ?? 15)),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-        child: Container(
-          alignment: align,
-          margin: EdgeInsets.symmetric(
-              vertical: virMargin ?? 0, horizontal: horMargin ?? 0),
-          padding: EdgeInsets.symmetric(
-              vertical: verticalPadding ?? 0,
-              horizontal: horizontalPadding ?? 0),
-          width: width,
-          height: height,
-          decoration: BoxDecoration(
-            color: color ?? Colors.grey.withOpacity(0.2),
-            borderRadius: BorderRadius.all(
-              Radius.circular(borderRadius ?? 15),
+    return Padding(
+      padding:  EdgeInsets.symmetric(
+          vertical: virMargin ?? 0, horizontal: horMargin ?? 0),
+      child: ClipRRect(
+        borderRadius: BorderRadius.all(Radius.circular(borderRadius ?? 15)),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+          child: Container(
+            alignment: align,
+            padding: EdgeInsets.symmetric(
+                vertical: verticalPadding ?? 0,
+                horizontal: horizontalPadding ?? 0),
+            width: width,
+            height: height,
+            decoration: BoxDecoration(
+              color: color ?? Colors.grey.withOpacity(0.2),
+              borderRadius: BorderRadius.all(
+                Radius.circular(borderRadius ?? 15),
+              ),
+              border: border,
             ),
-            border: border,
-          ),
-          child: InkWell(
-            borderRadius: BorderRadius.all(Radius.circular(borderRadius ?? 15)),
-            onTap: onTap,
-            child: child,
+            child: InkWell(
+              borderRadius: BorderRadius.all(Radius.circular(borderRadius ?? 15)),
+              onTap: onTap,
+              child: child,
+            ),
           ),
         ),
       ),

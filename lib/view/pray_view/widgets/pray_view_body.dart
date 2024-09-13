@@ -9,14 +9,16 @@ class PrayViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        children: [
-          (screenHeight(context) * 0.07).sh,
-          const Text('مراقب الصلاة',style: AppStyles.quranTextStyle50,),
-          (screenHeight(context) * 0.03).sh,
-
-          NewPray(),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            (screenHeight(context) * 0.07).sh,
+            const Text('مراقب الصلاة',style: AppStyles.quranTextStyle50,),
+            (screenHeight(context) * 0.03).sh,
+        
+            NewPray(),
+          ],
+        ),
       ),
     );
   }

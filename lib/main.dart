@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_qiblah/flutter_qiblah.dart';
@@ -14,6 +15,7 @@ import 'core/shared_prefrences/auth_shared_pref.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final cameras = await availableCameras();
   final AuthSharedPref authSharedPref = AuthSharedPref();
   bool isLoggedIn = await authSharedPref.isLoggedIn();
   await Supabase.initialize(
@@ -28,7 +30,7 @@ Future<void> main() async {
   );
 
   runApp(MyApp(
-    isLoggedIn: isLoggedIn,
+    isLoggedIn: isLoggedIn, cameras: cameras,
   ));
 }
 
@@ -36,8 +38,9 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   final bool isLoggedIn;
+  final List<CameraDescription> cameras;
 
-  MyApp({super.key, required this.isLoggedIn});
+  MyApp({super.key, required this.isLoggedIn, required this.cameras});
 
   final deviceSupport = FlutterQiblah.androidDeviceSensorSupport();
   final MobenPermissionHandler _mobenPermissionHandler =
@@ -79,7 +82,7 @@ class MyApp extends StatelessWidget {
         initialRoute: isLoggedIn
             ? AppRouter.bottomNavigationPath
             : AppRouter.loginViewPath,
-        getPages: AppRouter.routes,
+          getPages: AppRouter.getRoutes(cameras),
       ),
     );
   }
