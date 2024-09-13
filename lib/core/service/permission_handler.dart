@@ -23,4 +23,12 @@ class MobenPermissionHandler {
     }
     return status.isGranted;
   }
+
+  Future<bool> checkAndRequestExactAlarmPermission() async {
+    if (await Permission.scheduleExactAlarm.status.isDenied) {
+      final status = await Permission.scheduleExactAlarm.request();
+      return status.isGranted;
+    }
+    return true;
+  }
 }

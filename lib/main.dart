@@ -10,11 +10,13 @@ import 'package:moben/core/utils/local.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'core/env/env.dart';
+import 'core/service/notifications_handler.dart';
 import 'core/service/permission_handler.dart';
 import 'core/shared_prefrences/auth_shared_pref.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await NotificationsHandler.init();
   final cameras = await availableCameras();
   final AuthSharedPref authSharedPref = AuthSharedPref();
   bool isLoggedIn = await authSharedPref.isLoggedIn();
