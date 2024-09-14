@@ -7,6 +7,7 @@ import 'package:moben/core/utils/colors.dart';
 import 'package:moben/core/utils/size_config.dart';
 import 'package:moben/core/utils/styles.dart';
 
+import 'inline_editable_text.dart';
 import 'mesh.dart';
 
 class CounterViewBody extends StatelessWidget {
@@ -19,60 +20,73 @@ class CounterViewBody extends StatelessWidget {
         OMeshGradient(
           mesh: meshRect,
         ),
-        Align(
-          alignment: Alignment.topCenter,
-          child: Padding(
-            padding: EdgeInsets.only(top: screenHeight(context) * 0.1),
-            child: Column(
+        Column(
+          children: [
+            (screenHeight(context) * 0.06).sh,
+            Text(
+              'المسبحة',
+              style: AppStyles.quranTextStyle50
+                  .copyWith(color: AppColors.primaryColor),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'المسبحة',
-                  style: AppStyles.quranTextStyle50
-                      .copyWith(color: AppColors.primaryColor),
+                const Icon(
+                  Icons.info,
+                  color: AppColors.primaryColor,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.info,
+                Text(
+                  'إضغط مطولا للإعادة ',
+                  style: AppStyles.textStyle19.copyWith(
                       color: AppColors.primaryColor,
-                    ),
-                    Text(
-                      'إضغط مطولا للإعادة ',
-                      style: AppStyles.textStyle19.copyWith(
-                          color: AppColors.primaryColor,
-                          fontWeight: FontWeight.w700),
-                    ),
-                  ],
+                      fontWeight: FontWeight.w700),
                 ),
               ],
             ),
-          ),
-        ),
-        Align(
-            alignment: Alignment.center,
-            child: GetBuilder(
+            (screenHeight(context) * 0.03).sh,
+            // New editable text field
+            GetBuilder<CounterController>(
               init: CounterController(),
-              builder: (value) {
-                return InkWell(
-                  onTap: () {
-                    value.increment();
-                  },
-                  onLongPress: () {
-                    value.reset();
-                  },
-                  child: AnimatedFlipCounter(
-                    duration: const Duration(milliseconds: 300),
-                    textStyle: TextStyle(
-                      fontSize: value.counter > 99 ? 250 : 300,
-                      fontWeight: FontWeight.bold,
+              builder: (controller) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: InlineEditableText(
+                    initialText: controller.customText.value,
+                    onChanged: (newText) {
+                      controller.updateCustomText(newText);
+                    },
+                    textStyle: AppStyles.quranTextStyle30.copyWith(
                       color: AppColors.primaryColor,
                     ),
-                    value: value.counter,
                   ),
                 );
               },
-            )),
+            ),
+            // Expanded area for tapping (covers the rest of the screen)
+            Expanded(
+              child: GetBuilder<CounterController>(
+                builder: (controller) {
+                  return GestureDetector(
+                    onTap: controller.increment,
+                    onLongPress: controller.reset,
+                    behavior: HitTestBehavior.opaque,
+                    child: Center(
+                      child: AnimatedFlipCounter(
+                        duration: const Duration(milliseconds: 300),
+                        textStyle: TextStyle(
+                          fontSize: controller.counter > 99 ? 250 : 300,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primaryColor,
+                        ),
+                        value: controller.counter,
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ],
     );
   }

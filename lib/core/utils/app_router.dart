@@ -1,5 +1,5 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
-import 'package:moben/core/shared_prefrences/auth_shared_pref.dart';
+import 'package:moben/core/shared_prefrences/moben_shared_pref.dart';
 import 'package:moben/view/account_and_rank_view/account_and_rank_view.dart';
 import 'package:moben/view/azkar_view/azkar_view.dart';
 import 'package:moben/view/azkar_view/zekr_view.dart';
@@ -15,7 +15,7 @@ import '../../view/quran_audio_view/widgets/bottom_navigation_bar.dart';
 import 'package:camera/camera.dart';
 
 class AppRouter {
-  AuthSharedPref authSharedPref = AuthSharedPref();
+  MobenSharedPref authSharedPref = MobenSharedPref();
 
 
 

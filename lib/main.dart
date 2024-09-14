@@ -12,13 +12,13 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'core/env/env.dart';
 import 'core/service/notifications_handler.dart';
 import 'core/service/permission_handler.dart';
-import 'core/shared_prefrences/auth_shared_pref.dart';
+import 'core/shared_prefrences/moben_shared_pref.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await NotificationsHandler.init();
   final cameras = await availableCameras();
-  final AuthSharedPref authSharedPref = AuthSharedPref();
+  final MobenSharedPref authSharedPref = MobenSharedPref();
   bool isLoggedIn = await authSharedPref.isLoggedIn();
   await Supabase.initialize(
     url: Env.supabaseUrl,
@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: [SystemUiOverlay.top]);
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      systemNavigationBarColor: AppColors.primaryColor,
+      systemNavigationBarColor: Colors.transparent,
 
 
     ),);

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
-import 'package:moben/core/shared_prefrences/auth_shared_pref.dart';
+import 'package:moben/core/shared_prefrences/moben_shared_pref.dart';
 import 'package:moben/core/utils/colors.dart';
 import 'package:moben/core/utils/size_config.dart';
 import 'package:moben/core/utils/styles.dart';
@@ -19,7 +19,7 @@ class LoginViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final UserAuthController authController = Get.put(UserAuthController());
-    final AuthSharedPref authSharedPref = AuthSharedPref();
+    final MobenSharedPref authSharedPref = MobenSharedPref();
 
     return Container(
       width: screenWidth(context),

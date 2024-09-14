@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:moben/controller/audio_palylist_controller.dart';
 import 'package:moben/core/utils/size_config.dart';
 import 'package:moben/core/utils/widgets/glow_background.dart';
 import '../../core/utils/colors.dart';
 import 'widgets/quran_audio_view_body.dart';
 
 class QuranAudioView extends StatelessWidget {
-    QuranAudioView({super.key});
+    const QuranAudioView({super.key});
 
 
   @override
