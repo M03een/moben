@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:moben/core/utils/colors.dart';
 import 'package:moben/core/utils/styles.dart';
 import '../../../controller/audio_palylist_controller.dart';
@@ -112,8 +113,8 @@ class QuranAudioViewBody extends StatelessWidget {
                         offset: const Offset(0, 5),
                       ),
                     ]),
-                child: const Icon(
-                  Icons.arrow_upward,
+                child: const  HugeIcon(
+                  icon: HugeIcons.strokeRoundedArrowUp01,
                   color: AppColors.secAccentColor,
                 ),
               ),

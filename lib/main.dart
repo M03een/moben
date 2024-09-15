@@ -13,13 +13,14 @@ import 'core/env/env.dart';
 import 'core/service/notifications_handler.dart';
 import 'core/service/permission_handler.dart';
 import 'core/shared_prefrences/moben_shared_pref.dart';
-
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await NotificationsHandler.init();
   final cameras = await availableCameras();
   final MobenSharedPref authSharedPref = MobenSharedPref();
   bool isLoggedIn = await authSharedPref.isLoggedIn();
+
   await Supabase.initialize(
     url: Env.supabaseUrl,
     anonKey: Env.supabaseAnonKey,
