@@ -16,7 +16,9 @@ class CustomTextField extends StatelessWidget {
     this.controller,
     this.suffixIcon,
     this.validator,
-    required this.obscureText, this.width, this.height,
+    required this.obscureText,
+    this.width,
+    this.height,
   });
 
   final Function(String) onChanged;
@@ -35,7 +37,7 @@ class CustomTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: height ?? screenHeight(context) * 0.07,
-      width: width  ?? screenWidth(context) * 0.9,
+      width: width ?? screenWidth(context) * 0.9,
       child: GlassContainer(
         borderRadius: 12,
         height: screenHeight(context) * 0.07,
@@ -46,7 +48,8 @@ class CustomTextField extends StatelessWidget {
           obscureText: obscureText,
           validator: validator,
           controller: controller,
-          keyboardType: textInputType ?? TextInputType.none,
+          // Use TextInputType.text as the default if not specified
+          keyboardType: textInputType ?? TextInputType.text,
           onChanged: onChanged,
           style: TextStyle(color: color ?? AppColors.accentColor),
           decoration: InputDecoration(
