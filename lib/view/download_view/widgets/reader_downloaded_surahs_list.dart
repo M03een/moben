@@ -36,8 +36,7 @@ class ReaderDownloadedSurahsList extends StatelessWidget {
           children: [
             (screenHeight(context) * 0.04).sh,
             Padding(
-              padding:
-                  EdgeInsets.symmetric(horizontal: screenWidth(context) * 0.04),
+              padding: EdgeInsets.symmetric(horizontal: screenWidth(context) * 0.04),
               child: Row(
                 children: [
                   Text(
@@ -58,60 +57,39 @@ class ReaderDownloadedSurahsList extends StatelessWidget {
               ),
             ),
             (screenHeight(context) * 0.03).sh,
+
             Obx(() {
               if (downloadManager.isDownloading.value) {
                 return Column(
                   children: [
                     LinearProgressIndicator(
-                      value: downloadManager.downloadProgress.value,
+                      value: downloadManager.currentDownloadingSurah.value / downloadManager.totalSurahs.value,
                       backgroundColor: AppColors.primaryColor,
                       valueColor: const AlwaysStoppedAnimation<Color>(
                           AppColors.secAccentColor),
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      'جاري التحميل:  ${(downloadManager.downloadProgress.value * 100).toStringAsFixed(2)}%',
+                      'جاري التحميل: سورة ${downloadManager.currentDownloadingSurah.value} من ${downloadManager.totalSurahs.value}',
                       style: AppStyles.textStyle19,
                     ),
                     const SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ElevatedButton(
-                          style: ButtonStyle(
-                              backgroundColor: WidgetStatePropertyAll(
-                                  AppColors.whiteColor.withOpacity(0.2))),
-                          onPressed: downloadManager.isPaused.value
-                              ? downloadManager.resumeDownload
-                              : downloadManager.pauseDownload,
-                          child: Text(
-                            downloadManager.isPaused.value ? 'إستكمال' : 'توقف',
-                            style: AppStyles.textStyle19
-                                .copyWith(color: AppColors.secAccentColor),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        ElevatedButton(
-                          style: ButtonStyle(
-                            backgroundColor: WidgetStatePropertyAll(
-                              AppColors.whiteColor.withOpacity(0.2),
-                            ),
-                          ),
-                          onPressed: () {
-                            // Add logic to cancel the download
-                          },
-                          child: Text('إلغاء',
-                              style: AppStyles.textStyle19
-                                  .copyWith(color: AppColors.secAccentColor)),
-                        ),
-                      ],
+                    ElevatedButton(
+                      onPressed: () {
+                        downloadManager.cancelDownload();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.secAccentColor,
+
+                      ),
+                      child:   Text('إلغاء التحميل', style: AppStyles.textStyle19.copyWith(color: AppColors.primaryColor)),
                     ),
                   ],
                 );
               } else {
                 return InkWell(
                   onTap: () {
-                    downloadManager.downloadAllSurahs();
+                    downloadManager.downloadAllSurahs(readerController.downloadSelectedReader.value);
                   },
                   child: Container(
                     alignment: Alignment.center,
@@ -140,58 +118,59 @@ class ReaderDownloadedSurahsList extends StatelessWidget {
                 );
               }
             }),
+
             Obx(() {
-              return controller.downloadedSurahs.isEmpty
-                  ? const Center(
-                      child: GradientText(
-                        text: 'لايوجد سور تم تحميلها لهذا المقرئ',
-                        gradient: LinearGradient(
-                          colors: [
-                            AppColors.secAccentColor,
-                            AppColors.accentColor
+              if (controller.downloadedSurahs.isEmpty) {
+                return const Center(
+                  child: GradientText(
+                    text: 'لايوجد سور تم تحميلها لهذا المقرئ',
+                    gradient: LinearGradient(
+                      colors: [
+                        AppColors.secAccentColor,
+                        AppColors.accentColor
+                      ],
+                    ),
+                    style: AppStyles.textStyle24,
+                  ),
+                );
+              } else {
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: controller.downloadedSurahs.length,
+                    itemBuilder: (context, index) {
+                      final surahFile = controller.downloadedSurahs[index];
+                      final surahName =
+                      controller.getSurahName(surahFile.path);
+                      return GlassContainer(
+                        height: screenHeight(context) * 0.08,
+                        width: screenWidth(context) * 0.8,
+                        virMargin: screenHeight(context) * 0.01,
+                        verticalPadding: screenHeight(context) * 0.005,
+                        horizontalPadding: screenWidth(context) * 0.03,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              surahName,
+                              style: AppStyles.textStyle19,
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                controller.playDownloaded(index);
+                                Get.to(() => DownloadedAudioPlayingView());
+                              },
+                              icon: const Icon(
+                                HugeIcons.strokeRoundedPlay,
+                                color: AppColors.secAccentColor,
+                              ),
+                            ),
                           ],
                         ),
-                        style: AppStyles.textStyle24,
-                      ),
-                    )
-                  : Expanded(
-                      child: ListView.builder(
-                        itemCount: controller.downloadedSurahs.length,
-                        itemBuilder: (context, index) {
-                          final surahFile = controller.downloadedSurahs[index];
-                          final surahName =
-                              controller.getSurahName(surahFile.path);
-                          return GlassContainer(
-                            height: screenHeight(context) * 0.08,
-                            width: screenWidth(context) * 0.8,
-                            virMargin: screenHeight(context) * 0.01,
-                            verticalPadding: screenHeight(context) * 0.005,
-                            horizontalPadding: screenWidth(context) * 0.03,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  surahName,
-                                  style: AppStyles.textStyle19,
-                                ),
-                                IconButton(
-                                  onPressed: () {
-                                    print('================surahFile.path');
-                                    print(surahFile.path);
-                                    controller.playDownloaded(index);
-                                    Get.to(() => DownloadedAudioPlayingView());
-                                  },
-                                  icon: const Icon(
-                                    HugeIcons.strokeRoundedPlay,
-                                    color: AppColors.secAccentColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                    );
+                      );
+                    },
+                  ),
+                );
+              }
             }),
           ],
         ),

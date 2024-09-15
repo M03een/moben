@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:moben/controller/all_download_manager.dart';
 import 'package:moben/controller/audio_palylist_controller.dart';
 import 'package:moben/core/utils/app_router.dart';
 import 'package:moben/core/utils/widgets/glass_container.dart';
@@ -17,6 +18,7 @@ class DownloadedSurahViewBody extends StatelessWidget {
 
   final ReaderController readerController = Get.put(ReaderController());
   final AudioPlaylistController audioPlaylistController = Get.put(AudioPlaylistController());
+  final DownloadManager downloadManagerController = Get.put(DownloadManager());
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +44,7 @@ class DownloadedSurahViewBody extends StatelessWidget {
                 child: SvgIconButton(
                   onTap: () {
                     Get.back();
+                    downloadManagerController.resetDownloads();
                   },
                   icon: 'left_arrow.svg',
                   color: AppColors.accentColor,

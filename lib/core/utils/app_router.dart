@@ -54,7 +54,7 @@ class AppRouter {
           page: () => const NotificationManagerView()),
       GetPage(
         name: cameraViewPath,
-        page: () => CameraView(cameras: cameras),  // Pass the cameras to CameraView
+        page: () => CameraView(cameras: cameras),
       ),
     ];
   }

@@ -17,7 +17,6 @@ class DownloadManager extends GetxController {
 
   var isDownloading = false.obs;
   var isPaused = false.obs;
-  var downloadProgress = 0.0.obs;
   var currentDownloadingSurah = 0.obs;
   var totalSurahs = 114.obs;
   var downloadedSurahs = 0.obs;
@@ -44,43 +43,50 @@ class DownloadManager extends GetxController {
     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
 
+  Future<void> resetDownloads() async {
+    isDownloading.value = false;
+    isPaused.value = false;
+    currentDownloadingSurah.value = 0;
+    downloadedSurahs.value = 0;
 
+    final String readerName = readerController.downloadSelectedReader.value;
+    audioPlaylistController.downloadedSurahsMap[readerName]?.clear();
+    updateNotification();
+  }
 
-  Future<void> downloadAllSurahs() async {
+  Future<void> downloadAllSurahs(String selectedReader) async {
     if (isDownloading.value) return;
 
     isDownloading.value = true;
     isPaused.value = false;
-    downloadProgress.value = 0.0;
-    currentDownloadingSurah.value = 1;
-    downloadedSurahs.value = 0;
     _cancelToken = CancelToken();
 
-    final String readerName = readerController.selectedReader.value;
-    final List<int> downloadedSurahsList = audioPlaylistController.downloadedSurahsMap[readerName] ?? [];
+    final List<int> downloadedSurahsList = audioPlaylistController.downloadedSurahsMap[selectedReader] ?? [];
 
-    for (int i = 1; i <= 114; i++) {
+    downloadedSurahs.value = downloadedSurahsList.length;
+
+    for (int i = 114; i >= 1; i--) {
       if (_cancelToken!.isCancelled) break;
       if (!downloadedSurahsList.contains(i)) {
-        await downloadSurah(i);
+        await downloadSurah(i, selectedReader);
         downloadedSurahs.value++;
+        currentDownloadingSurah.value = 115 - i; // This will show progress from 1 to 114
+        updateNotification();
+        refreshDownloadedSurahsList(selectedReader);
       }
-      currentDownloadingSurah.value = i + 1;
-      downloadProgress.value = i / 114;
-      updateNotification();
     }
 
     isDownloading.value = false;
     showCompletionNotification();
   }
 
-  Future<void> downloadSurah(int surahNumber) async {
+  Future<void> downloadSurah(int surahNumber, String selectedReader) async {
     try {
       Directory appDocDir = await getApplicationDocumentsDirectory();
-      String readerFolder = '${appDocDir.path}/${readerController.selectedReader.value}';
+      String readerFolder = '${appDocDir.path}/$selectedReader';
       await Directory(readerFolder).create(recursive: true);
 
-      String surahUrl = '${HelperFunctions().readerUrl(id: readerController.readerIndex.value)}${surahNumber.toString().padLeft(3, '0')}.mp3';
+      String surahUrl = '${HelperFunctions().readerUrl(id: readerController.downloadReaderIndex.value)}${surahNumber.toString().padLeft(3, '0')}.mp3';
       String savePath = '$readerFolder/${surahNumber.toString().padLeft(3, '0')}.mp3';
 
       await dio.download(
@@ -89,35 +95,35 @@ class DownloadManager extends GetxController {
         cancelToken: _cancelToken,
         onReceiveProgress: (received, total) {
           if (total != -1) {
-            double progress = received / total;
+            // You can add additional progress tracking here if needed
           }
         },
       );
 
-      // Update the downloadedSurahsMap
-      List<int> currentDownloaded = audioPlaylistController.downloadedSurahsMap[readerController.selectedReader.value] ?? [];
+      List<int> currentDownloaded = audioPlaylistController.downloadedSurahsMap[selectedReader] ?? [];
       currentDownloaded.add(surahNumber);
-      audioPlaylistController.downloadedSurahsMap[readerController.selectedReader.value] = currentDownloaded;
+      audioPlaylistController.downloadedSurahsMap[selectedReader] = currentDownloaded;
     } catch (e) {
       if (e is DioException && e.type == DioExceptionType.cancel) {
         print("Download cancelled for surah $surahNumber");
+        showCancelNotification();
       } else {
         print("Download failed for surah $surahNumber: $e");
+        showInterruptionNotification();
       }
+      await resetDownloads();
     }
   }
 
-  void pauseDownload() {
+  void refreshDownloadedSurahsList(String selectedReader) {
+    audioPlaylistController.refreshDownloadedSurahs(readerName: selectedReader);
+  }
+
+  void cancelDownload() {
     if (isDownloading.value && !isPaused.value) {
       _cancelToken?.cancel();
-      isPaused.value = true;
-    }
-  }
-
-  void resumeDownload() {
-    if (isPaused.value) {
-      isPaused.value = false;
-      downloadAllSurahs();
+      isDownloading.value = false;
+      showCancelNotification();
     }
   }
 
@@ -146,6 +152,40 @@ class DownloadManager extends GetxController {
       0,
       'Download Complete',
       'All surahs have been downloaded',
+      const NotificationDetails(
+        android: AndroidNotificationDetails(
+          'download_channel',
+          'Download Notifications',
+          channelDescription: 'Notifications for surah downloads',
+          importance: Importance.high,
+          priority: Priority.high,
+        ),
+      ),
+    );
+  }
+
+  void showCancelNotification() {
+    flutterLocalNotificationsPlugin.show(
+      0,
+      'Download Cancelled',
+      'The download has been cancelled',
+      const NotificationDetails(
+        android: AndroidNotificationDetails(
+          'download_channel',
+          'Download Notifications',
+          channelDescription: 'Notifications for surah downloads',
+          importance: Importance.high,
+          priority: Priority.high,
+        ),
+      ),
+    );
+  }
+
+  void showInterruptionNotification() {
+    flutterLocalNotificationsPlugin.show(
+      0,
+      'Download Interrupted',
+      'The download has been interrupted due to an error',
       const NotificationDetails(
         android: AndroidNotificationDetails(
           'download_channel',
