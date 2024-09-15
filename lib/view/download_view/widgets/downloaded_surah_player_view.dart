@@ -77,7 +77,7 @@ class DownloadedAudioPlayingView extends StatelessWidget {
                     ])),
                     child: Obx(() {
                       return Text(
-                        controller.downloadedSurahName.value,
+                        'controller.downloadedSurahName.value',
                         style: AppStyles.quranTextStyle30.copyWith(
                           color: AppColors.primaryColor,
                         ),

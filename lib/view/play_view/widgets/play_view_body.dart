@@ -22,7 +22,7 @@ class PlayViewBody extends StatelessWidget {
 
   final SurahController surahController = Get.put(SurahController());
   final AudioPlaylistController audioPlaylistController =
-      Get.put(AudioPlaylistController());
+  Get.put(AudioPlaylistController());
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class PlayViewBody extends StatelessWidget {
         children: [
           PlayViewAppbar(
             surahName:
-                '${surahController.surahs[audioPlaylistController.surahIndex.value].name}',
+            '${surahController.surahs[audioPlaylistController.surahIndex.value].name}',
           ),
           (screenHeight(context) * 0.02).sh,
           ReaderAndDownloadWidget(
@@ -42,9 +42,9 @@ class PlayViewBody extends StatelessWidget {
           (screenHeight(context) * 0.01).sh,
           SurahWidget(
             surahName:
-                '${surahController.surahs[audioPlaylistController.surahIndex.value].name}',
+            '${surahController.surahs[audioPlaylistController.surahIndex.value].name}',
             isMakkia: surahController
-                    .surahs[audioPlaylistController.surahIndex.value].makkia ==
+                .surahs[audioPlaylistController.surahIndex.value].makkia ==
                 1,
           ),
           (screenHeight(context) * 0.01).sh,
