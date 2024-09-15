@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:moben/controller/reader_controller.dart';
-import 'package:moben/core/utils/widgets/gradient_text.dart';
+import 'package:moben/controller/network_controller.dart'; // Import the NetworkController
 import '../../../controller/all_download_manager.dart';
 import '../../../controller/audio_palylist_controller.dart';
 import '../../../core/utils/colors.dart';
@@ -11,6 +11,7 @@ import '../../../core/utils/styles.dart';
 import '../../../core/utils/widgets/custom_icon.dart';
 import '../../../core/utils/widgets/glass_container.dart';
 import '../../../core/utils/widgets/glow_background.dart';
+import '../../../core/utils/widgets/gradient_text.dart';
 import 'downloaded_surah_player_view.dart';
 
 class ReaderDownloadedSurahsList extends StatelessWidget {
@@ -19,6 +20,7 @@ class ReaderDownloadedSurahsList extends StatelessWidget {
   final AudioPlaylistController controller = Get.put(AudioPlaylistController());
   final ReaderController readerController = Get.put(ReaderController());
   final DownloadManager downloadManager = Get.put(DownloadManager());
+  final NetworkController networkController = Get.put(NetworkController()); // Add NetworkController
 
   @override
   Widget build(BuildContext context) {
@@ -65,8 +67,7 @@ class ReaderDownloadedSurahsList extends StatelessWidget {
                     LinearProgressIndicator(
                       value: downloadManager.currentDownloadingSurah.value / downloadManager.totalSurahs.value,
                       backgroundColor: AppColors.primaryColor,
-                      valueColor: const AlwaysStoppedAnimation<Color>(
-                          AppColors.secAccentColor),
+                      valueColor: const AlwaysStoppedAnimation<Color>(AppColors.secAccentColor),
                     ),
                     const SizedBox(height: 10),
                     Text(
@@ -80,16 +81,25 @@ class ReaderDownloadedSurahsList extends StatelessWidget {
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.secAccentColor,
-
                       ),
-                      child:   Text('إلغاء التحميل', style: AppStyles.textStyle19.copyWith(color: AppColors.primaryColor)),
+                      child: Text('إلغاء التحميل', style: AppStyles.textStyle19.copyWith(color: AppColors.primaryColor)),
                     ),
                   ],
                 );
               } else {
                 return InkWell(
                   onTap: () {
-                    downloadManager.downloadAllSurahs(readerController.downloadSelectedReader.value);
+                    // Check internet connection before starting download
+                    if (networkController.isInternetConnected.value) {
+                      downloadManager.downloadAllSurahs(readerController.downloadSelectedReader.value);
+                    } else {
+                      Get.snackbar(
+                        'لا يوجد اتصال بالإنترنت',
+                        'يرجى التأكد من اتصالك بالإنترنت للمواصلة',
+                        backgroundColor: Colors.red,
+                        colorText: Colors.white,
+                      );
+                    }
                   },
                   child: Container(
                     alignment: Alignment.center,
@@ -139,8 +149,7 @@ class ReaderDownloadedSurahsList extends StatelessWidget {
                     itemCount: controller.downloadedSurahs.length,
                     itemBuilder: (context, index) {
                       final surahFile = controller.downloadedSurahs[index];
-                      final surahName =
-                      controller.getSurahName(surahFile.path);
+                      final surahName = controller.getSurahName(surahFile.path);
                       return GlassContainer(
                         height: screenHeight(context) * 0.08,
                         width: screenWidth(context) * 0.8,

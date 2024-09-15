@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:moben/core/utils/colors.dart';
 import 'package:moben/core/utils/styles.dart';
-import 'package:moben/core/utils/widgets/glass_container.dart';
 import '../../../controller/audio_palylist_controller.dart';
 import '../../../controller/surah_controller.dart';
+import '../../../controller/network_controller.dart'; // Import the NetworkController
 import '../../../model/surah_model.dart';
 import '../../../core/utils/widgets/custom_text_field.dart';
 import 'custom_appbar.dart';
@@ -23,19 +23,17 @@ class QuranAudioViewBody extends StatelessWidget {
     Get.put(AudioPlaylistController());
     final AudioPlaylistController downloadedSurahsController =
     Get.put(AudioPlaylistController());
+    final NetworkController networkController = Get.put(NetworkController()); // Add NetworkController
 
     return Stack(
       children: [
         Scrollbar(
           controller: surahController.scrollController,
-          // Attach ScrollController here
           interactive: true,
           thumbVisibility: true,
           child: SingleChildScrollView(
             controller: surahController.scrollController,
-            // Attach the ScrollController here as well
             primary: false,
-            // Ensure primary is set to false to avoid conflict with PrimaryScrollController
             child: Column(
               children: [
                 CustomAppbar(),
@@ -75,10 +73,20 @@ class QuranAudioViewBody extends StatelessWidget {
                             isMakkia: surah.makkia == 1,
                             surahId: surah.id ?? 404,
                             onTap: () {
-                              audioPlaylistController.playTrack(surah.id! - 1);
-                              downloadedSurahsController.stopDownloaded();
-                              Get.toNamed(AppRouter.playViewPath,
-                                  arguments: surah);
+                              // Check internet connection before navigating
+                              if (networkController.isInternetConnected.value) {
+                                audioPlaylistController.playTrack(surah.id! - 1);
+                                downloadedSurahsController.stopDownloaded();
+                                Get.toNamed(AppRouter.playViewPath,
+                                    arguments: surah);
+                              } else {
+                                Get.snackbar(
+                                  'لا يوجد اتصال بالإنترنت',
+                                  'يرجى التأكد من اتصالك بالإنترنت لتشغيل السورة',
+                                  backgroundColor: Colors.red,
+                                  colorText: Colors.white,
+                                );
+                              }
                             },
                           );
                         },
@@ -91,7 +99,6 @@ class QuranAudioViewBody extends StatelessWidget {
             ),
           ),
         ),
-        // Add the "Jump to Top" button
         Obx(() {
           return surahController.showJumpToTopButton.value
               ? Positioned(
