@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:moben/controller/network_controller.dart';
 import 'package:moben/controller/surah_controller.dart';
 import 'package:moben/controller/user_auth_controller.dart';
 import 'package:moben/core/utils/app_router.dart';
@@ -24,6 +25,7 @@ class CustomDrawer extends StatefulWidget {
 class _CustomDrawerState extends State<CustomDrawer> {
   final SurahController surahController = Get.put(SurahController());
   final UserAuthController authController = Get.put(UserAuthController());
+  final NetworkController networkController = Get.put(NetworkController());
   String userName = 'User Name';
   String email = 'empty email';
 
@@ -49,7 +51,16 @@ class _CustomDrawerState extends State<CustomDrawer> {
         children: [
           InkWell(
             onTap: (){
-              Get.toNamed(AppRouter.accountAndRankViewPath);
+              if (networkController.isInternetConnected.value) {
+                Get.toNamed(AppRouter.accountAndRankViewPath);
+              } else {
+                Get.snackbar(
+                  'No Internet Connection',
+                  'Please check your connection',
+                  backgroundColor: Colors.red,
+                  colorText: Colors.white,
+                );
+              }
             },
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
