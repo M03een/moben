@@ -5,8 +5,8 @@ class MobenSharedPref {
   static const _keyNotification1Time = 'notification1Time';
   static const _keyNotification2Time = 'notification2Time';
   static const _keyNotification3Time = 'notification3Time';
-  static const _keyNotification4Time = 'notification4Time'; // ورد قراءة
-  static const _keyNotification5Time = 'notification5Time'; // ورد حفظ
+  static const _keyNotification4Time = 'notification4Time';
+  static const _keyNotification5Time = 'notification5Time';
 
 
   static const _keyNotification1Active = 'notification1Active';
@@ -30,14 +30,12 @@ class MobenSharedPref {
     await prefs.remove(_keyIsLoggedIn);
   }
 
-  // Save notification time as string "HH:mm"
   Future<void> setNotificationTime(int notificationId, String time) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String key = _getNotificationKey(notificationId);
     await prefs.setString(key, time);
   }
 
-  // Get notification time as string "HH:mm"
   Future<String?> getNotificationTime(int notificationId) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String key = _getNotificationKey(notificationId);
@@ -53,9 +51,9 @@ class MobenSharedPref {
       case 3:
         return _keyNotification3Time;
       case 4:
-        return _keyNotification4Time; // ورد قراءة
+        return _keyNotification4Time;
       case 5:
-        return _keyNotification5Time; // ورد حفظ
+        return _keyNotification5Time;
       default:
         return '';
     }
@@ -67,7 +65,6 @@ class MobenSharedPref {
     await prefs.setBool(key, isActive);
   }
 
-  // New method to get notification active state
   Future<bool> getNotificationActive(int notificationId) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String key = _getNotificationActiveKey(notificationId);

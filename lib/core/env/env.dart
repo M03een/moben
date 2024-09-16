@@ -9,4 +9,7 @@ abstract class Env {
 
   @EnviedField(varName: 'SUPABASE_ANON_KEY')
   static const String supabaseAnonKey = _Env.supabaseAnonKey;
+
+  @EnviedField(varName: 'POINTS_BASE_URL')
+  static const String pointsBaseUrl = _Env.pointsBaseUrl;
 }

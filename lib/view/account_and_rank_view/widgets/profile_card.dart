@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:moben/core/utils/colors.dart';
 import 'package:moben/core/utils/size_config.dart';
 import 'package:moben/core/utils/styles.dart';
+import 'package:moben/core/utils/widgets/custom_icon.dart';
 import 'package:moben/core/utils/widgets/gradient_text.dart';
 import 'package:smooth_corner/smooth_corner.dart';
 
@@ -26,15 +28,10 @@ class ProfileCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const Row(
+            const Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              HugeIcon(
-                icon: HugeIcons.strokeRoundedBookmark02,
-                color: AppColors.secAccentColor,
-                size: 30,
-              ),
-            ],
+              ],
           ),
           Row(
             children: [
