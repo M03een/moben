@@ -4,6 +4,7 @@ import 'package:moben/controller/surah_controller.dart';
 import 'package:moben/view/azkar_view/azkar_view.dart';
 import 'package:moben/view/counter_view/counter_view.dart';
 import 'package:moben/view/download_view/downloaded_surah_view.dart';
+import 'package:moben/view/generate_image_view/views/all_images_view.dart';
 import 'package:moben/view/notifications_manger_view/notification_manager_view.dart';
 import 'package:moben/view/qiblah_view/qiblah_view.dart';
 import 'package:moben/view/quran_audio_view/widgets/custom_bottom_nav_bar.dart';
@@ -21,14 +22,14 @@ class BottomNavBar extends StatelessWidget {
   final SurahController surahController = Get.put(SurahController());
 
   final List<Widget> pages = [
-    QuranAudioView(),
+    const QuranAudioView(),
     const CounterView(),
     const QiblahView(),
     const PrayView(),
     const AzkarView(),
     const DownloadedSurahView(),
     const NotificationManagerView(),
-
+    AllImagesView()
   ];
 
   @override

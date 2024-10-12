@@ -1085,6 +1085,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.28.0"
+  share_plus:
+    dependency: "direct main"
+    description:
+      name: share_plus
+      sha256: fec12c3c39f01e4df1ec6ad92b6e85503c5ca64ffd6e28d18c9ffe53fcc4cb11
+      url: "https://pub.dev"
+    source: hosted
+    version: "10.0.3"
+  share_plus_platform_interface:
+    dependency: transitive
+    description:
+      name: share_plus_platform_interface
+      sha256: c57c0bbfec7142e3a0f55633be504b796af72e60e3c791b44d5a017b985f7a48
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.0.1"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -1306,6 +1322,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
+  transformable_list_view:
+    dependency: "direct main"
+    description:
+      name: transformable_list_view
+      sha256: f228664601e5bb3402b78ca6f523aa51dbfa5cc84c9503e2c9e68a9570ac1c3f
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.6.0"
   typed_data:
     dependency: transitive
     description:
@@ -1466,6 +1490,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.1"
+  widgets_to_image:
+    dependency: "direct main"
+    description:
+      name: widgets_to_image
+      sha256: "9a251b95d3a9f10d72420dde9b7e3b0da5eddd47fb19cad066bc68c60b0d1dfb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
+  win32:
+    dependency: transitive
+    description:
+      name: win32
+      sha256: e5c39a90447e7c81cfec14b041cdbd0d0916bd9ebbc7fe02ab69568be703b9bd
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.6.0"
   workmanager:
     dependency: "direct main"
     description:

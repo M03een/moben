@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -131,6 +130,13 @@ class _CustomDrawerState extends State<CustomDrawer> {
           ),
           DrawerButton(
             onTap: () {
+              Get.toNamed(AppRouter.allImagesViewPath);
+            },
+            icon: HugeIcons.strokeRoundedAiImage,
+            label: 'إنشاء صورة بأية',
+          ),
+          DrawerButton(
+            onTap: () {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
@@ -178,6 +184,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
             icon: HugeIcons.strokeRoundedDoor01,
             label: 'تسجيل الخروج',
           ),
+
         ],
       ),
     );

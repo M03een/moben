@@ -130,6 +130,16 @@ class VerticalNavBar extends StatelessWidget {
                       : AppColors.whiteColor.withOpacity(0.2),
                 ),
                 CustomIcon(
+                  icon: 'bell.svg',
+                  onTap: () {
+                    bottomNavController.updateCurrentIndex(7);
+                  },
+                  isSelected: bottomNavController.currentSelectedIndex.value == 7,
+                  color: bottomNavController.currentSelectedIndex.value == 7
+                      ? AppColors.secAccentColor
+                      : AppColors.whiteColor.withOpacity(0.2),
+                ),
+                CustomIcon(
                   icon: 'quran.svg',
                   onTap: () {
                     MobenSnackBars().nextUpdateSnackBar();

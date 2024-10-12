@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:moben/core/utils/size_config.dart';
 import 'package:moben/core/utils/widgets/custom_icon.dart';
@@ -21,6 +22,7 @@ class CustomAppbar extends StatelessWidget {
     return Row(
       mainAxisAlignment:isTablet? MainAxisAlignment.center : MainAxisAlignment.spaceBetween,
       children: [
+
         Image.asset(
           'assets/images/logo.png',
           width: screenWidth(context) * 0.15,

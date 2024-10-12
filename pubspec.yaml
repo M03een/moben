@@ -55,6 +55,9 @@ dependencies:
   workmanager: ^0.5.2
   flutter_local_notifications: ^17.2.2
   timezone: ^0.9.4
+  widgets_to_image: ^1.0.0
+  share_plus: ^10.0.3
+  transformable_list_view: ^0.6.0
   camera: ^0.11.0+2
   intl: ^0.19.0
   flutter_native_splash: ^2.4.1
@@ -93,6 +96,8 @@ flutter:
     - assets/images/azkar_avatars/
     - assets/json/azkar/azkar.json
     - assets/json/surahs/surahs.json
+    - assets/json/quran/quran.json
+    - assets/images/logo.svg
     - .env
   #   - images/a_dot_ham.jpeg
 
