@@ -44,7 +44,7 @@ dependencies:
   flutter_svg: ^2.0.10+1
   mesh: ^0.4.1
   smooth_corner: ^1.1.0
-  flutter_qiblah: ^2.2.1
+  flutter_qiblah: ^3.0.4
   supabase_flutter: ^2.6.0
   envied: ^0.5.4+1
   permission_handler: ^11.3.1

@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        kotlin_version = '1.7.10' // Latest Kotlin version, you may update if necessary
+        kotlin_version = '2.0.20' // Latest Kotlin version, you may update if necessary
         gradle_version = '8.0.2' // Update to the latest stable version if needed
         android_tools_version = '8.0.0' // Update to the latest Android tools version
     }
