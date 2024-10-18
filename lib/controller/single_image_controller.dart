@@ -19,8 +19,9 @@ class SingleImageController extends GetxController {
   TextEditingController surahController = TextEditingController();
   TextEditingController verseStartController = TextEditingController();
   TextEditingController verseEndController = TextEditingController();
+  var isSaving = false.obs;
 
-  var textPosition = Rx<Offset>(const Offset(0, 0));
+  var textPosition = Rx<Offset>(const Offset(0, 200));
   var textColor = Rx<Color>(Colors.white);
   var textSize = 30.0.obs;
   var textOpacity = 1.0.obs;
@@ -36,9 +37,23 @@ class SingleImageController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // Listen for changes in text position and update logo alignment
     ever(textPosition, (_) => updateLogoPosition());
   }
+
+  Future<void> saveChanges(Uint8List? imageBytes) async {
+    if (imageBytes != null) {
+      isSaving.value = true;
+      try {
+        await Future.delayed(const Duration(seconds: 2));
+        captureImage(imageBytes);
+      } catch (e) {
+        Get.snackbar('Error', 'Failed to save image');
+      } finally {
+        isSaving.value = false;
+      }
+    }
+  }
+
 
   void pickColorFromImage(Offset position , String imageUrl) async {
     final image = await getImageFromNetwork(imageUrl); // get the image from the network

@@ -82,10 +82,11 @@ class EditImageView extends StatelessWidget {
             bottom: 16,
             right: 16,
             child: FloatingActionButton(
+              backgroundColor: AppColors.primaryColor,
               onPressed: () {
                 _showCustomizationBottomSheet(context);
               },
-              child: const Icon(Icons.edit),
+              child: const Icon(Icons.edit,color: AppColors.accentColor,),
             ),
           ),
         ],
@@ -128,17 +129,26 @@ class EditImageView extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        ElevatedButton(
+        Obx(() => ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.accentColor,
           ),
-          onPressed: () async {
+          onPressed: controller.isSaving.value
+              ? null
+              : () async {
+            controller.isSaving.value = true;
             final imageBytes = await widgetsToImageController.capture();
-            this.controller.captureImage(imageBytes!);
-            Navigator.pop(context);
+            if (imageBytes != null) {
+              await controller.saveChanges(imageBytes);
+              Navigator.pop(context); // Close the bottom sheet
+            }
           },
-          child: const Text('حفظ التغييرات'),
-        ),
+          child: controller.isSaving.value
+              ? const CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(AppColors.whiteColor),
+          )
+              : const Text('حفظ التغييرات'),
+        )),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.accentColor,
@@ -149,6 +159,7 @@ class EditImageView extends StatelessWidget {
       ],
     );
   }
+
 
   Widget _buildVerseSelectionSection(BuildContext context) {
     return Padding(
