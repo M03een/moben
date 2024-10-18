@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:moben/core/utils/size_config.dart';
 import 'package:widgets_to_image/widgets_to_image.dart';
@@ -59,6 +60,21 @@ class EditImageView extends StatelessWidget {
                         ),
                       ),
                     )),
+                Obx(() {
+                  return Align(
+                    alignment: controller.logoAlignment.value,
+                    child: SvgPicture.asset(
+                      'assets/images/logo.svg',
+                      height: screenHeight(context) * 0.1,
+                      width: screenWidth(context) * 0.1,
+                      colorFilter: ColorFilter.mode(
+                        AppColors.whiteColor.withOpacity(0.2),
+                        BlendMode.srcIn,
+                      ),
+                    ),
+                  );
+                }),
+
               ],
             ),
           ),
@@ -76,8 +92,6 @@ class EditImageView extends StatelessWidget {
       ),
     );
   }
-
-
 
   void _showCustomizationBottomSheet(BuildContext context) {
     showModalBottomSheet(
@@ -141,6 +155,7 @@ class EditImageView extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
+          // Existing Surah and Verse number input fields
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -170,10 +185,28 @@ class EditImageView extends StatelessWidget {
               ),
             ],
           ),
+
           (screenHeight(context) * 0.01).sh,
+
+          // Button to load specific verses
           ElevatedButton(
             onPressed: controller.loadSpecificQuranVerses,
             child: const Text('تحميل الآيات'),
+          ),
+
+          // New TextField to edit the verse
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Obx(() => TextField(
+                  onChanged: (value) => controller.quranVerse.value = value,
+                  // Dynamically update the verse
+                  controller:
+                      TextEditingController(text: controller.quranVerse.value),
+                  decoration: const InputDecoration(labelText: 'تحرير الآية'),
+                  maxLines: null,
+                  // Allow multiline text for long verses
+                  style: const TextStyle(color: AppColors.accentColor),
+                )),
           ),
         ],
       ),

@@ -30,6 +30,15 @@ class SingleImageController extends GetxController {
   var glowColor = Colors.white.obs;
   var blurRadius = 10.0.obs;
 
+  var logoAlignment = Alignment.bottomCenter.obs;
+
+
+  @override
+  void onInit() {
+    super.onInit();
+    // Listen for changes in text position and update logo alignment
+    ever(textPosition, (_) => updateLogoPosition());
+  }
 
   void pickColorFromImage(Offset position , String imageUrl) async {
     final image = await getImageFromNetwork(imageUrl); // get the image from the network
@@ -78,7 +87,7 @@ class SingleImageController extends GetxController {
     }
 
     if (selectedVerses.isNotEmpty) {
-      quranVerse.value = selectedVerses.join(' ');
+      quranVerse.value = selectedVerses.join(' ● ');
     } else {
       quranVerse.value = 'الآيات غير موجودة';
     }
@@ -135,6 +144,19 @@ class SingleImageController extends GetxController {
 
   void updateTextPosition(Offset delta) {
     textPosition.value += delta;
+    updateLogoPosition();
+  }
+  void updateLogoPosition() {
+    if (textPosition.value.dy < Get.context!.height * 0.33) {
+      // If text is in the top third, logo goes to bottom
+      logoAlignment.value = Alignment.bottomCenter;
+    } else if (textPosition.value.dy < Get.context!.height * 0.66) {
+      // If text is in the middle third, logo goes to bottom
+      logoAlignment.value = Alignment.bottomCenter;
+    } else {
+      // If text is in the bottom third, logo goes to top
+      logoAlignment.value = Alignment.topCenter;
+    }
   }
 
   void setTextPosition(TextPosition position) {
