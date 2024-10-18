@@ -6,7 +6,7 @@ import 'package:moben/view/azkar_view/zekr_view.dart';
 import 'package:moben/view/download_view/downloaded_surah_view.dart';
 import 'package:moben/view/download_view/widgets/reader_downloaded_surahs_list.dart';
 import 'package:moben/view/generate_image_view/views/all_images_view.dart';
-import 'package:moben/view/generate_image_view/views/single_image_view.dart';
+import 'package:moben/view/generate_image_view/views/edit_image_view.dart';
 import 'package:moben/view/login_and_register_view/login_view.dart';
 import 'package:moben/view/login_and_register_view/register_view.dart';
 import 'package:moben/view/notifications_manger_view/notification_manager_view.dart';

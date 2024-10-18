@@ -58,6 +58,9 @@ dependencies:
   widgets_to_image: ^1.0.0
   share_plus: ^10.0.3
   transformable_list_view: ^0.6.0
+  flutter_colorpicker: ^1.0.3
+  flutter_glow: ^0.3.2
+  image_gallery_saver: ^2.0.3
   camera: ^0.11.0+2
   intl: ^0.19.0
   flutter_native_splash: ^2.4.1
@@ -116,6 +119,9 @@ flutter:
     - family: Rubik
       fonts:
         - asset: assets/fonts/Rubik-VariableFont_wght.ttf
+    - family: QuranicWall
+      fonts:
+        - asset: assets/fonts/QuranicWall.ttf
     - family: Amiri
       fonts:
         - asset: assets/fonts/Amiri-Regular.ttf
